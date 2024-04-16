@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:18:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/15 10:41:24 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/16 11:38:47 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "../ft_bitmap/ft_bitmap.h"
 # include "../ft_btree/ft_btree.h"
-# include "../ft_string/ft_string.h"
 # include "../ft_error/ft_error.h"
+# include "../ft_string/ft_string.h"
 
 typedef enum e_operators
 {
@@ -36,12 +36,6 @@ typedef enum e_operators
 	OPERATOR_COUNT
 }				t_operators;
 
-typedef struct s_token
-{
-	t_operators	op;
-	char		*value;
-}				t_token;
-
 # define AND_OP "&&"
 # define OR_OP "||"
 # define PIPE_OP "|"
@@ -56,12 +50,35 @@ typedef struct s_token
 # define L_BRACKET_OP "["
 # define R_BRACKET_OP "]"
 
+# define AND_PRE 3
+# define OR_PRE 3
+# define PIPE_PRE 4
+# define L_REDIRECT_PRE 1
+# define R_REDIRECT_PRE 5
+# define L_DELIMITER_PRE 1
+# define R_APPEND_PRE 5
+# define L_PARANTHESE_PRE 2
+# define R_PARANTHESE_PRE 2
+# define L_CBRACKET_PRE 2
+# define R_CBRACKET_PRE 2
+# define L_BRACKET_PRE 2
+# define R_BRACKET_PRE 2
+
+typedef struct s_token
+{
+	t_operators	op;
+	int			op_precedence;
+	char		*value;
+	int			next_token_index;
+}				t_token;
+
 typedef struct s_parser_utils
 {
 	t_btree		*strings;
 }				t_parser_utils;
 
 char			**get_operators(void);
+int				*get_precedence(void);
 int				ft_is_operator(char *str, t_operators op);
 t_token			*ft_tokenize(char *str, int *token_count);
 
