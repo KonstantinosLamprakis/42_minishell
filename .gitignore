@@ -3,4 +3,4 @@
 *.tmp
 *dSYM*
 .vscode
-notes.txt
+*notes.txt
