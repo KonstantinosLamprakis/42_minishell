@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:18:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/16 18:23:15 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/16 18:26:18 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ char			**get_operators(void);
 int				*get_precedence(void);
 int				ft_is_operator(char *str, t_operators op);
 int				ft_which_op(char *str);
-t_token			*ft_tokenize(char *str, int *token_count);
 
 int				ft_is_encapsulator_start(t_operators op);
 int				ft_is_encapsulator_end(t_operators op);
