@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:18:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/16 15:06:22 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/16 18:23:15 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ typedef enum e_operators
 typedef struct s_token
 {
 	t_operators	op;
-	int			op_precedence;
+	t_operators	current_op;
 	int			start;
-	int			end;
-	int			next;
 }				t_token;
 
 typedef struct s_parser_utils
 {
 	t_btree		*strings;
 }				t_parser_utils;
+
+void			ft_parse(char *str);
 
 char			**get_operators(void);
 int				*get_precedence(void);
@@ -88,8 +88,8 @@ int				ft_is_encapsulator_start(t_operators op);
 int				ft_is_encapsulator_end(t_operators op);
 int				ft_is_encapsulator(t_operators op);
 
-int				endof_paranthese(char *str, t_token *token);
-int				endof_cbrackets(char *str, t_token *token);
-int				endof_brackets(char *str, t_token *token);
+int				endof_paranthese(char *str, int start);
+int				endof_cbrackets(char *str, int start);
+int				endof_brackets(char *str, int start);
 
 #endif
