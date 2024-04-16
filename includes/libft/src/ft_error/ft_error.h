@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:06:29 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/15 08:58:54 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/16 14:56:44 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef enum e_errno
 	BITMAP_MASK,
 	QUEUE_AT_CAPACITY,
 	QUEUE_EMPTY,
+	SYNTAX,
 	ERR_COUNT
 }		t_errno;
 
@@ -39,6 +40,7 @@ typedef enum e_errno
 # define BITMAP_MASK_ERR "Wrong number of bits to create the mask: "
 # define QUEUE_AT_CAPACITY_ERR "Queue is overpopulated: "
 # define QUEUE_EMPTY_ERR "Queue is empty: "
+# define SYNTAX_ERR "Syntax error: "
 
 int		*get_errno(void);
 void	set_errno(int err_value);

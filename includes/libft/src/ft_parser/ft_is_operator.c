@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 08:21:20 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/16 11:47:12 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/16 14:17:03 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,15 @@ int	ft_is_operator(char *str, t_operators op)
 		|| op == R_APPEND)
 		return (ft_is_doperator(str, op));
 	return (ft_is_soperator(str, op));
+}
+
+int	ft_which_op(char *str)
+{
+	int	index;
+
+	index = -1;
+	while (++index < OPERATOR_COUNT)
+		if (ft_is_operator(str, index))
+			return (index);
+	return (-1);
 }

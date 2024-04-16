@@ -6,11 +6,25 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 08:57:18 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/16 12:03:49 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/16 15:06:48 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_parser.h"
+
+static int	find_endof_encapsulator(char *str, t_token *token)
+{
+	char	**operators;
+
+	operators = get_operators();
+	if (token->op == L_PARANTHESE)
+		return (endof_paranthese(str, token));
+	if (token->op == L_CBRACKET)
+		return (endof_cbrackets(str, token));
+	if (token->op == L_BRACKET)
+		return (endof_brackets(str, token));
+	return (ft_strlen(operators[token->op]));
+}
 
 /**
  * @brief Tries every operators to see if the current char is part of an
@@ -35,13 +49,15 @@ static int	ft_parse_token(char *str, int offset, t_token *token,
 	{
 		if (ft_is_operator(str + offset, index))
 		{
+			if (ft_is_encapsulator_end(index))
+				return (set_error((char *)__func__, SYNTAX), -1);
 			token[*token_count].op = index;
 			token[*token_count].op_precedence = precedences[index];
-			token[*token_count].value = str + offset;
+			token[*token_count].start = offset;
 			if (*token_count > 0)
-				token[(*token_count) - 1].next_token_index = offset;
-			(*token_count)++;
-			return (ft_strlen(operators[index]));
+				token[(*token_count) - 1].next = offset;
+			token[*(token_count)].end = -1;
+			return (find_endof_encapsulator(str, &token[(*token_count)++]));
 		}
 	}
 	return (1);
@@ -58,18 +74,21 @@ static void	swap_tokens(t_token *token, int index1, int index2)
 {
 	t_token	tmp;
 
-	tmp.next_token_index = token[index1].next_token_index;
 	tmp.op = token[index1].op;
 	tmp.op_precedence = token[index1].op_precedence;
-	tmp.value = token[index1].value;
-	token[index1].next_token_index = token[index2].next_token_index;
+	tmp.start = token[index1].start;
+	tmp.end = token[index1].end;
+	tmp.next = token[index1].next;
 	token[index1].op = token[index2].op;
 	token[index1].op_precedence = token[index2].op_precedence;
-	token[index1].value = token[index2].value;
-	token[index2].next_token_index = tmp.next_token_index;
+	token[index1].start = token[index2].start;
+	token[index1].end = token[index2].end;
+	token[index1].next = token[index2].next;
 	token[index2].op = tmp.op;
 	token[index2].op_precedence = tmp.op_precedence;
-	token[index2].value = tmp.value;
+	token[index2].start = tmp.start;
+	token[index2].end = tmp.end;
+	token[index2].next = tmp.next;
 }
 
 /**
@@ -105,6 +124,7 @@ t_token	*ft_tokenize(char *str, int *token_count)
 {
 	t_token	*token;
 	int		index;
+	int		offset;
 
 	token = malloc(ft_strlen(str) * sizeof(t_token));
 	if (!token)
@@ -112,8 +132,13 @@ t_token	*ft_tokenize(char *str, int *token_count)
 	*token_count = 0;
 	index = 0;
 	while (str[index])
-		index += ft_parse_token(str, index, token, token_count);
-	token[(*token_count) - 1].next_token_index = ft_strlen(str);
+	{
+		offset = ft_parse_token(str, index, token, token_count);
+		if (offset < 0)
+			return (NULL);
+		index += offset;
+	}
+	token[(*token_count) - 1].next = ft_strlen(str);
 	ft_sort_tokens(token, *token_count);
 	return (token);
 }

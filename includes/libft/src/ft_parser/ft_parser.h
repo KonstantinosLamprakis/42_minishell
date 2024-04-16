@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:18:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/16 11:38:47 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/16 15:06:22 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ typedef struct s_token
 {
 	t_operators	op;
 	int			op_precedence;
-	char		*value;
-	int			next_token_index;
+	int			start;
+	int			end;
+	int			next;
 }				t_token;
 
 typedef struct s_parser_utils
@@ -80,6 +81,15 @@ typedef struct s_parser_utils
 char			**get_operators(void);
 int				*get_precedence(void);
 int				ft_is_operator(char *str, t_operators op);
+int				ft_which_op(char *str);
 t_token			*ft_tokenize(char *str, int *token_count);
+
+int				ft_is_encapsulator_start(t_operators op);
+int				ft_is_encapsulator_end(t_operators op);
+int				ft_is_encapsulator(t_operators op);
+
+int				endof_paranthese(char *str, t_token *token);
+int				endof_cbrackets(char *str, t_token *token);
+int				endof_brackets(char *str, t_token *token);
 
 #endif

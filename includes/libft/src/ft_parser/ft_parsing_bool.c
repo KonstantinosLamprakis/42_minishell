@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error_caller.c                                  :+:      :+:    :+:   */
+/*   ft_parsing_bool.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 07:23:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/16 10:33:17 by lgreau           ###   ########.fr       */
+/*   Created: 2024/04/16 13:43:04 by lgreau            #+#    #+#             */
+/*   Updated: 2024/04/16 13:44:12 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_error.h"
+#include "ft_parser.h"
 
-char	**get_error_caller(void)
+int	ft_is_encapsulator_start(t_operators op)
 {
-	static char	*error_caller = "";
-
-	return (&error_caller);
+	return (op == L_PARANTHESE || op == L_CBRACKET || op == L_BRACKET);
 }
 
-void	set_error_caller(char *caller_name)
+int	ft_is_encapsulator_end(t_operators op)
 {
-	char	**error_caller;
+	return (op == R_PARANTHESE || op == R_CBRACKET || op == R_BRACKET);
+}
 
-	error_caller = get_error_caller();
-	*error_caller = caller_name;
+int	ft_is_encapsulator(t_operators op)
+{
+	return (ft_is_encapsulator_start(op) || ft_is_encapsulator_end(op));
 }

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:09:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/14 12:46:17 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/16 14:57:04 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	**get_strerror(void)
 	error_messages[BITMAP_MASK] = BITMAP_MASK_ERR;
 	error_messages[QUEUE_AT_CAPACITY] = QUEUE_AT_CAPACITY_ERR;
 	error_messages[QUEUE_EMPTY] = QUEUE_EMPTY_ERR;
+	error_messages[SYNTAX] = SYNTAX_ERR;
 	return (error_messages);
 }
 
