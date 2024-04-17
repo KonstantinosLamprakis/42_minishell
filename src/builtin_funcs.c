@@ -6,11 +6,11 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:50:56 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/16 18:24:37 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/17 08:01:59 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 /*
 	TODO:
@@ -28,37 +28,6 @@
 		- env should also print local vars that are exported
 		- consider local exported vars whenever we use env in other commands
  */
-
-/**
- * @brief same as execve but for custom built-in functions spesified by task
- * description
- *
- * @param pathname the name of the function ex. echo, cd, pwd, export,
- * unset, env, exit
- * @param argv name of the func and its arguments
- * @param envp enviroment variables
- * @return int, -1 on error, 0 on success
- */
-int	builtin_execve(const char *pathname, char *const argv[], char *const envp[])
-{
-	if (!pathname || !argv || !argv[0])
-		return (-1);
-	if (ft_strcmp(pathname, "echo") == 0)
-		return (b_echo(argv, envp));
-	else if (ft_strcmp(pathname, "cd") == 0)
-		return (b_echo(argv, envp));
-	else if (ft_strcmp(pathname, "pwd") == 0)
-		return (b_echo(argv, envp));
-	else if (ft_strcmp(pathname, "export") == 0)
-		return (b_echo(argv, envp));
-	else if (ft_strcmp(pathname, "unset") == 0)
-		return (b_echo(argv, envp));
-	else if (ft_strcmp(pathname, "env") == 0)
-		return (b_echo(argv, envp));
-	else if (ft_strcmp(pathname, "exit") == 0)
-		return (b_echo(argv, envp));
-	return (-1);
-}
 
 /**
  * @brief reproduce the behavior of echo with option -n
@@ -97,7 +66,7 @@ int b_echo(char *const argv[], char *const envp[])
  */
 int	b_cd(char *const argv[], char *const envp[])
 {
-	char	path;
+	char	*path;
 	int		i;
 
 	if (!argv[1])
@@ -137,7 +106,7 @@ int b_pwd(char *const argv[], char *const envp[])
  */
 int	b_export(char *const argv[], char *const envp[])
 {
-
+	return (0);
 }
 
 /**
@@ -171,7 +140,7 @@ int	b_env(char *const argv[], char *const envp[])
 	}
 	i = -1;
 	while (envp[++i])
-		printf("$s\n", envp[i]);
+		printf("%s\n", envp[i]);
 	return (0);
 }
 
@@ -228,4 +197,43 @@ static char	*get_env_value(char *const envp[], char *const key)
 		result[i++] = envp[k][found++];
 	result[i] = '\0';
 	return (result);
+}
+
+/**
+ * @brief same as execve but for custom built-in functions spesified by task
+ * description
+ *
+ * @param pathname the name of the function ex. echo, cd, pwd, export,
+ * unset, env, exit
+ * @param argv name of the func and its arguments
+ * @param envp enviroment variables
+ * @return int, -1 on error, 0 on success
+ */
+int	builtin_execve(const char *pathname, char *const argv[], char *const envp[])
+{
+	if (!pathname || !argv || !argv[0])
+		return (-1);
+	// printf("%s 1\n", pathname);
+	if (ft_strcmp(pathname, "echo") == 0)
+		return (b_echo(argv, envp));
+	else if (ft_strcmp(pathname, "cd") == 0)
+		return (b_cd(argv, envp));
+	else if (ft_strcmp(pathname, "pwd") == 0)
+		return (b_pwd(argv, envp));
+	else if (ft_strcmp(pathname, "export") == 0)
+		return (b_export(argv, envp));
+	else if (ft_strcmp(pathname, "unset") == 0)
+		return (b_unset(argv, envp));
+	else if (ft_strcmp(pathname, "env") == 0)
+		return (b_env(argv, envp));
+	else if (ft_strcmp(pathname, "exit") == 0)
+		return (b_exit(argv, envp));
+	// printf("2\n");
+	return (-1);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	argv++;
+	builtin_execve(argv[0], argv, envp);
 }
