@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:18:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/16 18:26:18 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/17 09:17:11 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,19 @@ typedef enum e_operators
 	R_REDIRECT,
 	L_DELIMITER,
 	R_APPEND,
+	OPERATOR_COUNT
+}					t_operators;
+
+typedef enum e_encapsulators
+{
 	L_PARANTHESE,
 	R_PARANTHESE,
 	L_CBRACKET,
 	R_CBRACKET,
 	L_BRACKET,
 	R_BRACKET,
-	OPERATOR_COUNT
-}				t_operators;
+	ENCAPSULATOR_COUNT
+}					t_encapsulators;
 
 # define AND_OP "&&"
 # define OR_OP "||"
@@ -43,52 +48,39 @@ typedef enum e_operators
 # define R_REDIRECT_OP ">"
 # define L_DELIMITER_OP "<<"
 # define R_APPEND_OP ">>"
-# define L_PARANTHESE_OP "("
-# define R_PARANTHESE_OP ")"
-# define L_CBRACKET_OP "{"
-# define R_CBRACKET_OP "}"
-# define L_BRACKET_OP "["
-# define R_BRACKET_OP "]"
 
-# define AND_PRE 3
-# define OR_PRE 3
-# define PIPE_PRE 4
-# define L_REDIRECT_PRE 1
-# define R_REDIRECT_PRE 5
-# define L_DELIMITER_PRE 1
-# define R_APPEND_PRE 5
-# define L_PARANTHESE_PRE 2
-# define R_PARANTHESE_PRE 2
-# define L_CBRACKET_PRE 2
-# define R_CBRACKET_PRE 2
-# define L_BRACKET_PRE 2
-# define R_BRACKET_PRE 2
+# define L_PARANTHESE_ENC "("
+# define R_PARANTHESE_ENC ")"
+# define L_CBRACKET_ENC "{"
+# define R_CBRACKET_ENC "}"
+# define L_BRACKET_ENC "["
+# define R_BRACKET_ENC "]"
 
 typedef struct s_token
 {
-	t_operators	op;
-	t_operators	current_op;
-	int			start;
-}				t_token;
+	t_operators		op;
+	t_encapsulators	enc;
+	int				start;
+	int				end;
+}					t_token;
 
 typedef struct s_parser_utils
 {
-	t_btree		*strings;
-}				t_parser_utils;
+	t_btree			*strings;
+}					t_parser_utils;
 
-void			ft_parse(char *str);
+void				ft_parse(char *str);
 
-char			**get_operators(void);
-int				*get_precedence(void);
-int				ft_is_operator(char *str, t_operators op);
-int				ft_which_op(char *str);
+char				**get_operators(void);
+char				**get_encapsulators(void);
+int					*get_lengths(void);
 
-int				ft_is_encapsulator_start(t_operators op);
-int				ft_is_encapsulator_end(t_operators op);
-int				ft_is_encapsulator(t_operators op);
+int					ft_is_operator(char *str, t_operators op);
+int					ft_which_op(char *str);
+int					ft_which_enc(char *str);
 
-int				endof_paranthese(char *str, int start);
-int				endof_cbrackets(char *str, int start);
-int				endof_brackets(char *str, int start);
+int					endof_paranthese(char *str, int start);
+int					endof_cbrackets(char *str, int start);
+int					endof_brackets(char *str, int start);
 
 #endif

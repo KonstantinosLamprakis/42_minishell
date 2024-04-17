@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/16 18:25:04 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/17 09:29:51 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,54 +17,53 @@
 		-
 */
 
-static int	skip_subtree(char *str, int start, t_operators op)
+static int	handle_found_encapsulator(t_token *token, char *str, int start,
+		t_encapsulators enc)
 {
-	if (op == L_PARANTHESE)
-		return (endof_paranthese(str, start));
-	if (op == L_CBRACKET)
-		return (endof_paranthese(str, start));
-	if (op == L_BRACKET)
-		return (endof_paranthese(str, start));
-	return (-1);
+	token->start = start;
+	token->enc = enc;
+	token->op = -1;
+	if (enc == L_PARANTHESE)
+		token->end = token->start + endof_paranthese(str, start);
+	if (enc == L_CBRACKET)
+		token->end = token->start + endof_cbrackets(str, start);
+	if (enc == L_BRACKET)
+		token->end = token->start + endof_brackets(str, start);
+	return (1);
 }
 
-static void	handle_found_token(char *str, t_token *token, int *index, int *max)
+static int	handle_found_operator(t_token *token, int index, t_operators op)
 {
-	int	*precedences;
-
-	precedences = get_precedence();
-	if (precedences[token->current_op] > *max)
-	{
-		token->start = *index;
-		token->op = token->current_op;
-		*max = precedences[token->op];
-	}
-	if (ft_is_encapsulator(token->current_op))
-		*index += skip_subtree(str, *index, token->current_op);
+	token->op = op;
+	token->enc = -1;
+	token->start = index;
+	return (1);
 }
 
-static int find_next_token(char *str, t_token *token)
+/**
+ * @brief Finds the next token, searchin for the biggest precedence and skipping
+ * encapsulations such as () {} or []
+ *
+ * @param str
+ * @param token to save the values in
+ * @return int whether a token has been found or not
+ */
+static int	find_next_token(char *str, t_token *token)
 {
-	int	*precedences;
 	int	index;
-	int	op;
-	int	max;
+	int	token_c;
 
-	precedences = get_precedence();
 	index = -1;
-	max = -1;
 	token->start = -1;
-	token->op = 0;
 	while (str[++index])
 	{
-		op = ft_which_op(str + index);
-		if (op >= 0)
-		{
-			token->current_op = op;
-			handle_found_token(str, token, &index, &max);
-			if (*get_errno() != 0)
-				return (-1);
-		}
+		token_c = ft_which_op(str + index);
+		if (token_c >= 0 && handle_found_operator(token, index, token_c))
+			break ;
+		token_c = ft_which_enc(str + index);
+		if (token_c >= 0 && handle_found_encapsulator(token, str, index,
+				token_c))
+			break ;
 	}
 	if (token->start < 0)
 		return (0);
@@ -76,17 +75,19 @@ static int find_next_token(char *str, t_token *token)
  * 	and using c as basic word separator
  *
  * @param str string to parse
- * @return char** parsed list of strings
  */
 void	ft_parse(char *str)
 {
-	// t_btree	*syntaxic_tree;
-	char	**operators;
-	char	*left;
-	char	*right;
+	int		*lengths;
+	// char	*left;
+	// char	*right;
 	t_token	token;
 
-	operators = get_operators();
+	char	**operators = get_operators();
+	char	**encapsulators = get_encapsulators();
+
+	// t_btree	*syntaxic_tree;
+	lengths = get_lengths();
 	token.start = -1;
 	token.op = -1;
 	printf("\n%s input: \"%s\"\n", (char *)__func__, str);
@@ -97,16 +98,10 @@ void	ft_parse(char *str)
 		else
 		{
 			printf("Next token is \"%s\"\n", str + token.start);
-			if (ft_is_encapsulator(token.op) && printf("todo: handle %s\n", operators[token.op]))
-				return ;
-			printf("token start = %d, %c\n", token.start, str[token.start]);
-			left = ft_substr(str, 0, token.start);
-			ft_parse(left);
-			free(left);
-			right = ft_substr(str, token.start + ft_strlen(operators[token.op]) + 1, ft_strlen(str) - token.start + ft_strlen(operators[token.op]) + 1);
-			// printf("|%s|\n", right);
-			ft_parse(right);
-			free(right);
+			if ((int)token.op >= 0)
+				printf("Operator found %d : %s.\n", token.op, operators[token.op]);
+			if ((int)token.enc >= 0)
+				printf("Encapsulator found %d : %s.\n", token.enc, encapsulators[token.enc]);
 		}
 	}
 }
