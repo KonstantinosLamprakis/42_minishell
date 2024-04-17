@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/17 09:29:51 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/17 10:38:17 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ void	ft_parse(char *str)
 		{
 			printf("Next token is \"%s\"\n", str + token.start);
 			if ((int)token.op >= 0)
+			{
 				printf("Operator found %d : %s.\n", token.op, operators[token.op]);
+
+			}
 			if ((int)token.enc >= 0)
 				printf("Encapsulator found %d : %s.\n", token.enc, encapsulators[token.enc]);
 		}

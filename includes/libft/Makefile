@@ -138,7 +138,8 @@ FT_QUEUE_SRCS =	ft_create_queue.c			\
 FT_QUEUE_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_QUEUE_SRCS}}
 
 FT_PARSER_SRCS =	ft_is_operator.c			\
-					ft_tokenize.c				\
+					ft_encapsulators.c			\
+					ft_parser.c					\
 					ft_operators.c
 FT_PARSER_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_PARSER_SRCS}}
 
@@ -160,8 +161,7 @@ OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 TOTAL_OBJS := $(words ${OBJS})
 
 PROGRESS_PERCENT := 0
-TOTAL_FINAL_LEN := 49
-FINAL_LEN := 40
+FINAL_LEN := 41
 PERCENT_PER_EQUAL_SIGN := ${shell echo "scale=2; 100 / ${FINAL_LEN}" | bc}
 PERCENT_PER_FILE := $(shell echo "scale=2; 100 / $(TOTAL_OBJS)" | bc)
 
@@ -170,7 +170,6 @@ all : build
 build : init_ascii ${NAME}
 
 ${NAME} : ${OBJS}
-	@make init_lib
 	@ar rcs ${NAME} ${OBJS}
 
 init_ascii :
@@ -232,54 +231,47 @@ define compile_with_progress_bar
 	fi
 endef
 
-${FT_CHAR_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_char/%.c
+${OBJ_DIR} :
+	@mkdir -p ${OBJ_DIR}
+
+${FT_CHAR_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_char/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_STRING_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_string/%.c
+${FT_STRING_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_string/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_MEMORY_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_memory/%.c
+${FT_MEMORY_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_memory/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_LINKED_LIST_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_linked_list/%.c
+${FT_LINKED_LIST_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_linked_list/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_CONVERSION_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_conversion/%.c
+${FT_CONVERSION_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_conversion/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_PUT_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_put/%.c
+${FT_PUT_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_put/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_PRINTF_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_printf/%.c
+${FT_PRINTF_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_printf/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_GET_NEXT_LINE_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_get_next_line/%.c
+${FT_GET_NEXT_LINE_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_get_next_line/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_ERROR_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_error/%.c
+${FT_ERROR_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_error/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_BITMAP_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_bitmap/%.c
+${FT_BITMAP_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_bitmap/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_BTREE_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_btree/%.c
+${FT_BTREE_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_btree/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_QUEUE_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_queue/%.c
+${FT_QUEUE_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_queue/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
 
-${FT_PARSER_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_parser/%.c
+${FT_PARSER_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ft_parser/%.c | ${OBJ_DIR}
 	@${compile_with_progress_bar}
-
-init_lib :
-	@printf "\n${AR_COLOR}Creating the library ${RESET_COLOR}"
-	@sleep 0.2
-	@printf "${AR_COLOR}. ${RESET_COLOR}"
-	@sleep 0.2
-	@printf "${AR_COLOR}. ${RESET_COLOR}"
-	@sleep 0.2
-	@echo "${AR_COLOR}.${RESET_COLOR}"
-	@sleep 0.2
 
 move_objs:
 	@for sub in ${SRC_SUB}; do \

@@ -4,3 +4,7 @@
 *dSYM*
 .vscode
 notes.txt
+*.o
+*.a
+minishell
+.DS_Store

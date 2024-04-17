@@ -7,21 +7,34 @@ SRC_DIR = src
 OBJ_DIR = obj
 INCLUDES_DIR = includes
 
-SRCS =
+SRCS =	main.c
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
-LIBFT = libft.a
+LIBFT_DIR = ${INCLUDES_DIR}/libft
+LIBFT = ${LIBFT_DIR}/libft.a
+INCLUDE_LIBFT = -L${LIBFT_DIR} -lft
 
 all : ${NAME}
 
-${NAME} : ${OBJS}
-	@ar rcs ${NAME} ${OBJS}
+${NAME} : ${OBJS} ${LIBFT}
+	@$(CC) $(CFLAGS) ${INCLUDE_LIBFT} ${OBJS} -o ${NAME}
+
+${OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c | ${OBJ_DIR}
+	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
+
+${OBJ_DIR} :
+	@mkdir -p ${OBJ_DIR}
+
+${LIBFT} :
+	@make -sC ${LIBFT_DIR} all
 
 clean :
 	@rm -f ${OBJS}
+	@make -sC ${LIBFT_DIR} clean
 
 fclean : clean
 	@rm -f ${NAME}
+	@make -sC ${LIBFT_DIR} fclean
 
 re : fclean all
 
