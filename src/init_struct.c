@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/17 11:15:08 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/17 14:23:11 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,7 @@ void	init_struct(t_program *program, char *envp)
 {
 	program->envp;
 	init_environment(program);
+	if (*get_errno() != 0)
+		return ;
+	program->opened_count = 0;
 }
