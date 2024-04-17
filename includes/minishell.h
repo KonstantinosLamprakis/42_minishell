@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/17 16:09:11 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/17 18:04:56 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_program
 
 //			STRUCT_RELATED
 
-void		init_struct(t_program *program, char *envp);
+void		init_struct(t_program *program, char **envp);
 void		clean_struct(t_program *program);
 
 

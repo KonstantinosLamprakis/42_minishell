@@ -9,7 +9,9 @@ INCLUDES_DIR = includes
 
 SRCS =	main.c					\
 		init_struct.c			\
-		quit_utils.c
+		quit_utils.c			\
+		left_redirection.c		\
+		ft_open.c
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
 LIBFT_DIR = ${INCLUDES_DIR}/libft
