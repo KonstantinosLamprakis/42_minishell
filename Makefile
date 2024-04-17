@@ -7,7 +7,9 @@ SRC_DIR = src
 OBJ_DIR = obj
 INCLUDES_DIR = includes
 
-SRCS =	main.c
+SRCS =	main.c					\
+		init_struct.c			\
+		quit_utils.c
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
 LIBFT_DIR = ${INCLUDES_DIR}/libft

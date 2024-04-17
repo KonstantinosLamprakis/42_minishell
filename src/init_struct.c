@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment.c                                      :+:      :+:    :+:   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 10:52:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/17 11:10:35 by lgreau           ###   ########.fr       */
+/*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
+/*   Updated: 2024/04/17 11:15:08 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,19 @@ static void	get_env_paths(t_program *program)
  *
  * @param program
  */
-void	init_environment(t_program *program)
+static void	init_environment(t_program *program)
 {
 	get_env_paths(program);
+}
+
+/**
+ * @brief Initializes the main program structure
+ *
+ * @param program
+ * @param envp
+ */
+void	init_struct(t_program *program, char *envp)
+{
+	program->envp;
+	init_environment(program);
 }
