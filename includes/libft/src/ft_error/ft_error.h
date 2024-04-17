@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:06:29 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/16 14:56:44 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/17 16:06:45 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,28 @@ typedef enum e_errno
 	INVALID_ARG,
 	ALLOC,
 	OPEN,
+	CLOSE,
 	READ,
 	WRONG_ERRNO,
 	BITMAP_MASK,
 	QUEUE_AT_CAPACITY,
 	QUEUE_EMPTY,
 	SYNTAX,
+	DUP,
 	ERR_COUNT
 }		t_errno;
 
 # define INVALID_ARG_ERR "Invalid argument: "
 # define ALLOC_ERR "Error allocating memory: "
 # define OPEN_ERR "Error opening a file: "
+# define CLOSE_ERR "Eroor closing a file: "
 # define READ_ERR "Error reading the file: "
 # define WRONG_ERRNO_ERR "Wrong error number: "
 # define BITMAP_MASK_ERR "Wrong number of bits to create the mask: "
 # define QUEUE_AT_CAPACITY_ERR "Queue is overpopulated: "
 # define QUEUE_EMPTY_ERR "Queue is empty: "
 # define SYNTAX_ERR "Syntax error: "
+# define DUP_ERR "Error dupliacting file descriptors: "
 
 int		*get_errno(void);
 void	set_errno(int err_value);
