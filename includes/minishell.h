@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 09:33:45 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/18 11:41:47 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int			ft_open(t_program *program, char *file_name, int flags, int mode);
 
 //			OPERATORS
 
+void		l_redirect_handler(void *arg);
 void		left_redirection(t_program *program, char *arg, char *left_arg);
 
 //			MISC.c
