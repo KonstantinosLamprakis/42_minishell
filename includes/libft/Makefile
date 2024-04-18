@@ -140,7 +140,8 @@ FT_QUEUE_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_QUEUE_SRCS}}
 FT_PARSER_SRCS =	ft_is_operator.c			\
 					ft_encapsulators.c			\
 					ft_parser.c					\
-					ft_operators.c
+					ft_operators.c				\
+					ft_handlers.c
 FT_PARSER_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_PARSER_SRCS}}
 
 

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 11:34:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/18 12:04:06 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	save_next(char *str, t_token *token)
  */
 void	ft_parse(char *str)
 {
-	t_token	token;
+	t_token				token;
 	t_operator_handler	*handlers;
 
 	/*	For printing purposes	*/
@@ -115,11 +115,12 @@ void	ft_parse(char *str)
 			printf("Next token is \"%s\"\n", str + token.start);
 			save_next(str, &token);
 			if (token.next_operator >= 0)
-				printf("And next starts @: %d\n%s", token.next_operator, str + token.next_operator);
+				printf("And next starts @: %d\n%s\n", token.next_operator, str + token.next_operator);
 			if ((int)token.op >= 0)
 			{
 				printf("Operator found %d : %s.\n", token.op,
 						operators[token.op]);
+				printf("Executing %d's handler\n", token.op);
 				handlers[token.op]((void *)&token);
 			}
 			if ((int)token.enc >= 0)
