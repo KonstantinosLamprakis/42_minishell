@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/17 11:15:19 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/18 10:35:01 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define MINISHELL_H
 
 # include "libft/libft.h"
+# include <unistd.h> // chdir, write, getcwd
+# include <stdlib.h> // getenv
+# include <stdio.h> // printf
 
 typedef struct s_program
 {

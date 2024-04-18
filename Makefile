@@ -1,15 +1,22 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+
+# CFLAGS = -Wall -Werror -Wextra
+
+CFLAGS =
 
 NAME = minishell
 
 SRC_DIR = src
+
 OBJ_DIR = obj
+
 INCLUDES_DIR = includes
 
 SRCS =	main.c					\
 		init_struct.c			\
-		quit_utils.c
+		quit_utils.c			\
+		builtin_funcs.c
+
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
 LIBFT_DIR = ${INCLUDES_DIR}/libft
