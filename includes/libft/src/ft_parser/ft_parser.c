@@ -6,16 +6,11 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/17 10:38:17 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/18 11:34:36 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_parser.h"
-
-/*	Flow:
-		- when a token is found, create a new btree_node
-		-
-*/
 
 static int	handle_found_encapsulator(t_token *token, char *str, int start,
 		t_encapsulators enc)
@@ -70,6 +65,23 @@ static int	find_next_token(char *str, t_token *token)
 	return (1);
 }
 
+static void	save_next(char *str, t_token *token)
+{
+	int	index;
+
+	index = token->start;
+	token->next_operator = -1;
+	while (str[++index])
+	{
+		if (ft_which_op(str + index) >= 0 || ft_which_enc(str
+					+ index) >= 0)
+		{
+			token->next_operator = index;
+			break ;
+		}
+	}
+}
+
 /**
  * @brief Parses str respecting operators such as '()' or '""'
  * 	and using c as basic word separator
@@ -78,18 +90,21 @@ static int	find_next_token(char *str, t_token *token)
  */
 void	ft_parse(char *str)
 {
-	int		*lengths;
-	// char	*left;
-	// char	*right;
 	t_token	token;
+	t_operator_handler	*handlers;
 
-	char	**operators = get_operators();
-	char	**encapsulators = get_encapsulators();
-
-	// t_btree	*syntaxic_tree;
+	/*	For printing purposes	*/
+	int		*lengths;
+	char	**operators;
+	char	**encapsulators;
+	operators = get_operators();
+	encapsulators = get_encapsulators();
 	lengths = get_lengths();
+
 	token.start = -1;
 	token.op = -1;
+	token.str = str;
+	handlers = get_handlers();
 	printf("\n%s input: \"%s\"\n", (char *)__func__, str);
 	if (find_next_token(str, &token) >= 0)
 	{
@@ -98,13 +113,18 @@ void	ft_parse(char *str)
 		else
 		{
 			printf("Next token is \"%s\"\n", str + token.start);
+			save_next(str, &token);
+			if (token.next_operator >= 0)
+				printf("And next starts @: %d\n%s", token.next_operator, str + token.next_operator);
 			if ((int)token.op >= 0)
 			{
-				printf("Operator found %d : %s.\n", token.op, operators[token.op]);
-
+				printf("Operator found %d : %s.\n", token.op,
+						operators[token.op]);
+				handlers[token.op]((void *)&token);
 			}
 			if ((int)token.enc >= 0)
-				printf("Encapsulator found %d : %s.\n", token.enc, encapsulators[token.enc]);
+				printf("Encapsulator found %d : %s.\n", token.enc,
+						encapsulators[token.enc]);
 		}
 	}
 }
