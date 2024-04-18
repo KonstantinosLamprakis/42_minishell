@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 09:09:43 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/18 10:35:48 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	save_std_fd(t_program *program)
 		program->std_fd[std] = dup(std);
 		if (program->std_fd[std] < 0)
 			return (set_error((char *)__func__, DUP));
+		program->opened_files[program->opened_count++] = std;
 	}
 }
 
@@ -80,9 +81,9 @@ static void	init_environment(t_program *program)
  */
 void	init_struct(t_program *program, char **envp)
 {
+	program->opened_count = 0;
 	program->envp = envp;
 	init_environment(program);
 	if (*get_errno() != 0)
 		return ;
-	program->opened_count = 0;
 }
