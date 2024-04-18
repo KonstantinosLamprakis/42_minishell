@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/17 18:04:56 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/18 08:55:15 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_program
 	int		status;
 	int		opened_files[OPEN_MAX];
 	int		opened_count;
+	int		std_fd[3];
 }				t_program;
 
 //			STRUCT_RELATED
