@@ -6,23 +6,26 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:50:56 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/17 08:01:59 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/18 11:16:47 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /*
-	TODO:
+	INFO:
 		- in case of echo without -n option, should be consider an error
-		or just do the normal echo?
+		or just do the normal echo? -> I did normal echo
 		- in case of cd, should I consider options like -L, also should I
-		consider if path is missing to take path from $HOME?
+		consider if path is missing to take path from $HOME? ->
+		didn't consider any options and also I implement the functionality
+		with $HOME
+
+	TODO:
 		- should I modify putstr to return -1 on error of the write function?
 		- exit() should clean fd and memory before exit
 		- what to do with unset? should be exported to environment variables
 		in order to access the local variables of the shell
-		- remove get_env_value()
 		- unset should have extra command to add assigment to local vars
 		implement the whole thing locally (export command and assigment)
 		- env should also print local vars that are exported
@@ -36,7 +39,7 @@
  * @param envp environment variables
  * @return int, 0 on success, -1 on error
  */
-int b_echo(char *const argv[], char *const envp[])
+int	b_echo(char *const argv[], char *const envp[])
 {
 	int	is_n;
 	int	i;
@@ -69,12 +72,13 @@ int	b_cd(char *const argv[], char *const envp[])
 	char	*path;
 	int		i;
 
-	if (!argv[1])
+	path = argv[1];
+	if (!path)
 	{
 		path = getenv("HOME");
 		if (!path)
 			return (-1);
-		return (chdir(path));
+		chdir(path);
 	}
 	return (chdir(argv[1]));
 }
@@ -86,7 +90,7 @@ int	b_cd(char *const argv[], char *const envp[])
  * @param envp environment variables
  * @return int, 0 on success, -1 on error
  */
-int b_pwd(char *const argv[], char *const envp[])
+int	b_pwd(char *const argv[], char *const envp[])
 {
 	char	s[261];
 
@@ -163,43 +167,6 @@ int	b_exit(char *const argv[], char *const envp[])
 }
 
 /**
- * @brief Get the value of the enviroment variable named key
- *
- * @param envp environment variables tables from main
- * @param key environment variable name ex. "HOME"
- * @return NULL if not find the value, otherwise the value
- * the value should be free after it used
- */
-static char	*get_env_value(char *const envp[], char *const key)
-{
-	int		i;
-	int		found;
-	int		k;
-	char	*result;
-
-	k = -1;
-	found = 0;
-	while (envp[++k] && !found)
-	{
-		i = 0;
-		while (envp[k][i] != '\0' && key[i] != '\0' && envp[k][i] == key[i])
-			i++;
-		found = (key[i] == '\0' && envp[k][i] == '=');
-	}
-	if (!found)
-		return (NULL);
-	found = i + 1;
-	result = malloc(ft_strlen(envp[--k] - found) + 1);
-	if (!result)
-		return (NULL);
-	i = 0;
-	while (envp[k][found] != '\0')
-		result[i++] = envp[k][found++];
-	result[i] = '\0';
-	return (result);
-}
-
-/**
  * @brief same as execve but for custom built-in functions spesified by task
  * description
  *
@@ -213,7 +180,6 @@ int	builtin_execve(const char *pathname, char *const argv[], char *const envp[])
 {
 	if (!pathname || !argv || !argv[0])
 		return (-1);
-	// printf("%s 1\n", pathname);
 	if (ft_strcmp(pathname, "echo") == 0)
 		return (b_echo(argv, envp));
 	else if (ft_strcmp(pathname, "cd") == 0)
@@ -228,7 +194,6 @@ int	builtin_execve(const char *pathname, char *const argv[], char *const envp[])
 		return (b_env(argv, envp));
 	else if (ft_strcmp(pathname, "exit") == 0)
 		return (b_exit(argv, envp));
-	// printf("2\n");
 	return (-1);
 }
 

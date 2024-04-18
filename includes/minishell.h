@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 10:36:48 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/18 11:22:33 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ typedef struct s_program
 }				t_program;
 
 //			INIT_STRUCT.c
+void		init_struct(t_program *program, char **envp);
 
-void		init_struct(t_program *program, char *envp);
+//			UTILS.c
+void		add_to_envp(char ***envp_ptr, char *new_var);
+static char	*get_env_value(char *const envp[], char *const key);
 
 //			QUIT_UTILS.c
 
