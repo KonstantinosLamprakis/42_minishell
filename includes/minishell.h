@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 11:55:34 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:20:26 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,18 @@ void		init_struct(t_program *program, char **envp);
 
 //			ENV_UTILS.c
 void		add_to_envp(char ***envp_ptr, char *new_var);
-char		*get_env_value(char *const envp[], char *const key);
-void		del_from_envp(char **envp, char *key)
+char		*get_env_value(char *envp[], char *const key);
+void		del_from_envp(char **envp, char *key);
+void		replace_envp_key(char ***envp, char *key, char *new_value);
+
+//			UTILS.c
+char		*ft_strjoin_3(char const *s1, char const *s2, char const *s3);
+
+
+//			BUILTIN_FUNCS.c
+int			builtin_execve(const char *pathname, char *const argv[], char *envp[]);
 
 //			QUIT_UTILS.c
-
 void		free_arr(void **arr, int is_alloc);
 
 #endif

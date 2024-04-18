@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = #-Wall -Werror -Wextra
 
 NAME = minishell
 
@@ -13,7 +13,9 @@ INCLUDES_DIR = includes
 SRCS =	main.c					\
 		init_struct.c			\
 		quit_utils.c			\
-		builtin_funcs.c
+		builtin_funcs.c			\
+		utils.c					\
+		env_utils.c
 
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 

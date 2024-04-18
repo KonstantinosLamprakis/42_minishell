@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:21:09 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/18 11:55:44 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:56:07 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	find_env(char **envp, char *key)
  * @return NULL if not find the value, otherwise the value
  * the value should be free after it used
  */
-char	*get_env_value(char *const envp[], char *const key)
+char	*get_env_value(char *envp[], char *const key)
 {
 	int		i;
 	int		found;
@@ -84,7 +84,7 @@ void	add_to_envp(char ***envp_ptr, char *new_var)
 	char	**envp;
 
 	if (!envp_ptr)
-		return (NULL);
+		return ;
 	envp = *envp_ptr;
 	if (!envp || !new_var)
 		return ;
@@ -111,7 +111,7 @@ void	add_to_envp(char ***envp_ptr, char *new_var)
  */
 void	del_from_envp(char **envp, char *key)
 {
-	int		i;
+	int	i;
 
 	if (!envp || !key)
 		return ;
@@ -125,4 +125,24 @@ void	del_from_envp(char **envp, char *key)
 		i++;
 	}
 	envp[i] = NULL;
+}
+
+/**
+ * @brief change a value of a key at env
+ *
+ * @param envp
+ * @param key the value that it will be changed ex. "HOME"
+ * @param new_value contains the new value not included "="
+ */
+void	replace_envp_key(char ***envp, char *key, char *new_value)
+{
+	int		i;
+	char	*temp;
+
+	if (!envp || !*envp || !key || !new_value)
+		return ;
+	del_from_envp(*envp, key);
+	temp = ft_strjoin_3(key, "=", new_value);
+	add_to_envp(envp, temp);
+	free(temp);
 }

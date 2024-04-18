@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 11:21:22 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:32:07 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	get_env_paths(t_program *program)
 	char	*line;
 	int		index;
 
-	tmp = ft_split(program->envp, '\n');
+	tmp = ft_split(program->envp[0], '\n');
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC));
 	line = NULL;
@@ -66,6 +66,7 @@ static void	init_environment(t_program *program)
 static void	create_envp(char ***new_envp, char **old_envp)
 {
 	int		i;
+	int		j;
 	char	**result;
 
 	if (!old_envp)
@@ -78,7 +79,18 @@ static void	create_envp(char ***new_envp, char **old_envp)
 		return (set_error((char *)__func__, ALLOC));
 	i = -1;
 	while (old_envp[++i])
-		result[i] = old_envp[i];
+	{
+		result[i] = malloc(sizeof(char) * (ft_strlen(old_envp[i]) + 1));
+		if (!result[i])
+		{
+			free(result);
+			return (set_error((char *)__func__, ALLOC));
+		}
+		j = -1;
+		while (old_envp[i][++j] != '\0')
+			result[i][j] = old_envp[i][j];
+		result[i][j] = '\0';
+	}
 	result[i] = NULL;
 	*new_envp = result;
 }
@@ -92,5 +104,5 @@ static void	create_envp(char ***new_envp, char **old_envp)
 void	init_struct(t_program *program, char **envp)
 {
 	create_envp(&(program->envp), envp);
-	init_environment(program);
+	//init_environment(program);
 }

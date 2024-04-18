@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:50:56 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/18 11:29:26 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:59:43 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@
 		with $HOME
 
 	TODO:
+		- implement cd to work with . and ..
+		- in order to free from signal you just call a function which contains
+		a static variable as pointer to the things you want to free. This pointer
+		initialized at the beggining
+		- env, var SHLVL
+			- -42 -> negative became "0"
+			- 42 -> number became number + 1 = 43
+			- "test" -> remains test
+		- export
+			- without args -> print env but sorted
+			- export abc+=" something here"
+			- if you do export test
+				- at export you will se test='' but at env you will not see the test at all
+		- use bash as referece -> just type bash at terminal
 		- should I modify putstr to return -1 on error of the write function?
 		- exit() should clean fd and memory before exit
 		- what to do with unset? should be exported to environment variables
@@ -39,7 +53,7 @@
  * @param envp environment variables
  * @return int, 0 on success, -1 on error
  */
-int	b_echo(char *const argv[], char *const envp[])
+int	b_echo(char *const argv[], char *envp[])
 {
 	int	is_n;
 	int	i;
@@ -62,35 +76,59 @@ int	b_echo(char *const argv[], char *const envp[])
 
 /**
  * @brief reproduce the behavior of cd with only a relative-absolute path
+ * no need to free the result of getenv
  *
  * @param argv a list like ["echo", "-n", "string1", "string2", NULL]
  * @param envp environment variables
  * @return int, 0 on success, -1 on error
  */
-int	b_cd(char *const argv[], char *const envp[])
+int	b_cd(char *const argv[], char *envp[])
 {
 	char	*path;
-	int		i;
+	char	*old_pwd;
+	int		is_rel;
 
 	path = argv[1];
-	if (!path)
+	is_rel = path && path[0] != '/';
+	if (!path || is_rel)
 	{
 		path = getenv("HOME");
 		if (!path)
 			return (-1);
 	}
-	chdir(path);
-	
+	if (is_rel)
+		path = ft_strjoin_3(path, "/", argv[1]);
+	if (chdir(path) == -1)
+	{
+		if (is_rel)
+			free(path);
+		printf ("Error moving to %s\n", path);
+		return (-1);
+	}
+	old_pwd = get_env_value(envp, "PWD");
+	if (!old_pwd)
+	{
+		if (is_rel)
+			free(path);
+		return (-1);
+	}
+	replace_envp_key(&envp, "OLDPWD", old_pwd);
+	free(old_pwd);
+	replace_envp_key(&envp, "PWD", path);
+	if (is_rel)
+		free(path);
+	return (0);
 }
 
 /**
  * @brief reproduce the behavior of pwd no options
+ * filename has max length of 260
  *
  * @param argv a list like ["echo", "-n", "string1", "string2", NULL]
  * @param envp environment variables
  * @return int, 0 on success, -1 on error
  */
-int	b_pwd(char *const argv[], char *const envp[])
+int	b_pwd(char *const argv[], char *envp[])
 {
 	char	s[261];
 
@@ -108,7 +146,7 @@ int	b_pwd(char *const argv[], char *const envp[])
  * @param envp environment variables
  * @return int, 0 on success, -1 on error
  */
-int	b_export(char *const argv[], char *const envp[])
+int	b_export(char *const argv[], char *envp[])
 {
 	return (0);
 }
@@ -120,7 +158,7 @@ int	b_export(char *const argv[], char *const envp[])
  * @param envp environment variables
  * @return int, 0 on success, -1 on error
  */
-int	b_unset(char *const argv[], char *const envp[])
+int	b_unset(char *const argv[], char *envp[])
 {
 	return (0);
 }
@@ -133,15 +171,15 @@ int	b_unset(char *const argv[], char *const envp[])
  * @param envp environment variables
  * @return int, 0 on success, -1 on error
  */
-int	b_env(char *const argv[], char *const envp[])
+int	b_env(char *const argv[], char *envp[])
 {
 	int		i;
 
-	if (argv[1])
-	{
-		printf("Error: env should not have any options / args\n");
-		return (-1);
-	}
+	// if (argv[1])
+	// {
+	// 	printf("Error: env should not have any options / args\n");
+	// 	return (-1);
+	// }
 	i = -1;
 	while (envp[++i])
 		printf("%s\n", envp[i]);
@@ -156,7 +194,7 @@ int	b_env(char *const argv[], char *const envp[])
  * @param envp environment variables
  * @return int, 0 on success, -1 on error
  */
-int	b_exit(char *const argv[], char *const envp[])
+int	b_exit(char *const argv[], char *envp[])
 {
 	if (argv[1])
 	{
@@ -176,7 +214,7 @@ int	b_exit(char *const argv[], char *const envp[])
  * @param envp enviroment variables
  * @return int, -1 on error, 0 on success
  */
-int	builtin_execve(const char *pathname, char *const argv[], char *const envp[])
+int	builtin_execve(const char *pathname, char *const argv[], char *envp[])
 {
 	if (!pathname || !argv || !argv[0])
 		return (-1);
@@ -195,10 +233,4 @@ int	builtin_execve(const char *pathname, char *const argv[], char *const envp[])
 	else if (ft_strcmp(pathname, "exit") == 0)
 		return (b_exit(argv, envp));
 	return (-1);
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	argv++;
-	builtin_execve(argv[0], argv, envp);
 }
