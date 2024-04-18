@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:50:56 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/18 11:27:04 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/18 11:29:26 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ int	b_cd(char *const argv[], char *const envp[])
 		path = getenv("HOME");
 		if (!path)
 			return (-1);
-		chdir(path);
 	}
-	return (chdir(argv[1]));
+	chdir(path);
+	
 }
 
 /**
