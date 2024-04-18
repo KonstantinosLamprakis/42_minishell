@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 09:04:30 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/18 10:34:09 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,25 @@
  */
 void	left_redirection(t_program *program, char *arg, char *left_arg)
 {
-	int	fd;
+	int	left_fd;
+	int	right_fd;
 
-	fd = ft_open(program , arg, O_RDONLY, -1);
-	if (fd < 0)
+	right_fd = ft_open(program , arg, O_RDONLY, -1);
+	if (right_fd < 0)
 		return (set_error((char *)__func__, OPEN));
-	if (!left_arg && printf("Redirecting %d to %d\n", fd, STDIN))
+	if (!left_arg)
 	{
-		if (dup2(fd, STDIN) < 0)
+		printf("Redirecting %d to %d\n", right_fd, STDIN);
+		if (dup2(right_fd, STDIN) < 0)
 			return (set_error((char *)__func__, DUP));
 	}
 	else
-		printf("TODO: handle non-null left argument.\n");
+	{
+		left_fd = ft_btoi(left_arg, "0123456789");
+		if (*get_errno() != 0)
+			return ;
+		printf("Redirecting %d to %d\n", right_fd, left_fd);
+		if (dup2(right_fd, left_fd) < 0)
+			return (set_error((char *)__func__, DUP));
+	}
 }
