@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 08:36:49 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 13:37:49 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 13:45:10 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	**get_operators(void)
 {
 	static char	*operators[OPERATOR_COUNT];
 
-	operators[NO_OPERATOR] = "";
 	operators[AND] = AND_OP;
 	operators[OR] = OR_OP;
 	operators[PIPE] = PIPE_OP;

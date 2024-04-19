@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:18:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 13:37:27 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 13:44:59 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef enum e_operators
 
 typedef enum e_encapsulators
 {
-	NO_OPERATOR,
 	L_PARANTHESE,
 	R_PARANTHESE,
 	L_CBRACKET,
