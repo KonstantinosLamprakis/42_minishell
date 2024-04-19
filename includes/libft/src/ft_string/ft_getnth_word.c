@@ -6,12 +6,11 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:44:37 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 13:27:01 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 13:39:01 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
-#include <stdio.h>
 
 /**
  * @brief Extracts the nth word from str, defining a word by is_sep

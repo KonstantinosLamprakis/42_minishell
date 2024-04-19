@@ -6,12 +6,11 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:08:59 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 10:20:12 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 13:39:39 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
-#include <stdio.h>
 
 /**
  * @brief Applies ft_substr and ft_strtrim_if to get a trimmed substring
