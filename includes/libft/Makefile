@@ -50,7 +50,8 @@ FT_STRING_SRCS =	ft_strlen.c					\
 					ft_isbase_valid.c			\
 					ft_strcmp.c					\
 					ft_strtrim_if.c				\
-					ft_substr_if.c
+					ft_substr_if.c				\
+					ft_strskip.c
 FT_STRING_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_STRING_SRCS}}
 
 FT_MEMORY_SRCS =	ft_memchr.c				\

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 07:31:47 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 10:12:24 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 11:34:48 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ int		ft_strcindex(const char *str, int c);
 void	ft_strsort(char *str);
 int		ft_isbase_valid(char *base, char *forbidden_char);
 int		ft_strcmp(const char *s1, const char *s2);
+
+char	*ft_strskip(char *str, int (*cmp)(int), int *is_eol);
 
 #endif
