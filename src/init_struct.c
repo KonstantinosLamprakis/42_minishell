@@ -6,11 +6,18 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 10:35:48 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 09:50:30 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_program	*get_program(void)
+{
+	static t_program	program;
+
+	return (&program);
+}
 
 /**
  * @brief Extracts the paths from the program environment
@@ -79,8 +86,11 @@ static void	init_environment(t_program *program)
  * @param program
  * @param envp
  */
-void	init_struct(t_program *program, char **envp)
+void	init_struct(char **envp)
 {
+	t_program *program;
+
+	program = get_program();
 	program->opened_count = 0;
 	program->envp = envp;
 	init_environment(program);
