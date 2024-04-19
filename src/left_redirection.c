@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 11:55:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 13:26:31 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@ int	l_redirect_handler(void *arg)
 	t_token	*token;
 	char	*left_arg;
 	char	*right_arg;
+	char	*tmp;
 
 	token = (t_token *)arg;
 	if (!token)
 		return (-1);
 	printf("%s: received token:\n", (char *)__func__);
+	printf("  |- string: %s\n", token->str);
+	printf("  |- start : %s\n", token->str + token->start);
 	left_arg = NULL;
 	if (token->start > 0)
 	{
@@ -35,14 +38,15 @@ int	l_redirect_handler(void *arg)
 			return (set_error((char *)__func__, ALLOC), -1);
 	}
 	printf("  |- left_arg  = %s\n", left_arg);
-	right_arg = ft_getnth_word(token->str + token->start + 1, 1, ft_iswspace, ft_iswspace);
-	// ft_substr_if(token->str, token->start + 1, token->next_operator
-	// 		- token->start - 1, ft_iswspace);
-	if (!right_arg)
+	tmp = ft_getnth_word(token->str + token->start + 1, 1, ft_iswspace, NULL);
+	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), -1);
+	right_arg = ft_strtrim_if(tmp, ft_iswspace);
+	if (!right_arg)
+		return (-1);
 	printf("  |- right_arg = %s\n", right_arg);
-	// left_redirection(right_arg, left_arg);
-	return (0);
+	left_redirection(right_arg, left_arg);
+	return (free(tmp), 1 + ft_strlen(right_arg) + 1);
 }
 
 /**
