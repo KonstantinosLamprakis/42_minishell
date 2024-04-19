@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 07:31:47 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 10:05:22 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 10:12:24 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strdup(const char *s1);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
+char	*ft_substr_if(char *str, int start, int len, int (*cmp)(int));
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoinline(char const *s1, char const *s2, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
