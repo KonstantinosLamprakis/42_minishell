@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 12:39:27 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 11:55:36 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,44 +17,50 @@
  *
  * @param arg t_token received from the parser
  */
-void	l_redirect_handler(void *arg)
+int	l_redirect_handler(void *arg)
 {
 	t_token	*token;
 	char	*left_arg;
 	char	*right_arg;
-	int		*lengths;
 
 	token = (t_token *)arg;
 	if (!token)
-		return ;
-	lengths = get_lengths();
+		return (-1);
 	printf("%s: received token:\n", (char *)__func__);
-	left_arg = ft_substr(token->str, 0, token->start - 1);
-	if (!left_arg)
-		return (set_error((char *)__func__, ALLOC));
+	left_arg = NULL;
+	if (token->start > 0)
+	{
+		left_arg = ft_substr_if(token->str, 0, token->start - 1, ft_iswspace);
+		if (!left_arg)
+			return (set_error((char *)__func__, ALLOC), -1);
+	}
 	printf("  |- left_arg  = %s\n", left_arg);
-	right_arg = ft_substr(token->str, token->start + lengths[token->op], token->next_operator - token->start - lengths[token->op]);
+	right_arg = ft_getnth_word(token->str + token->start + 1, 1, ft_iswspace, ft_iswspace);
+	// ft_substr_if(token->str, token->start + 1, token->next_operator
+	// 		- token->start - 1, ft_iswspace);
 	if (!right_arg)
-		return (set_error((char *)__func__, ALLOC));
+		return (set_error((char *)__func__, ALLOC), -1);
 	printf("  |- right_arg = %s\n", right_arg);
+	// left_redirection(right_arg, left_arg);
+	return (0);
 }
 
 /**
  * @brief Redirect arg's file descriptor to stdin
  * if nothing is before the redirection or the file in fornt if there's one
  *
- * @param program structure with all the informations
  * @param arg openable filename expected
  * @param left_arg optionnal (= NULL) left part of the redirection
  */
-void	left_redirection(t_program *program, char *arg, char *left_arg)
+void	left_redirection(char *arg, char *left_arg)
 {
 	int	left_fd;
 	int	right_fd;
 
-	right_fd = ft_open(program , arg, O_RDONLY, -1);
+	right_fd = ft_open(arg, O_RDONLY, -1);
 	if (right_fd < 0)
-		return (set_error((char *)__func__, OPEN));
+		return (printf("Tried to open: |%s|\n", arg),
+			set_error((char *)__func__, OPEN));
 	if (!left_arg)
 	{
 		printf("Redirecting %d to %d\n", right_fd, STDIN);
