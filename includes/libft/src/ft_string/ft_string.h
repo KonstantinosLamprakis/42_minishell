@@ -6,13 +6,14 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 07:31:47 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/14 14:47:44 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 10:05:22 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_STRING_H
 # define FT_STRING_H
 
+# include "../ft_error/ft_error.h"
 # include "../ft_memory/ft_memory.h" // ft_memcpy
 # include "../ft_char/ft_char.h" // ft_isinbase
 
@@ -32,6 +33,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoinline(char const *s1, char const *s2, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_strstrim(char const *s1, char sep);
+char	*ft_strtrim_if(char *str, int (*cmp)(int));
 char	**ft_split(char const *s, char c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
