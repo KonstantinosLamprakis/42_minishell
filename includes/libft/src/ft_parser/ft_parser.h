@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:18:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 12:03:55 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 11:37:01 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "../ft_error/ft_error.h"
 # include "../ft_string/ft_string.h"
 
-typedef void	(*t_operator_handler)(void *);
+typedef int	(*t_operator_handler)(void *);
 
 typedef enum e_operators
 {

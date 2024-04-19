@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 12:04:06 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/19 13:23:05 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,9 @@ void	ft_parse(char *str)
 				printf("Operator found %d : %s.\n", token.op,
 						operators[token.op]);
 				printf("Executing %d's handler\n", token.op);
-				handlers[token.op]((void *)&token);
+				int	tmp = handlers[token.op]((void *)&token);
+				printf("Parser must skip %d char.\n", tmp);
+				printf("Starting next iteration from %s\n", str + tmp);
 			}
 			if ((int)token.enc >= 0)
 				printf("Encapsulator found %d : %s.\n", token.enc,
