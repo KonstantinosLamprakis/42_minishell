@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/17 11:15:08 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/22 16:17:10 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,41 @@ static void	init_environment(t_program *program)
 }
 
 /**
+ * @brief copy everything from old_envp to new_envp
+ *
+ * @param new_envp pointer to new envp
+ * @param old_envp old envp that we will copy to the new one
+ */
+static void	create_envp(char ***new_envp, char **old_envp)
+{
+	int		i;
+	int		j;
+	char	**result;
+
+	if (!old_envp)
+		return ;
+	i = 0;
+	while (old_envp[i])
+		i++;
+	result = malloc((i + 1) * sizeof(char *));
+	if (!result)
+		return (set_error((char *)__func__, ALLOC));
+	i = -1;
+	while (old_envp[++i])
+	{
+		result[i] = malloc(sizeof(char) * (ft_strlen(old_envp[i]) + 1));
+		if (!result[i])
+			return (free(result), set_error((char *)__func__, ALLOC));
+		j = -1;
+		while (old_envp[i][++j] != '\0')
+			result[i][j] = old_envp[i][j];
+		result[i][j] = '\0';
+	}
+	result[i] = NULL;
+	*new_envp = result;
+}
+
+/**
  * @brief Initializes the main program structure
  *
  * @param program
@@ -65,6 +100,6 @@ static void	init_environment(t_program *program)
  */
 void	init_struct(t_program *program, char *envp)
 {
-	program->envp;
+	create_envp(&(program->envp), envp);
 	init_environment(program);
 }
