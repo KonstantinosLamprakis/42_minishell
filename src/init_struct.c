@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 12:32:07 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 09:52:22 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,7 @@ static void	create_envp(char ***new_envp, char **old_envp)
 	{
 		result[i] = malloc(sizeof(char) * (ft_strlen(old_envp[i]) + 1));
 		if (!result[i])
-		{
-			free(result);
-			return (set_error((char *)__func__, ALLOC));
-		}
+			return (free(result), set_error((char *)__func__, ALLOC));
 		j = -1;
 		while (old_envp[i][++j] != '\0')
 			result[i][j] = old_envp[i][j];

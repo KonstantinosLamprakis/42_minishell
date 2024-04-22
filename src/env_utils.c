@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:21:09 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/18 13:56:07 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 09:50:15 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,19 @@ char	*get_env_value(char *envp[], char *const key)
  *
  * @param envp_ptr pointer to the env which will be updated, should be freeable
  * @param new_var is the new value we add at the end
+ * @param pos if is negative or grater than size of envp then the new_var puted
+ * on last position otherwise it puted on position pos and everythink else shifted
+ * to the right after that
  */
-void	add_to_envp(char ***envp_ptr, char *new_var)
+void	add_to_envp(char ***envp_ptr, char *new_var, int pos)
 {
 	int		i;
 	char	**result;
 	char	**envp;
 
-	if (!envp_ptr)
+	if (!envp_ptr || !*envp_ptr || !new_var)
 		return ;
 	envp = *envp_ptr;
-	if (!envp || !new_var)
-		return ;
 	i = 0;
 	while (envp[i])
 		i++;
@@ -96,9 +97,13 @@ void	add_to_envp(char ***envp_ptr, char *new_var)
 		return (set_error((char *)__func__, ALLOC));
 	i = -1;
 	while (envp[++i])
-		result[i] = envp[i];
-	result[i++] = ft_strdup(new_var);
-	result[i] = NULL;
+		result[i] = envp[i - ((i > pos) && pos >= 0)];
+	result[i] = envp[i - 1];
+	if (pos > i || pos < 0)
+		result[i] = ft_strdup(new_var);
+	else if (pos >= 0)
+		result[pos] = ft_strdup(new_var);
+	result[++i] = NULL;
 	free(envp);
 	*envp_ptr = result;
 }
@@ -108,16 +113,19 @@ void	add_to_envp(char ***envp_ptr, char *new_var)
  *
  * @param envp
  * @param key the value that it will be delteted ex. "HOME"
+ * @return returns the position of the deleted element or -1 if not found
  */
-void	del_from_envp(char **envp, char *key)
+int	del_from_envp(char **envp, char *key)
 {
 	int	i;
+	int	pos;
 
 	if (!envp || !key)
-		return ;
-	i = find_env(envp, key);
-	if (i == -1)
-		return ;
+		return -1;
+	pos = find_env(envp, key);
+	if (pos == -1)
+		return (-1);
+	i = pos;
 	free(envp[i]);
 	while (envp[i + 1])
 	{
@@ -125,6 +133,7 @@ void	del_from_envp(char **envp, char *key)
 		i++;
 	}
 	envp[i] = NULL;
+	return (pos);
 }
 
 /**
@@ -141,8 +150,7 @@ void	replace_envp_key(char ***envp, char *key, char *new_value)
 
 	if (!envp || !*envp || !key || !new_value)
 		return ;
-	del_from_envp(*envp, key);
 	temp = ft_strjoin_3(key, "=", new_value);
-	add_to_envp(envp, temp);
+	add_to_envp(envp, temp, del_from_envp(*envp, key));
 	free(temp);
 }
