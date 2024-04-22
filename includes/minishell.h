@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 17:16:35 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 09:56:44 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,18 @@ void		replace_envp_key(char ***envp, char *key, char *new_value);
 
 //			UTILS.c
 char		*ft_strjoin_3(char const *s1, char const *s2, char const *s3);
-
+int			builtin_execve(const char *pathname, char *const argv[], char *envp[]);
 
 //			BUILTIN_FUNCS.c
-int			builtin_execve(const char *pathname, char *const argv[], char *envp[]);
+int			b_echo(char *const argv[], char *envp[]);
+int			b_cd(char *const argv[], char *envp[]);
+int			b_pwd(char *const argv[], char *envp[]);
+int			b_exit(char *const argv[], char *envp[]);
+
+//			BUILTIN_FUNCS_ENV.c
+int			b_export(char *const argv[], char *envp[]);
+int			b_unset(char *const argv[], char *envp[]);
+int			b_env(char *const argv[], char *envp[]);
 
 //			QUIT_UTILS.c
 void		free_arr(void **arr, int is_alloc);

@@ -14,6 +14,7 @@ SRCS =	main.c					\
 		init_struct.c			\
 		quit_utils.c			\
 		builtin_funcs.c			\
+		builtin_funcs_env.c		\
 		utils.c					\
 		env_utils.c
 
