@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:50:56 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/22 09:57:34 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:31:28 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 		implement the whole thing locally (export command and assigment)
 		- env should also print local vars that are exported
 		- consider local exported vars whenever we use env in other commands
+		- add null check at strdup, strcmp, strjoin, putstr, strlen, substr
  */
 
 /**
@@ -72,117 +73,6 @@ int	b_echo(char *const argv[], char *envp[])
 	if (!is_n)
 		if (write(1, "\n", 1) == -1)
 			return (-1);
-	return (0);
-}
-
-/**
- * @brief takes envp and find current folder from PWD variable, then
- * returns the parrent folder as string
- *
- * @param envp
- * @return char* should be freed after use, it is allocated
- */
-char	*get_parrent_folder(char **envp)
-{
-	char	*pwd;
-	int		i;
-	char	*result;
-
-	pwd = get_env_value(envp ,"PWD");
-	if (!pwd)
-		return (NULL);
-	i = ft_strlen(pwd) - 1;
-	while (i >= 0 && pwd[i] != '/')
-		i--;
-	if (pwd[i] == '/')
-		result = ft_substr(pwd, 0, i);
-	free(pwd);
-	return (result);
-}
-
-/**
- * @brief create new string after trim all . or ./ from path
- * it is allocated and should be freed
- *
- * @param path
- * @return char* path after trim - handle all . means current folder
- */
-// should trim ./ from beggining, /. from end and /./ from middle
-char	*handle_dot(char *path, char **envp)
-{
-	int	i;
-	int	mask[256];
-	int	flag;
-	int	len;
-
-	// case len <= 3
-	i = -1;
-	while (++i < 256)
-		mask[i] = 0;
-	if (!ft_strcmp(path, ".") || !ft_strcmp(path, "./"))
-		return (get_env_value(envp, "PWD"));
-	mask[0] = (path[0] == '.' && path[1] == '/');
-	mask[1] = (path[0] == '.' && path[1] == '/');
-	i = 0;
-	while (path[++i + 2] != '\0')
-	{
-		flag = (path[i] == '/' && path[i + 1] == '.' && path[i + 2] == '/');
-		mask[i] += flag;
-		mask[i + 1] += flag;
-		mask[i + 2] += flag;
-	}
-	len = ft_strlen(path);
-	mask[len - 1] += (path[len - 1] == '.' && path[len - 2] == '/');
-	mask[len - 2] += (path[len - 1] == '.' && path[len - 2] == '/');
-}
-
-/**
- * @brief reproduce the behavior of cd with only a relative-absolute path
- * no need to free the result of getenv
- *
- * @param argv a list like ["echo", "-n", "string1", "string2", NULL]
- * @param envp environment variables
- * @return int, 0 on success, -1 on error
- */
-int	b_cd(char *const argv[], char *envp[])
-{
-	char	*path;
-	char	*old_pwd;
-	int		is_rel;
-
-	path = argv[1];
-	if (argv[1][0] == '.' && (argv[1][1] == '\0' || (argv[1][1] == '/') && argv[1][2] == '\0'))
-		return (0);
-	else if (ft_strcmp(argv[1], "..") == 0)
-		path = get_parrent_folder(envp);
-	is_rel = path && path[0] != '/';
-	if (!path || is_rel)
-	{
-		path = getenv("HOME");
-		if (!path)
-			return (-1);
-	}
-	if (is_rel)
-		path = ft_strjoin_3(path, "/", argv[1]);
-	if (chdir(path) == -1)
-	{
-		if (is_rel || ft_strcmp(argv[1], "..") == 0)
-			free(path);
-		printf ("Error moving to %s\n", path);
-		return (-1);
-	}
-	old_pwd = get_env_value(envp, "PWD");
-	if (!old_pwd)
-	{
-		if (is_rel || ft_strcmp(argv[1], "..") == 0)
-			free(path);
-		return (-1);
-	}
-	replace_envp_key(&envp, "OLDPWD", old_pwd);
-	free(old_pwd);
-	replace_envp_key(&envp, "PWD", path);
-	if (is_rel  || ft_strcmp(argv[1], "..") == 0)
-		free(path);
 	return (0);
 }
 

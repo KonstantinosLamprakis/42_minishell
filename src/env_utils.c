@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:21:09 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/22 09:50:15 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:24:52 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,17 @@ static int	find_env(char **envp, char *key)
  *
  * @param envp environment variables tables from main
  * @param key environment variable name ex. "HOME"
+ * @param suffix optional, if its not NULL, it is added at the result
  * @return NULL if not find the value, otherwise the value
  * the value should be free after it used
  */
-char	*get_env_value(char *envp[], char *const key)
+char	*get_env_value(char *envp[], char *const key, char *suffix)
 {
 	int		i;
 	int		found;
 	int		k;
 	char	*result;
+	char	*temp;
 
 	k = find_env(envp, key);
 	if (k == -1)
@@ -67,6 +69,11 @@ char	*get_env_value(char *envp[], char *const key)
 	while (envp[k][found] != '\0')
 		result[i++] = envp[k][found++];
 	result[i] = '\0';
+	if (!suffix)
+		return (result);
+	temp = result;
+	result = ft_strjoin(temp, suffix);
+	free(temp);
 	return (result);
 }
 

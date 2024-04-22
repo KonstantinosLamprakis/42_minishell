@@ -6,10 +6,11 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 09:54:37 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/22 09:57:10 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:31:24 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/minishell.h"
 
 /**
  * @brief reproduce the behavior of export with no options

@@ -13,6 +13,7 @@ INCLUDES_DIR = includes
 SRCS =	main.c					\
 		init_struct.c			\
 		quit_utils.c			\
+		b_cd.c					\
 		builtin_funcs.c			\
 		builtin_funcs_env.c		\
 		utils.c					\
