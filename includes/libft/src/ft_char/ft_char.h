@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_char.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 07:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/09 12:35:40 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/22 17:27:43 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 # define FT_CHAR_H
 
 # include "../ft_string/ft_string.h" // ft_strchr
-
-# define SPACE 32
+# ifndef SPACE
+#  define SPACE 32
+# endif
 
 int	ft_islower(int c);
 int	ft_isupper(int c);

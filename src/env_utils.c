@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:21:09 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/22 16:15:19 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:04:36 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int	find_env(char **envp, char *key)
 	int		i;
 	int		found;
 	int		k;
-	char	*result;
 
 	k = -1;
 	found = 0;
@@ -154,7 +153,6 @@ int	del_from_envp(char **envp, char *key)
  */
 void	replace_envp_key(char ***envp, char *key, char *new_value)
 {
-	int		i;
 	char	*temp;
 
 	if (!envp || !*envp || !key || !new_value)

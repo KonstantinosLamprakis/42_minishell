@@ -10,6 +10,7 @@ INCLUDES_DIR = includes
 SRCS =	main.c					\
 		init_struct.c			\
 		env_utils.c				\
+		utils.c					\
 		quit_utils.c
 
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
@@ -21,7 +22,7 @@ INCLUDE_LIBFT = -L${LIBFT_DIR} -lft
 all : ${NAME}
 
 ${NAME} : ${OBJS} ${LIBFT}
-	@$(CC) $(CFLAGS) ${INCLUDE_LIBFT} ${OBJS} -o ${NAME}
+	@$(CC) $(CFLAGS) ${INCLUDE_LIBFT} ${OBJS} -o ${NAME} -lreadline
 
 ${OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c | ${OBJ_DIR}
 	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/22 16:17:10 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:29:15 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	get_env_paths(t_program *program)
 	char	*line;
 	int		index;
 
-	tmp = ft_split(program->envp, '\n');
+	tmp = ft_split((const char *)program->envp, '\n');
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC));
 	line = NULL;
@@ -98,8 +98,8 @@ static void	create_envp(char ***new_envp, char **old_envp)
  * @param program
  * @param envp
  */
-void	init_struct(t_program *program, char *envp)
+void	init_struct(t_program *program, char **envp)
 {
 	create_envp(&(program->envp), envp);
-	init_environment(program);
+	// init_environment(program);
 }
