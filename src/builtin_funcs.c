@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:50:56 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/22 15:31:28 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:36:08 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@
 		with $HOME
 
 	TODO:
-		- echo -nnnnnn, echo -n -n -n echo test > out1 > out2, creates out1 and out2 but writes test only at out2
+		- echo -nnnnnn, echo -n -n -n echo test > out1 > out2, creates out1
+		and out2 but writes test only at out2
 		- implement cd to work with . and ..
 		- in order to free from signal you just call a function which contains
-		a static variable as pointer to the things you want to free. This pointer
-		initialized at the beggining
+		a static variable as pointer to the things you want to free.
+		This pointer initialized at the beggining
 		- env, var SHLVL
 			- -42 -> negative became "0"
 			- 42 -> number became number + 1 = 43
@@ -35,7 +36,8 @@
 			- without args -> print env but sorted
 			- export abc+=" something here"
 			- if you do export test
-				- at export you will se test='' but at env you will not see the test at all
+				- at export you will se test='' but at env you will not
+				see the test at all
 		- use bash as referece -> just type bash at terminal
 		- should I modify putstr to return -1 on error of the write function?
 		- exit() should clean fd and memory before exit

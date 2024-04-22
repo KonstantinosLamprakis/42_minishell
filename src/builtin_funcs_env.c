@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 09:54:37 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/22 15:31:24 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:36:32 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	b_unset(char *const argv[], char *envp[])
 	return (0);
 }
 
-
 /**
  * @brief reproduce the behavior of env with no options or arguments
  *
@@ -46,13 +45,13 @@ int	b_unset(char *const argv[], char *envp[])
  */
 int	b_env(char *const argv[], char *envp[])
 {
-	int		i;
+	int	i;
 
-	// if (argv[1])
-	// {
-	// 	printf("Error: env should not have any options / args\n");
-	// 	return (-1);
-	// }
+	if (argv[1])
+	{
+		printf("Error: env should not have any options / args\n");
+		return (-1);
+	}
 	i = -1;
 	while (envp[++i])
 		printf("%s\n", envp[i]);

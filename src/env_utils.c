@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:21:09 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/22 11:24:52 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:37:51 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,16 @@ char	*get_env_value(char *envp[], char *const key, char *suffix)
 }
 
 /**
- * @brief Create a new envp, copy everything from old one and then add new_var
- * at the end. Finally free old_envp and update the pointer to point the new one.
+ * @brief Create a new envp, copy everything from old one and
+ * then add new_var * at the end.
+ * Finally free old_envp and update the pointer to point the new one.
  *
- * @param envp_ptr pointer to the env which will be updated, should be freeable
+ * @param envp_ptr pointer to the env which will be updated,
+ * should be freeable
  * @param new_var is the new value we add at the end
- * @param pos if is negative or grater than size of envp then the new_var puted
- * on last position otherwise it puted on position pos and everythink else shifted
- * to the right after that
+ * @param pos if is negative or grater than size of envp then
+ * the new_var puted on last position otherwise it puted on position pos
+ * and everythink else shifted to the right after that
  */
 void	add_to_envp(char ***envp_ptr, char *new_var, int pos)
 {
@@ -128,7 +130,7 @@ int	del_from_envp(char **envp, char *key)
 	int	pos;
 
 	if (!envp || !key)
-		return -1;
+		return (-1);
 	pos = find_env(envp, key);
 	if (pos == -1)
 		return (-1);

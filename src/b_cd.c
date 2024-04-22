@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/22 15:31:21 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:35:42 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ static char	*remove_2_dots(char *path, int index)
 	start = index - 1;
 	while (start > 0 && path[start] != '/')
 		start--;
-	result = malloc((ft_strlen(path) - (path[index + 3] == '/') - 1 - ((index - start - 1)* (start != -1))) * sizeof(char));
+	result = malloc((ft_strlen(path) - (path[index + 3] == '/') \
+	- 1 - ((index - start - 1) * (start != -1))) * sizeof(char));
 	if (!result)
 		return (NULL);
 	i = -1;
@@ -131,7 +132,7 @@ static char	*remove_2_dots(char *path, int index)
 	while (path[++i] != '\0')
 	{
 		if (i > start && i <= index + 2 && i != 0)
-			continue;
+			continue ;
 		if (i == index + 3 && path[i] == '/')
 			continue ;
 		result[j++] = path[i];
@@ -154,7 +155,8 @@ static char	*remove_dot(char *path, int index)
 	int		j;
 	char	*result;
 
-	result = malloc((ft_strlen(path) - (path[index + 1] == '/')) * sizeof(char));
+	result = malloc((ft_strlen(path) - (path[index + 1] == '/')) \
+	* sizeof(char));
 	if (!result)
 		return (NULL);
 	i = -1;
