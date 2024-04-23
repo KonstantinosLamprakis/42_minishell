@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:03 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 16:38:14 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:12:55 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	b_exit(char *const argv[], char *envp[])
 		status = get_status(argv[1]);
 	else
 		status = 0;
-	// TODO free everything
+	clean_struct();
 	exit(status);
 }
 
@@ -67,7 +67,7 @@ static int	get_status(char *status_str)
 	if (status_str[i] != '\0')
 	{
 		printf("exit: %s: numeric argument required\n", status_str);
-		// TODO status = same as the last command executed
+		status = get_program()->status;
 	}
 	else
 	{
