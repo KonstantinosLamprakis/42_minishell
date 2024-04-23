@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 17:40:57 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:17:46 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,10 @@ void	init_struct(char **envp)
 	create_envp(&(program->envp), envp);
 	program->opened_count = 0;
 	// program->envp = envp;
-	program->exp_v = NULL;
-	program->loc_v = NULL;
+	program->exp_v = malloc(1 * sizeof(char *));
+	program->exp_v[0] = NULL;
+	program->loc_v = malloc(1 * sizeof(char *));
+	program->loc_v[0] = NULL;
 	program->status = 0;
 	init_environment(program);
 	if (*get_errno() != 0)

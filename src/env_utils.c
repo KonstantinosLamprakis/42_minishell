@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:21:09 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 20:54:02 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:16:17 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ static int	find_env(char **envp, char *key)
  * @param envp environment variables tables from main
  * @param key environment variable name ex. "HOME"
  * @param suffix optional, if its not NULL, it is added at the result
- * @return NULL if not find the value, otherwise the value
- * the value should be free after it used
+ * @return NULL if not find the value, or the value is just KEY and no
+ * KEY=VALUE, otherwise the value
+ * The value should be free after it used
  */
 char	*get_env_value(char *envp[], char *const key, char *suffix)
 {
@@ -60,7 +61,7 @@ char	*get_env_value(char *envp[], char *const key, char *suffix)
 	char	*temp;
 
 	k = find_env(envp, key);
-	if (k == -1)
+	if (k == -1 || envp[k][ft_strlen(key) + 1] != '=')
 		return (NULL);
 	found = ft_strlen(key) + 1;
 	result = malloc((ft_strlen(envp[k]) - found + 1) * sizeof(char));
@@ -85,6 +86,7 @@ char	*get_env_value(char *envp[], char *const key, char *suffix)
  *
  * @param envp_ptr pointer to the env which will be updated,
  * should be freeable
+ * envp could be either envp array, local_v or exported variables array
  * @param new_var is the new value we add at the end
  * @param pos if is negative or grater than size of envp then
  * the new_var puted on last position otherwise it puted on position pos
@@ -108,7 +110,8 @@ void	add_to_envp(char ***envp_ptr, char *new_var, int pos)
 	i = -1;
 	while (envp[++i])
 		result[i] = envp[i - ((i > pos) && pos >= 0)];
-	result[i] = envp[i - 1];
+	if (i > 0)
+		result[i] = envp[i - 1];
 	if (pos > i || pos < 0)
 		result[i] = ft_strdup(new_var);
 	else if (pos >= 0)
