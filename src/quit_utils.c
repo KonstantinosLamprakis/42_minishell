@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:00:08 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/17 11:05:08 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/23 14:34:11 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param arr
  * @param is_alloc whether or not arr is allocated
  */
-void	free_arr(void **arr, int is_alloc)
+void	free_arr(char **arr, int is_alloc)
 {
 	if (arr)
 		while (*arr)
