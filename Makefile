@@ -14,8 +14,12 @@ SRCS =	main.c					\
 		init_struct.c			\
 		quit_utils.c			\
 		b_cd.c					\
-		builtin_funcs.c			\
-		builtin_funcs_env.c		\
+		b_echo.c				\
+		b_env.c					\
+		b_exit.c				\
+		b_export.c				\
+		b_pwd.c					\
+		b_unset.c				\
 		utils.c					\
 		env_utils.c
 

@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   b_export.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 13:47:58 by klamprak         ###   ########.fr       */
+/*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
+/*   Updated: 2024/04/23 13:47:08 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char *argv[], char *envp[])
+/**
+ * @brief reproduce the behavior of export with no options
+ *
+ * @param argv a list like ["echo", "-n", "string1", "string2", NULL]
+ * @param envp environment variables
+ * @return int, 0 on success, -1 on error
+ */
+int	b_export(char *const argv[], char *envp[])
 {
-	t_program	program;
-
-	init_struct(&program, envp);
-	builtin_execve(argv[1], argv + 1, program.envp);
-	// builtin_execve("env", argv + 1, program.envp);
+	return (0);
 }
