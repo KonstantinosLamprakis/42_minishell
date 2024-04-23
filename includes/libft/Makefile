@@ -26,7 +26,8 @@ FT_CHAR_SRCS =	ft_islower.c				\
 				ft_iswspace.c				\
 				ft_isinbase.c				\
 				ft_toupper.c				\
-				ft_tolower.c
+				ft_tolower.c				\
+				ft_isword.c
 FT_CHAR_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_CHAR_SRCS}}
 
 FT_STRING_SRCS =	ft_strlen.c					\
@@ -48,7 +49,11 @@ FT_STRING_SRCS =	ft_strlen.c					\
 					ft_strcindex.c				\
 					ft_strsort.c				\
 					ft_isbase_valid.c			\
-					ft_strcmp.c
+					ft_strcmp.c					\
+					ft_strtrim_if.c				\
+					ft_substr_if.c				\
+					ft_strskip.c				\
+					ft_getnth_word.c
 FT_STRING_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_STRING_SRCS}}
 
 FT_MEMORY_SRCS =	ft_memchr.c				\
@@ -140,7 +145,8 @@ FT_QUEUE_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_QUEUE_SRCS}}
 FT_PARSER_SRCS =	ft_is_operator.c			\
 					ft_encapsulators.c			\
 					ft_parser.c					\
-					ft_operators.c
+					ft_operators.c				\
+					ft_handlers.c
 FT_PARSER_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_PARSER_SRCS}}
 
 
@@ -161,7 +167,7 @@ OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 TOTAL_OBJS := $(words ${OBJS})
 
 PROGRESS_PERCENT := 0
-FINAL_LEN := 41
+FINAL_LEN := 40
 PERCENT_PER_EQUAL_SIGN := ${shell echo "scale=2; 100 / ${FINAL_LEN}" | bc}
 PERCENT_PER_FILE := $(shell echo "scale=2; 100 / $(TOTAL_OBJS)" | bc)
 
@@ -171,6 +177,18 @@ build : init_ascii ${NAME}
 
 ${NAME} : ${OBJS}
 	@ar rcs ${NAME} ${OBJS}
+	@printf "\033[A\033[K"
+	@printf "\033[A\033[K"
+	@printf "\033[A\033[K"
+	@printf "\033[A\033[K"
+	@printf "\033[A\033[K"
+	@printf "\033[A\033[K"
+	@printf "\033[A\033[K"
+	@printf "\033[A\033[K"
+	@printf "\033[A\033[K"
+	@printf "\033[A\033[K"
+	@printf "\r"
+	@make init_ascii
 
 init_ascii :
 	@echo "${GRAY_COLOR}/+ ======================================== +\\"
