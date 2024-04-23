@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:50:56 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 12:22:38 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 13:23:22 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	b_echo(char *const argv[], char *envp[])
 
 /**
  * @brief reproduce the behavior of pwd no options
- * filename has max length of 260
  *
  * @param argv a list like ["echo", "-n", "string1", "string2", NULL]
  * @param envp environment variables
@@ -88,12 +87,18 @@ int	b_echo(char *const argv[], char *envp[])
  */
 int	b_pwd(char *const argv[], char *envp[])
 {
-	char	s[261];
+	char	*path;
 
-	if (!getcwd(s, 261))
+	if (argv[1] && argv[1][0] == '-')
+	{
+		printf("Error: should not provide any option with pwd command\n");
 		return (-1);
-	if (ft_putstr(s) == -1)
+	}
+	path = get_env_value(envp, "PWD", NULL);
+	if (!path)
 		return (-1);
+	printf("%s\n", path);
+	free(path);
 	return (0);
 }
 
@@ -124,7 +129,7 @@ int	b_exit(char *const argv[], char *envp[])
 		if (argv[1][i] != '\0')
 		{
 			printf("exit: %s: numeric argument required\n", argv[1]);
-			// status = same as the last command executed
+			// TODO status = same as the last command executed
 		}
 		else
 		{
@@ -137,6 +142,6 @@ int	b_exit(char *const argv[], char *envp[])
 				status = 0;
 		}
 	}
-	// free everything
+	// TODO free everything
 	exit(status);
 }
