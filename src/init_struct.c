@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 16:49:07 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:40:57 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,9 @@ void	init_struct(char **envp)
 	create_envp(&(program->envp), envp);
 	program->opened_count = 0;
 	// program->envp = envp;
+	program->exp_v = NULL;
+	program->loc_v = NULL;
+	program->status = 0;
 	init_environment(program);
 	if (*get_errno() != 0)
 		return ;

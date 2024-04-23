@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 16:37:22 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:30:19 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@ static char	*get_final_path(char *arg, char *envp[]);
 static char	*get_initial_path(char *path, char *envp[]);
 static char	*remove_2_dots(char *path, int index);
 static char	*remove_dot(char *path, int index);
+
+/*
+	Edge cases:
+		- cd
+		- cd /../../../../../././././
+		- cd -
+ */
 
 /**
  * @brief reproduce the behavior of cd with only a relative-absolute path

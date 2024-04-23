@@ -6,11 +6,20 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:14 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 16:38:55 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 20:09:26 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+	Edge cases:
+		- unset:
+			- do nothing
+		- unset [name] [name2] ...
+			- delete every name if exists from any place, local, env, exported
+			- if name doesn't exists just continue
+ */
 
 /**
  * @brief reproduce the behavior of unset with no options
