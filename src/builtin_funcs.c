@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:50:56 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/22 15:36:08 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 12:22:38 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,37 @@ int	b_pwd(char *const argv[], char *envp[])
  */
 int	b_exit(char *const argv[], char *envp[])
 {
-	if (argv[1])
+	int	status;
+	int	i;
+
+	printf("exit\n");
+	if (argv[1] && argv[2])
 	{
-		printf("Error: exit should not have any options / args\n");
+		printf("exit: too many arguments\n");
 		return (-1);
 	}
-	exit(0);
+	if (argv[1])
+	{
+		i = -1 + (argv[1][0] == '-');
+		while (argv[1][++i] != '\0')
+			if (argv[1][i] < '0' || argv[1][i] > '9')
+				break;
+		if (argv[1][i] != '\0')
+		{
+			printf("exit: %s: numeric argument required\n", argv[1]);
+			// status = same as the last command executed
+		}
+		else
+		{
+			status = ft_atoi(argv[1]);
+			if (status < 0)
+				status = 256 - (-status % 256);
+			else if (status > 255)
+				status = status % 256;
+			if (status == 256)
+				status = 0;
+		}
+	}
+	// free everything
+	exit(status);
 }

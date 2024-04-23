@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/22 15:57:15 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 11:54:29 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int	b_cd(char *const argv[], char *envp[])
 	char	*old_pwd;
 
 	if (argv[1] && argv[1][0] == '-' && argv[1][1] == '\0')
+	{
 		path = get_env_value(envp, "OLDPWD", "/");
+		printf("%s\n", path);
+	}
 	else
 		path = get_final_path(argv[1], envp);
 	if (chdir(path) == -1)
