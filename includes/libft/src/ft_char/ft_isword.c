@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isword.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 09:03:05 by lgreau           ###   ########.fr       */
+/*   Created: 2024/04/19 11:39:31 by lgreau            #+#    #+#             */
+/*   Updated: 2024/04/19 11:43:56 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "ft_char.h"
 
-int	main(int argc, char *argv[], char *envp[])
+/**
+ * @brief Returns whether or not str will be entering a new word
+ * by checking if the character pointed by str is a separator
+ * and the next one is in a word
+ *
+ * @param str
+ * @param is_sep
+ * @return int
+ */
+int	ft_isword(char *str, int (*is_sep)(int))
 {
-	argc = 0;
-	argv = NULL;
-	init_struct(envp);
-	set_handler(L_REDIRECT, l_redirect_handler);
-
-	char	str[] = "infile < test/test.txt";
-
-	ft_parse(str);
-
-	exit(*get_errno() != 0);
+	return ((*is_sep)(str[0]) && !(*is_sep)(str[1]));
 }
-

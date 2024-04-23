@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/22 17:28:37 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:03:55 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,26 @@ static char	*trim_spaces_between(char *line_read, int start, int end);
  * @param envp enviroment variables
  * @return int, -1 on error, 0 on success
  */
-int	builtin_execve(const char *path, char *const argv[], char *envp[])
-{
-	if (!path || !argv || !argv[0])
-		return (-1);
-	if (ft_strcmp(path, "echo") == 0)
-		return (b_echo(argv, envp));
-	else if (ft_strcmp(path, "cd") == 0)
-		return (b_cd(argv, envp));
-	else if (ft_strcmp(path, "pwd") == 0)
-		return (b_pwd(argv, envp));
-	else if (ft_strcmp(path, "export") == 0)
-		return (b_export(argv, envp));
-	else if (ft_strcmp(path, "unset") == 0)
-		return (b_unset(argv, envp));
-	else if (ft_strcmp(path, "env") == 0)
-		return (b_env(argv, envp));
-	else if (ft_strcmp(path, "exit") == 0)
-		return (b_exit(argv, envp));
-	return (-1);
-}
+// int	builtin_execve(const char *path, char *const argv[], char *envp[])
+// {
+// 	if (!path || !argv || !argv[0])
+// 		return (-1);
+// 	if (ft_strcmp(path, "echo") == 0)
+// 		return (b_echo(argv, envp));
+// 	else if (ft_strcmp(path, "cd") == 0)
+// 		return (b_cd(argv, envp));
+// 	else if (ft_strcmp(path, "pwd") == 0)
+// 		return (b_pwd(argv, envp));
+// 	else if (ft_strcmp(path, "export") == 0)
+// 		return (b_export(argv, envp));
+// 	else if (ft_strcmp(path, "unset") == 0)
+// 		return (b_unset(argv, envp));
+// 	else if (ft_strcmp(path, "env") == 0)
+// 		return (b_env(argv, envp));
+// 	else if (ft_strcmp(path, "exit") == 0)
+// 		return (b_exit(argv, envp));
+// 	return (-1);
+// }
 
 /**
  * @brief same with strjoin but 3 args

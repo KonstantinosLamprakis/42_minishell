@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/22 17:29:15 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 09:00:38 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_program	*get_program(void)
+{
+	static t_program	program;
+
+	return (&program);
+}
 
 /**
  * @brief Extracts the paths from the program environment
@@ -19,31 +26,46 @@
  */
 static void	get_env_paths(t_program *program)
 {
-	char	**tmp;
 	char	*line;
 	int		index;
 
-	tmp = ft_split((const char *)program->envp, '\n');
-	if (!tmp)
-		return (set_error((char *)__func__, ALLOC));
 	line = NULL;
 	index = -1;
-	while (tmp[++index])
+	while (program->envp[++index])
 	{
-		if (ft_strncmp(tmp[index], "PATH=", 5) == 0)
+		if (ft_strncmp(program->envp[index], "PATH=", 5) == 0)
 		{
-			line = ft_substr(tmp[index], 5, ft_strlen(tmp[index] - 5));
+			line = ft_substr(program->envp[index], 5,
+					ft_strlen(program->envp[index] - 5));
 			if (!line)
-				return (free_arr((void **)tmp, 1), set_error((char *)__func__,
-						ALLOC));
+				return (set_error((char *)__func__, ALLOC));
 			break ;
 		}
 	}
-	free_arr((void **)tmp, 1);
 	program->env_path = ft_split(line, ':');
 	if (!program->env_path)
 		return (free(line), set_error((char *)__func__, ALLOC));
 	free(line);
+}
+
+/**
+ * @brief Saves the std file descriptor (STDIN, OUT & ERR) in the program
+ * for future "reset" and to allow file descriptor maipulation w/o losing them
+ *
+ * @param program
+ */
+static void	save_std_fd(t_program *program)
+{
+	int	std;
+
+	std = -1;
+	while (++std < 3)
+	{
+		program->std_fd[std] = dup(std);
+		if (program->std_fd[std] < 0)
+			return (set_error((char *)__func__, DUP));
+		program->opened_files[program->opened_count++] = std;
+	}
 }
 
 /**
@@ -55,6 +77,7 @@ static void	get_env_paths(t_program *program)
 static void	init_environment(t_program *program)
 {
 	get_env_paths(program);
+	save_std_fd(program);
 }
 
 /**
@@ -95,11 +118,17 @@ static void	create_envp(char ***new_envp, char **old_envp)
 /**
  * @brief Initializes the main program structure
  *
- * @param program
  * @param envp
  */
-void	init_struct(t_program *program, char **envp)
+void	init_struct(char **envp)
 {
+	t_program *program;
+
+	program = get_program();
 	create_envp(&(program->envp), envp);
-	// init_environment(program);
+	program->opened_count = 0;
+	program->envp = envp;
+	init_environment(program);
+	if (*get_errno() != 0)
+		return ;
 }

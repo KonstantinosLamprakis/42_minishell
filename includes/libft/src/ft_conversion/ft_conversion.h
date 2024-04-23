@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:05:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/09 14:29:17 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/18 09:43:08 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../ft_char/ft_char.h" // ft_iswspace
 # include "../ft_string/ft_string.h" // ft_isbase_valid
+# include "../ft_error/ft_error.h"
 
 # include <stdlib.h> // NULL, malloc
 # include <limits.h> // INT_MAX, INT_MIN
