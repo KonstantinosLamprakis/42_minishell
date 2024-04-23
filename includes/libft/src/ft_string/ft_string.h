@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 07:31:47 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 09:59:35 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/23 13:44:40 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ int		ft_strcindex(const char *str, int c);
 void	ft_strsort(char *str);
 int		ft_isbase_valid(char *base, char *forbidden_char);
 int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strchr_if(char *str, int (*cmp)(int));
 
 char	*ft_strskip(char *str, int (*cmp)(int), int *is_eol);
 char	*ft_getnth_word(char *str, int n, int (*is_sep)(int), int (*cmp)(int));
 
 char	**ft_fctsplit(char *str, int (*cmp)(int));
+char	**ft_escsplit(char *str, int (*cmp)(int), int (*esc)(int));
 
 #endif

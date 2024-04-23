@@ -55,7 +55,9 @@ FT_STRING_SRCS =	ft_strlen.c					\
 					ft_substr_if.c				\
 					ft_strskip.c				\
 					ft_getnth_word.c			\
-					ft_fctsplit.c
+					ft_fctsplit.c				\
+					ft_escsplit.c				\
+					ft_strchr_if.c
 FT_STRING_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_STRING_SRCS}}
 
 FT_MEMORY_SRCS =	ft_memchr.c				\

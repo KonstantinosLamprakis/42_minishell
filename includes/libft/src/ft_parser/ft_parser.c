@@ -6,26 +6,26 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 10:02:43 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/23 13:17:46 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_parser.h"
 
-static int	handle_found_encapsulator(t_token *token, char *str, int start,
-		t_encapsulators enc)
-{
-	token->start = start;
-	token->enc = enc;
-	token->op = -1;
-	if (enc == L_PARANTHESE)
-		token->end = token->start + endof_paranthese(str, start);
-	if (enc == L_CBRACKET)
-		token->end = token->start + endof_cbrackets(str, start);
-	if (enc == L_BRACKET)
-		token->end = token->start + endof_brackets(str, start);
-	return (1);
-}
+// static int	handle_found_encapsulator(t_token *token, char *str, int start,
+// 		t_encapsulators enc)
+// {
+// 	token->start = start;
+// 	token->enc = enc;
+// 	token->op = -1;
+// 	if (enc == L_PARANTHESE)
+// 		token->end = token->start + endof_paranthese(str, start);
+// 	if (enc == L_CBRACKET)
+// 		token->end = token->start + endof_cbrackets(str, start);
+// 	if (enc == L_BRACKET)
+// 		token->end = token->start + endof_brackets(str, start);
+// 	return (1);
+// }
 
 static int	handle_found_operator(t_token *token, int index, t_operators op)
 {
@@ -55,10 +55,10 @@ static int	find_next_token(char *str, t_token *token)
 		token_c = ft_which_op(str + index);
 		if (token_c >= 0 && handle_found_operator(token, index, token_c))
 			break ;
-		token_c = ft_which_enc(str + index);
-		if (token_c >= 0 && handle_found_encapsulator(token, str, index,
-				token_c))
-			break ;
+		// token_c = ft_which_enc(str + index);
+		// if (token_c >= 0 && handle_found_encapsulator(token, str, index,
+		// 		token_c))
+		// 	break ;
 	}
 	if (token->start < 0)
 		return (0);
@@ -146,9 +146,9 @@ void	ft_parse(char *str)
 				}
 				ft_parse(str + offset);
 			}
-			if ((int)token.enc >= 0)
-				printf("Encapsulator found %d : %s.\n", token.enc,
-						encapsulators[token.enc]);
+			// if ((int)token.enc >= 0)
+			// 	printf("Encapsulator found %d : %s.\n", token.enc,
+			// 			encapsulators[token.enc]);
 		}
 	}
 }
