@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:21:09 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 16:12:41 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 20:54:02 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int	find_env(char **envp, char *key)
 	int		found;
 	int		k;
 
+	if (!key || !key[0])
+		return (-1);
 	k = -1;
 	found = 0;
 	while (envp[++k] && !found)
@@ -33,7 +35,7 @@ static int	find_env(char **envp, char *key)
 		i = 0;
 		while (envp[k][i] != '\0' && key[i] != '\0' && envp[k][i] == key[i])
 			i++;
-		found = (key[i] == '\0' && envp[k][i] == '=');
+		found = (key[i] == '\0' && (envp[k][i] == '=' || envp[k][i] == '\0'));
 	}
 	if (!found)
 		return (-1);
