@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 07:31:47 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 11:53:48 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/23 09:59:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 
 char	*ft_strskip(char *str, int (*cmp)(int), int *is_eol);
 char	*ft_getnth_word(char *str, int n, int (*is_sep)(int), int (*cmp)(int));
+
+char	**ft_fctsplit(char *str, int (*cmp)(int));
 
 #endif
