@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 09:29:34 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/23 10:02:43 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,19 @@ void	ft_parse(char *str)
 	printf("\n%s input: \"%s\"\n", (char *)__func__, str);
 	if (find_next_token(str, &token) >= 0)
 	{
-		if (token.start < 0)
-			printf("No operators in \"%s\".\n", str);
+		if (token.start < 0 && printf("No operators in \"%s\".\n", str))
+		{
+			offset = handlers[OPERATOR_COUNT]((void *)&token);
+			printf("Parser must skip %d char.\n", offset);
+			printf("Starting next iteration from %s\n", str + offset);
+			if (offset < 0)
+			{
+				if (*get_errno() != 0 && printf("Something went wrong in thep previous hanlder.\n"))
+					return ;
+				printf("The parsing finished without problem.\n");
+				return ;
+			}
+		}
 		else
 		{
 			printf("Next token is \"%s\"\n", str + token.start);
