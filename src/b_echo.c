@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:36 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 13:56:53 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:37:58 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	b_echo(char *const argv[], char *envp[])
 	int	is_n;
 	int	i;
 
+	envp = NULL;
 	i = 0;
 	is_n = is_option_n(argv, &i);
 	if (!argv[i])
@@ -77,7 +78,8 @@ static int	is_option_n(char *const argv[], int *i)
 		while (argv[*i][j] == 'n')
 			j++;
 		if (argv[*i][j] != '\0')
-			break;
+			break ;
 		is_n = 1;
 	}
+	return (0);
 }

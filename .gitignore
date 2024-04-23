@@ -3,12 +3,8 @@
 *.tmp
 *dSYM*
 .vscode
-<<<<<<< HEAD
 notes.txt
 *.o
 *.a
 minishell
 .DS_Store
-=======
-*notes.txt
->>>>>>> 3b789f0607ae2b244c0b2807b5b8ba13b3da0673

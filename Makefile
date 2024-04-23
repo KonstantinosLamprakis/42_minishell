@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = #-Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 NAME = minishell
 
@@ -21,9 +21,11 @@ SRCS =	main.c					\
 		b_pwd.c					\
 		b_unset.c				\
 		utils.c					\
-		env_utils.c
+		env_utils.c				\
+		env_utils_2.c				\
 		left_redirection.c		\
 		ft_open.c
+
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
 LIBFT_DIR = ${INCLUDES_DIR}/libft

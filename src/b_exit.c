@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:03 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 14:05:00 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:38:14 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	b_exit(char *const argv[], char *envp[])
 {
 	int	status;
 
+	envp = NULL;
 	printf("exit\n");
 	if (argv[1] && argv[2])
 	{
@@ -62,7 +63,7 @@ static int	get_status(char *status_str)
 	i = -1 + (status_str[0] == '-');
 	while (status_str[++i] != '\0')
 		if (status_str[i] < '0' || status_str[i] > '9')
-			break;
+			break ;
 	if (status_str[i] != '\0')
 	{
 		printf("exit: %s: numeric argument required\n", status_str);

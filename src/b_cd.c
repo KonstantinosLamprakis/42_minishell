@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 12:25:10 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:37:22 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,6 @@ static char	*get_final_path(char *arg, char *envp[])
  */
 static char	*get_initial_path(char *path, char *envp[])
 {
-	char	*temp;
-	char	*init_path;
-
 	if (!path)
 		return (get_env_value(envp, "HOME", "/"));
 	if (path[0] == '/')
