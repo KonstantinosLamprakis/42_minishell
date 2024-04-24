@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:21:09 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 21:19:51 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 08:39:06 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*get_env_value(char *envp[], char *const key, char *suffix)
 	char	*temp;
 
 	k = find_env(envp, key);
-	if (k == -1 || envp[k][ft_strlen(key) + 1] != '=')
+	if (k == -1 || envp[k][ft_strlen(key)] != '=')
 		return (NULL);
 	found = ft_strlen(key) + 1;
 	result = malloc((ft_strlen(envp[k]) - found + 1) * sizeof(char));

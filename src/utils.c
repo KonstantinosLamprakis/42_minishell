@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 16:49:24 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 08:31:24 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*trim_spaces_between(char *line_read, int start, int end);
  */
 int	builtin_execve(const char *path, char *const argv[], char *envp[])
 {
-	if (!path || !argv || !argv[0])
+	if (!path || !argv || !argv[0] || !envp)
 		return (-1);
 	if (ft_strcmp(path, "echo") == 0)
 		return (b_echo(argv, envp));
