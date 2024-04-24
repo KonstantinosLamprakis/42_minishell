@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 08:19:27 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:44:27 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,11 @@ int	b_export(char *const argv[], char *envp[])
 		{
 			value = get_env_value(program->loc_v, key, NULL);
 			if (value)
+			{
+				del_from_envp(program->loc_v, key);
 				replace_envp_key(&program->envp, key, value);
-			else
+			}
+			else if (!get_env_value(program->envp, key, NULL))
 			{
 				del_from_envp(program->exp_v, key);
 				add_to_envp(&program->exp_v, key, -1);
