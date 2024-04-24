@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 10:23:51 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:55:33 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ int	b_cd(char *const argv[], char *envp[])
 	// TODO CDPATH implementation
 	envp = get_program()->envp;
 	if (argv[1] && argv[1][0] == '-' && argv[1][1] == '\0')
-	{
 		path = get_env_value(envp, "OLDPWD", "/");
-		printf("%s\n", path);
-	}
 	else
 		path = get_final_path(argv[1], envp);
 	if (chdir(path) == -1)
@@ -57,7 +54,11 @@ int	b_cd(char *const argv[], char *envp[])
 		return (free(path), -1);
 	replace_envp_key(&get_program()->envp, "OLDPWD", old_pwd);
 	free(old_pwd);
+	if (path[ft_strlen(path) - 1] == '/' && ft_strlen(path) > 1)
+		path[ft_strlen(path) - 1] = '\0';
 	replace_envp_key(&get_program()->envp, "PWD", path);
+	if (argv[1] && argv[1][0] == '-' && argv[1][1] == '\0')
+		printf("%s\n", path);
 	free(path);
 	return (0);
 }
