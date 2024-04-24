@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 14:59:41 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 09:27:18 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_program
 	int		opened_files[OPEN_MAX];
 	int		opened_count;
 	int		std_fd[3];
+	char	*delimiter;
 }				t_program;
 
 //			ENV_UTILS.c
@@ -69,6 +70,7 @@ int			ft_open(char *file_name, int flags, int mode);
 
 int			l_redirect_handler(void *arg);
 void		left_redirection(char *arg, char *left_arg);
+int			l_delimiter_handler(void *arg);
 
 //			COMMAND_RELATED
 
