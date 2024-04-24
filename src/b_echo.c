@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:36 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 16:37:58 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 18:07:53 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static int	is_option_n(char *const argv[], int *i)
 	if (!argv[1])
 	{
 		printf("\n");
+		*i = 1;
 		return (0);
 	}
 	is_n = 0;
@@ -81,5 +82,5 @@ static int	is_option_n(char *const argv[], int *i)
 			break ;
 		is_n = 1;
 	}
-	return (0);
+	return (is_n);
 }
