@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:18:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 13:44:59 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 11:24:40 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include "../ft_btree/ft_btree.h"
 # include "../ft_error/ft_error.h"
 # include "../ft_string/ft_string.h"
+
+# define DEBUG_START_HANDLER "\n/+ ----- Start of Handler ----- +\\\n"
+# define DEBUG_END_OF_HANDLER "\\+ ------ End of Handler ------ +/\n\n"
 
 typedef int	(*t_operator_handler)(void *);
 
