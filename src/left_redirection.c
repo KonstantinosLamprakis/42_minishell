@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 09:30:27 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 09:42:07 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	l_redirect_handler(void *arg)
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), -1);
 	right_arg = ft_strtrim_if(tmp, ft_iswspace);
+	free(tmp);
 	if (!right_arg)
 		return (-1);
 	printf("  |- right_arg = %s\n\n", right_arg);
@@ -50,7 +51,7 @@ int	l_redirect_handler(void *arg)
 	if (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) == NULL)
 		return (-1);
 	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) - token->str) + ft_strlen(right_arg);
-	return (free(tmp), offset);
+	return (offset);
 }
 
 /**
