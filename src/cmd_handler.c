@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 15:08:44 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 08:00:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*get_cmd(char **cmd_args)
 			return (cmd);
 		free(cmd);
 	}
-	return (NULL);
+	return (set_error((char *)__func__, COMMAND_NOT_FOUND), NULL);
 }
 
 int	cmd_handler(void *arg)
