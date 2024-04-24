@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 09:42:07 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 11:13:12 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	left_redirection(char *arg, char *left_arg)
 			set_error((char *)__func__, OPEN));
 	if (!left_arg)
 	{
-		printf("Redirecting %d to %d\n\n", right_fd, STDIN);
+		printf("Redirecting %d (%s) to %d\n\n", right_fd, arg, STDIN);
 		if (dup2(right_fd, STDIN) < 0)
 			return (set_error((char *)__func__, DUP));
 	}

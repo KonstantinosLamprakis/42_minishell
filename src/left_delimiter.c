@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 09:41:33 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 11:18:54 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,49 @@ int	l_delimiter_handler(void *arg)
 		return (-1);
 	printf("  |- right_arg = %s\n\n", right_arg);
 
+	left_delimiter(right_arg, left_arg);
+
 	if (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) == NULL)
 		return (-1);
 	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) - token->str) + ft_strlen(right_arg);
 	return (offset);
+}
+
+/**
+ * @brief Reads from stdin until DELIMITER
+ * then redirects the read content to stdin
+ *
+ * @param arg Delimiter to read from stdin until
+ * @param left_arg optionnal (= NULL) argument defining to which fd
+ * the redirection occurs
+ */
+void	left_delimiter(char *arg, char *left_arg)
+{
+	t_program	*program;
+	char		*buffer;
+	int			here_doc;
+
+	program = get_program();
+	program->delimiter = arg;
+	here_doc = ft_open_first(HERE_DOC_FILE, O_TRUNC | O_CREAT | O_WRONLY, 0644);
+	if (here_doc < 0)
+		return ;
+	write(STDOUT, HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
+	buffer = ft_get_next_line(STDIN);
+	while (buffer)
+	{
+		if (ft_strlen(buffer) == (1 + ft_strlen(program->delimiter))
+			&& ft_strncmp(buffer, program->delimiter, ft_strlen(buffer) - 1) == 0)
+		{
+			free(buffer);
+			break ;
+		}
+		write(here_doc, buffer, ft_strlen(buffer));
+		free(buffer);
+		write(STDOUT, HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
+		buffer = ft_get_next_line(STDIN);
+	}
+	close(here_doc);
+	printf("Read stdin until |%s|.\n", program->delimiter);
+	left_redirection(HERE_DOC_FILE, left_arg);
 }
