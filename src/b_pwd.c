@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:19 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 13:45:57 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:22:03 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	b_pwd(char *const argv[], char *envp[])
 {
 	char	*path;
 
+	envp = get_program()->envp;
 	if (argv[1] && argv[1][0] == '-')
 	{
 		printf("Error: should not provide any option with pwd command\n");

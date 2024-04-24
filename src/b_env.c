@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:30 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 13:47:28 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:23:20 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	b_env(char *const argv[], char *envp[])
 {
 	int	i;
 
+	envp = get_program()->envp;
 	if (argv[1])
 	{
 		printf("Error: env should not have any options / args\n");
