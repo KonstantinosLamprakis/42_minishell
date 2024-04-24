@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 08:14:02 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 08:19:27 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,13 @@ int	b_export(char *const argv[], char *envp[])
 		else
 		{
 			value = get_env_value(program->loc_v, key, NULL);
-			if (!value)
-				continue ;
-			replace_envp_key(&program->envp, key, value);
+			if (value)
+				replace_envp_key(&program->envp, key, value);
+			else
+			{
+				del_from_envp(program->exp_v, key);
+				add_to_envp(&program->exp_v, key, -1);
+			}
 		}
 	}
 	return (0);
@@ -188,5 +192,7 @@ static void	print_record(char *rec)
 			printf("\"");
 		is_eq += rec[i] == '=';
 	}
-	printf("\"\n");
+	if (is_eq)
+		printf("\"");
+	printf("\n");
 }
