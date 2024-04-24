@@ -6,27 +6,26 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 23:31:12 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 07:21:27 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 	Edge cases:
 		export test
-			- test not exist (just add "test" and export it, but not on env)
+			- test not exist (just add "test" at exp_v[] not at envp[])
 			- test exists and has a value already (just export it "test=value")
-				- "value" for export and value for env without ""
 		export test=
-			- add 'test=""' even if test already exists with a value
-				- add "test=" at env but without quotes
-				- add test="" at export
+			- same as export test="", the new value is just an empty string
 		export test=value
-			- test not exist (export it 'test="value"'))
-			- test exists and has a value already (export it "test="new_value""))
+			- test not exists: create it and export it at envp[]
+			- test exists and has a value already -> replace the value and
+			export it at envp[]
 			- value is not a valid name_value
-			- in all cases should add on env whithout "" and on export with ""
+			- in all cases should add on env whithout "", we add "" only
+			when we print exported vars
 		export test="value"
-			- same with test=value
+			- same with export test=value
 		export
 			- just print env and exported vars but sorted
  */
@@ -46,12 +45,55 @@ static void	print_record(char *rec);
 int	b_export(char *const argv[], char *envp[])
 {
 	int			i;
+	int			j;
 	t_program	*program;
+	char		*key;
+	char		*value;
+	int			pos;
 
 	envp = NULL;
 	program = get_program();
 	if (!argv[1])
 		return (print_sorted(program->envp, program->exp_v), 0);
+	i = 0;
+	while (argv[++i])
+	{
+		if (!ft_isalpha(argv[i][0]))
+		{
+			printf("export: %s: not valid identifier\n", argv[i]);
+			continue ;
+		}
+		j = 1;
+		while (ft_isalnum(argv[i][j]))
+			j++;
+		if (argv[i][j] != '=' && argv[i][j] != '\0')
+		{
+			printf("export: %s: not valid identifier\n", argv[i]);
+			continue ;
+		}
+		key = ft_substr(argv[i], 0, j);
+		if (argv[i][j] == '=' && argv[i][j + 1] != '\0')
+		{
+			value = ft_substr(argv[i], j + 1, ft_strlen(argv[i]));
+			del_from_envp(program->exp_v, key);
+			del_from_envp(program->loc_v, key);
+			replace_envp_key(program->envp, key, value);
+		}
+		else if (argv[i][j] == '=')
+		{
+			value = ft_strdup("");
+			del_from_envp(program->exp_v, key);
+			del_from_envp(program->loc_v, key);
+			replace_envp_key(program->envp, key, value);
+		}
+		else
+		{
+			value = get_env_value(program->loc_v, key, NULL);
+			if (!value)
+				continue ;
+			replace_envp_key(program->envp, key, value);
+		}
+	}
 	return (0);
 }
 

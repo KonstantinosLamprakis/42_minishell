@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 17:39:55 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 07:05:38 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 	envp: an always up-to-date array that holds environment vars
 	loc_v: same as envp but only for local vars that are not env
 	and not displayed either at "env" or "export", only at "$(var)"
-	loc_v: same as envp but only for exported vars, with no value
+	exp_v: same as envp but only for exported vars, with no value
 	that they are not displayed at normal "env", only at "export"
 	status: the status of the last command that excecuted
  */
