@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 07:05:38 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 07:41:02 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void		create_envp(char ***new_envp, char **old_envp);
 
 //			UTILS.c
 char		*ft_strjoin_3(char const *s1, char const *s2, char const *s3);
-int			builtin_execve(const char *pathname, char *const argv[], char *envp[]);
+int			builtin_execve(const char *pathname, char *const argv[], \
+			char *envp[]);
 char		*get_line(void);
 
 //			BUILTIN DUNCS
@@ -79,6 +80,9 @@ void		clean_struct(void);
 //			QUIT_UTILS.c
 void		free_arr(void **arr, int is_alloc);
 int			ft_open(char *file_name, int flags, int mode);
+
+//			CLEAN_STRUCT.c
+void		clean_struct(void);
 
 //			OPERATORS
 // int			l_redirect_handler(void *arg);

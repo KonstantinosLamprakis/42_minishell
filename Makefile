@@ -12,6 +12,7 @@ INCLUDES_DIR = includes
 
 SRCS =	main.c					\
 		init_struct.c			\
+		clean_struct.c			\
 		quit_utils.c			\
 		b_cd.c					\
 		b_echo.c				\
@@ -22,7 +23,7 @@ SRCS =	main.c					\
 		b_unset.c				\
 		utils.c					\
 		env_utils.c				\
-		env_utils_2.c				\
+		env_utils_2.c			\
 		left_redirection.c		\
 		ft_open.c
 

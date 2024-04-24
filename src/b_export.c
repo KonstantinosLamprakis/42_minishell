@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 07:21:27 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 07:37:23 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 
 static void	sort_array(char **ar);
 static void	print_record(char *rec);
+static void	print_sorted(char **p_envp, char **p_exp_v);
 
 /**
  * @brief reproduce the behavior of export with no options
@@ -49,7 +50,6 @@ int	b_export(char *const argv[], char *envp[])
 	t_program	*program;
 	char		*key;
 	char		*value;
-	int			pos;
 
 	envp = NULL;
 	program = get_program();
@@ -77,21 +77,21 @@ int	b_export(char *const argv[], char *envp[])
 			value = ft_substr(argv[i], j + 1, ft_strlen(argv[i]));
 			del_from_envp(program->exp_v, key);
 			del_from_envp(program->loc_v, key);
-			replace_envp_key(program->envp, key, value);
+			replace_envp_key(&program->envp, key, value);
 		}
 		else if (argv[i][j] == '=')
 		{
 			value = ft_strdup("");
 			del_from_envp(program->exp_v, key);
 			del_from_envp(program->loc_v, key);
-			replace_envp_key(program->envp, key, value);
+			replace_envp_key(&program->envp, key, value);
 		}
 		else
 		{
 			value = get_env_value(program->loc_v, key, NULL);
 			if (!value)
 				continue ;
-			replace_envp_key(program->envp, key, value);
+			replace_envp_key(&program->envp, key, value);
 		}
 	}
 	return (0);
@@ -109,7 +109,6 @@ static void	print_sorted(char **p_envp, char **p_exp_v)
 	char		**exp_v;
 	int			i;
 	int			j;
-	int			*arr;
 
 	create_envp(&envp, p_envp);
 	create_envp(&exp_v, p_exp_v);

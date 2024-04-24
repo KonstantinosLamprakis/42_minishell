@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:14 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 20:53:49 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 07:37:38 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ static int	unset_if_exists(char *key, char **ar);
 int	b_unset(char *const argv[], char *envp[])
 {
 	int			i;
-	int			j;
-	int			is_deleted;
 	char		**ar;
 	t_program	*program;
 
