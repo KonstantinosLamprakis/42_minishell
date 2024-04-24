@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 08:00:53 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 11:31:55 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,21 @@ static char	*get_cmd(char **cmd_args)
 	int			index;
 
 	program = get_program();
-	index = -1;
-	while (program->env_path[++index])
+	if (cmd_args[0][0] == '/')
 	{
-		cmd = ft_strjoin_3(program->env_path[index], "/", cmd_args[0]);
-		if (access(cmd, F_OK) >= 0)
-			return (cmd);
-		free(cmd);
+		if (access(cmd_args[0], F_OK) >= 0)
+			return (cmd_args[0]);
+	}
+	else
+	{
+		index = -1;
+		while (program->env_path[++index])
+		{
+			cmd = ft_strjoin_3(program->env_path[index], "/", cmd_args[0]);
+			if (access(cmd, F_OK) >= 0)
+				return (cmd);
+			free(cmd);
+		}
 	}
 	return (set_error((char *)__func__, COMMAND_NOT_FOUND), NULL);
 }
