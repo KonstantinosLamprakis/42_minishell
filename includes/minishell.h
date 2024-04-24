@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 10:20:30 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 11:55:29 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,12 @@ int			ft_open_first(char *file_name, int flags, int mode);
 
 int			l_redirect_handler(void *arg);
 void		left_redirection(char *arg, char *left_arg);
+
 int			l_delimiter_handler(void *arg);
 void		left_delimiter(char *arg, char *left_arg);
+
+int			and_handler(void *arg);
+void		and_operation(char *left_arg);
 
 //			COMMAND_RELATED
 

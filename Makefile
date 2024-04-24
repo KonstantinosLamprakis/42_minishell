@@ -16,7 +16,8 @@ SRCS =	main.c					\
 		ft_open.c				\
 		cmd_handler.c			\
 		misc.c					\
-		left_delimiter.c
+		left_delimiter.c		\
+		and_handler.c
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
 LIBFT_DIR = ${INCLUDES_DIR}/libft
