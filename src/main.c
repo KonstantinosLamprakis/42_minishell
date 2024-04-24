@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 09:03:05 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 08:09:09 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ int	main(int argc, char *argv[], char *envp[])
 	argv = NULL;
 	init_struct(envp);
 	set_handler(L_REDIRECT, l_redirect_handler);
+	set_handler(OPERATOR_COUNT, cmd_handler);
 
-	char	str[] = "infile < test/test.txt";
+	char	str[] = "< Makefile cat";
 
 	ft_parse(str);
 

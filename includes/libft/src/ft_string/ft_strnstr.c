@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 20:24:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/09 07:35:53 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 08:40:20 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 			if (!needle[offset])
 				return (ptr);
 		}
-		len--;
 		ptr++;
 	}
 	return (NULL);
