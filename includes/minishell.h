@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 11:55:29 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 13:00:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ void		left_delimiter(char *arg, char *left_arg);
 
 int			and_handler(void *arg);
 void		and_operation(char *left_arg);
+
+int			or_handler(void *arg);
+void		or_operation(char *left_arg);
 
 //			COMMAND_RELATED
 
