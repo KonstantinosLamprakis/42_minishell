@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:02:48 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/17 16:11:41 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/23 13:11:15 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ static void	close_files(t_program *program)
  *
  * @param program
  */
-void	clean_struct(t_program *program)
+void	clean_struct(void)
 {
+	t_program	*program;
+
+	program = get_program();
 	close_files(program);
 }

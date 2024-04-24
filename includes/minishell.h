@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 09:27:18 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 10:07:58 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,14 @@ char		*get_line(void);
 
 t_program	*get_program(void);
 void		init_struct(char **envp);
-void		clean_struct(t_program *program);
+void		clean_struct(void);
 
 
 //			UTILS
 
 void		free_arr(char **arr, int is_alloc);
 int			ft_open(char *file_name, int flags, int mode);
+int			ft_open_first(char *file_name, int flags, int mode);
 
 //			OPERATORS
 
