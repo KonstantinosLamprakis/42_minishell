@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 07:37:23 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 08:14:02 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,19 +145,22 @@ static void	sort_array(char **ar)
 	char	*temp;
 	int		swaped;
 
+	if (!ar || !ar[0] || !ar[1])
+		return;
 	i = 0;
 	swaped = 1;
 	while (ar[i] && swaped)
 	{
 		j = 0;
 		swaped = 0;
-		while (ar[i] && ar[i + 1])
+		while (ar[j] && ar[j + 1])
 		{
 			if (ft_strcmp(ar[j], ar[j + 1]) > 0)
 			{
 				temp = ar[j];
 				ar[j] = ar[j + 1];
 				ar[j + 1] = temp;
+				swaped = 1;
 			}
 			j++;
 		}
@@ -185,5 +188,5 @@ static void	print_record(char *rec)
 			printf("\"");
 		is_eq += rec[i] == '=';
 	}
-	printf("\"");
+	printf("\"\n");
 }
