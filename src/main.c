@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 21:34:50 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:59:51 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ int	main(int argc, char *argv[], char *envp[])
 		free(line);
 		free_arr((void *)cmd_ar, 1);
 	}
+	set_handler(L_REDIRECT, l_redirect_handler);
+	set_handler(OPERATOR_COUNT, cmd_handler);
+	char	str[] = "< Makefile cat"
+	ft_parse(str);
 	clean_struct();
-	// set_handler(L_REDIRECT, l_redirect_handler);
-	// ft_parse(str);
-	// exit(*get_errno() != 0);
+	exit(*get_errno() != 0);
 }
 

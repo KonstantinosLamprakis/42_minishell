@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 08:36:49 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 13:45:10 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 13:04:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char	**get_encapsulators(void)
 
 	encapsulators[L_PARANTHESE] = L_PARANTHESE_ENC;
 	encapsulators[R_PARANTHESE] = R_PARANTHESE_ENC;
-	encapsulators[L_CBRACKET] = L_CBRACKET_ENC;
-	encapsulators[R_CBRACKET] = R_CBRACKET_ENC;
-	encapsulators[L_BRACKET] = L_BRACKET_ENC;
-	encapsulators[R_BRACKET] = R_BRACKET_ENC;
+	// encapsulators[L_CBRACKET] = L_CBRACKET_ENC;
+	// encapsulators[R_CBRACKET] = R_CBRACKET_ENC;
+	// encapsulators[L_BRACKET] = L_BRACKET_ENC;
+	// encapsulators[R_BRACKET] = R_BRACKET_ENC;
 	return (&encapsulators[0]);
 }
 

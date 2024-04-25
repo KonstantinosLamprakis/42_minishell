@@ -27,7 +27,13 @@ SRCS =	main.c					\
 		env_utils.c				\
 		env_utils_2.c			\
 		left_redirection.c		\
-		ft_open.c
+		ft_open.c				\
+		cmd_handler.c			\
+		misc.c					\
+		left_delimiter.c		\
+		and_handler.c			\
+		or_handler.c			\
+		pipe_handler.c
 
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 

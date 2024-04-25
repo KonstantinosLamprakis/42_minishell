@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 09:29:34 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 13:13:15 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static int	handle_found_encapsulator(t_token *token, char *str, int start,
 	token->op = -1;
 	if (enc == L_PARANTHESE)
 		token->end = token->start + endof_paranthese(str, start);
-	if (enc == L_CBRACKET)
-		token->end = token->start + endof_cbrackets(str, start);
-	if (enc == L_BRACKET)
-		token->end = token->start + endof_brackets(str, start);
+	// if (enc == L_CBRACKET)
+	// 	token->end = token->start + endof_cbrackets(str, start);
+	// if (enc == L_BRACKET)
+	// 	token->end = token->start + endof_brackets(str, start);
 	return (1);
 }
 
@@ -93,6 +93,7 @@ void	ft_parse(char *str)
 	t_token				token;
 	t_operator_handler	*handlers;
 	int					offset;
+	char				*sub;
 
 	/*	For printing purposes	*/
 	int		*lengths;
@@ -107,10 +108,23 @@ void	ft_parse(char *str)
 	token.str = str;
 	handlers = get_handlers();
 	printf("\n%s input: \"%s\"\n", (char *)__func__, str);
-	if (find_next_token(str, &token) >= 0)
+	if (ft_strlen_if(str, ft_iswspace) > 0 && find_next_token(str, &token) >= 0)
 	{
-		if (token.start < 0)
-			printf("No operators in \"%s\".\n", str);
+		if (token.start < 0 && printf("No operators in \"%s\".\n", str))
+		{
+			printf(DEBUG_START_HANDLER);
+			offset = handlers[OPERATOR_COUNT]((void *)&token);
+			printf(DEBUG_END_OF_HANDLER);
+			printf("Parser must skip %d char.\n", offset);
+			printf("Starting next iteration from %s\n", str + offset);
+			if (offset < 0)
+			{
+				if (*get_errno() != 0 && printf("Something went wrong in thep previous hanlder.\n"))
+					return ;
+				printf("The parsing finished without problem.\n");
+				return ;
+			}
+		}
 		else
 		{
 			printf("Next token is \"%s\"\n", str + token.start);
@@ -123,7 +137,9 @@ void	ft_parse(char *str)
 				printf("Operator found %d : %s.\n", token.op,
 						operators[token.op]);
 				printf("Executing %d's handler\n", token.op);
+				printf(DEBUG_START_HANDLER);
 				offset = handlers[token.op]((void *)&token);
+				printf(DEBUG_END_OF_HANDLER);
 				printf("Parser must skip %d char.\n", offset);
 				printf("Starting next iteration from %s\n", str + offset);
 				if (offset < 0)
@@ -136,8 +152,18 @@ void	ft_parse(char *str)
 				ft_parse(str + offset);
 			}
 			if ((int)token.enc >= 0)
+			{
 				printf("Encapsulator found %d : %s.\n", token.enc,
 						encapsulators[token.enc]);
+				printf("Encapsulator ends @ %d: %s\n", token.end, token.str + token.end);
+				sub = ft_substr(token.str, token.start + 1, token.end - token.start - 1);
+				if (!sub)
+					return (set_error((char *)__func__, ALLOC));
+				printf("sub = %s\n", sub);
+				ft_parse(sub);
+				free(sub);
+				ft_parse(str + token.end + 1);
+			}
 		}
 	}
 }

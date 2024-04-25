@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 09:14:56 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 10:21:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:07:54 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,28 @@ void	print_opened_fd(void)
 			printf("  |- %d: has been closed.\n", index);
 	}
 	print_std_fd();
+}
+
+void	print_environment(void)
+{
+	t_program	*program;
+	int			index;
+	int			offset;
+
+	program = get_program();
+	printf("Environment:\n");
+	index = -1;
+	while (program->envp[++index])
+	{
+		printf("  |- %s\n", program->envp[index]);
+		if (ft_strncmp(program->envp[index], "PATH=", 5) == 0)
+		{
+			offset = -1;
+			while (program->env_path[++offset])
+				printf("    |- %s\n", program->env_path[offset]);
+		}
+	}
+	printf("\n");
 }
 
 void	print_std_fd(void)

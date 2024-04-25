@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:06:29 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 10:45:10 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 08:00:16 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef enum e_errno
 	QUEUE_EMPTY,
 	SYNTAX,
 	DUP,
+	FORK,
+	COMMAND_NOT_FOUND,
 	ERR_COUNT
 }				t_errno;
 
@@ -44,6 +46,8 @@ typedef enum e_errno
 # define QUEUE_EMPTY_ERR "Queue is empty: "
 # define SYNTAX_ERR "Syntax error: "
 # define DUP_ERR "Error dupliacting file descriptors: "
+# define FORK_ERR "Error forking: "
+# define COMMAND_NOT_FOUND_ERR "Command not found: "
 
 int				*get_errno(void);
 void			set_errno(int err_value);

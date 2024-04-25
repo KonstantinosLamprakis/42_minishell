@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 07:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 09:02:18 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/23 09:54:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 # include "../ft_string/ft_string.h" // ft_strchr
 # ifndef SPACE
 #  define SPACE 32
+# endif
+
+# ifndef SQUOTE
+#  define SQUOTE '\''
+# endif
+
+# ifndef DQUOTE
+#  define DQUOTE '\"'
 # endif
 
 int	ft_islower(int c);
@@ -29,5 +37,8 @@ int	ft_isascii(int c);
 int	ft_isinbase(int c, char *base);
 int	ft_isinbasen(int c, char *base, int n);
 int	ft_isword(char *str, int (*is_sep)(int));
+int	ft_isquote(int c);
+int	ft_issquote(int c);
+int	ft_isdquote(int c);
 
 #endif
