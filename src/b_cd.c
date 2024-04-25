@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 17:57:40 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 19:31:12 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ static char	*remove_dot(char *path, int index);
 /*
 	Edge cases:
 		- cd
+			- after HOME is useted
 		- cd /../../../../../././././
 		- cd -
+		- cd ~
  */
 
 /**

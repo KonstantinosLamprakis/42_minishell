@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 19:02:32 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 08:53:24 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,17 @@
 /*
 	tester: https://github.com/zstenger93/42_minishell_tester
 	bugs:
+		- commands with uppercase -> not doing them, because they are
+		different  executables
 		- export name+=value(to existing and new ones vars)
 		- SHLVL: equal to +1 if valid or 1 if invalid(ex negative or string)
-		- CDPATH
-		- commands with uppercase
 		- error msgs to be the same
 		- check for mem leaks
 		- fix norminette
 		- ~ should give home dir even if HOME unseted
+		- TODO: replace ~ with value right before you call for builtins
 		- OLDPWD doesn't exists initally
-		- error when pwd takes args
+		- CDPATH
  */
 
 int	main(int argc, char *argv[], char *envp[])

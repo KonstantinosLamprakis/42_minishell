@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:36 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 18:07:53 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 19:30:28 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int	is_option_n(char *const argv[], int *i);
 		- echo
 		- echo -nnnnnnnadsfasdf -n -n -n test
 		- echo -asdfadsf
+		- echo ~
 */
 
 /**

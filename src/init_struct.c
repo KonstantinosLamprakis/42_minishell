@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 21:17:46 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/24 19:28:51 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,25 @@ static void	init_environment(t_program *program)
 void	init_struct(char **envp)
 {
 	t_program	*program;
+	char		*temp;
+	char		*home;
 
 	program = get_program();
 	create_envp(&(program->envp), envp);
+	del_from_envp(program->envp, "OLDPWD");
 	program->opened_count = 0;
-	// program->envp = envp;
 	program->exp_v = malloc(1 * sizeof(char *));
 	program->exp_v[0] = NULL;
 	program->loc_v = malloc(1 * sizeof(char *));
 	program->loc_v[0] = NULL;
+	home = get_env_value(program->envp, "HOME", NULL);
+	if (home)
+	{
+		temp = ft_strjoin("~=", home);
+		add_to_envp(&program->loc_v, temp, -1);
+		free(home);
+		free(temp);
+	}
 	program->status = 0;
 	init_environment(program);
 	if (*get_errno() != 0)
