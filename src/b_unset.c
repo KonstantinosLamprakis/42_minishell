@@ -6,13 +6,14 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:14 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 19:24:37 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:42:04 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 static int	unset_if_exists(char *key, char **ar);
+static void	unset_all_lists(char *key);
 
 /*
 	Edge cases:
@@ -34,45 +35,38 @@ static int	unset_if_exists(char *key, char **ar);
  */
 int	b_unset(char *const argv[], char *envp[])
 {
-	int			i;
-	char		**ar;
-	char		*temp;
-	t_program	*program;
+	int		i;
+	char	*temp;
 
 	envp = NULL;
 	if (!argv[1])
 		return (0);
 	if (argv[1][0] == '-')
 		return (printf("unset: -%c: invalid option\n", argv[1][1]), 1);
-	program = get_program();
 	if (argv[1][0] == '~' && argv[1][1] == '\0')
 	{
-		temp = get_env_value(program->loc_v, "~", NULL);
+		temp = get_env_value(get_program()->loc_v, "~", NULL);
 		if (!temp)
-		{
-			printf("unset: ~ not set\n");
-			return (1);
-		}
+			return (printf("unset: ~ not set\n"), 1);
 		printf("unset: `%s': not a valid identifier\n", temp);
-		free(temp);
-		return (1);
+		return (free(temp), 1);
 	}
 	i = 0;
 	while (argv[++i])
 	{
 		if (argv[i][0] == '-')
-		{
 			printf("unset: `%s': not a valid identifier\n", argv[i]);
-			continue ;
-		}
-		ar = program->envp;
-		unset_if_exists(argv[i], ar);
-		ar = program->loc_v;
-		unset_if_exists(argv[i], ar);
-		ar = program->exp_v;
-		unset_if_exists(argv[i], ar);
+		else
+			unset_all_lists(argv[i]);
 	}
 	return (0);
+}
+
+static void	unset_all_lists(char *key)
+{
+	unset_if_exists(key, get_program()->envp);
+	unset_if_exists(key, get_program()->loc_v);
+	unset_if_exists(key, get_program()->exp_v);
 }
 
 /**
