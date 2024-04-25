@@ -6,11 +6,13 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 19:28:51 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:35:30 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	update_shlvl(void);
 
 t_program	*get_program(void)
 {
@@ -108,7 +110,29 @@ void	init_struct(char **envp)
 		free(temp);
 	}
 	program->status = 0;
+	update_shlvl();
 	init_environment(program);
 	if (*get_errno() != 0)
 		return ;
+}
+
+static void	update_shlvl(void)
+{
+	char	*value;
+	int		i;
+	int		shlvl;
+
+	value = get_env_value(get_program()->envp, "SHLVL", NULL);
+	i = 0;
+	while (value[i] >= '0' && value[i] <= '9')
+		i++;
+	if (value[i] != '\0' || i > 10)
+		shlvl = 0;
+	else
+		shlvl = ft_atoi(value);
+	shlvl++;
+	free(value);
+	value = ft_itoa(shlvl);
+	replace_envp_key(&get_program()->envp, "SHLVL", value);
+	free(value);
 }
