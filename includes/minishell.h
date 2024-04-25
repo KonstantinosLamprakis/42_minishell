@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 13:00:35 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/25 10:37:03 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@
 # define HERE_DOC_FILE ".here_doc_tmp"
 # define HERE_DOC_PROMPT "heredoc> "
 
+# define PIPE_WRITE 1
+# define PIPE_READ 0
+
 typedef struct s_program
 {
 	char	**envp;
@@ -42,6 +45,7 @@ typedef struct s_program
 	int		opened_count;
 	int		std_fd[3];
 	char	*delimiter;
+	int		pipe_end[2];
 }				t_program;
 
 //			ENV_UTILS.c
@@ -84,8 +88,12 @@ void		and_operation(char *left_arg);
 int			or_handler(void *arg);
 void		or_operation(char *left_arg);
 
+int			pipe_handler(void *arg);
+void		pipe_operation(char *left_arg);
+
 //			COMMAND_RELATED
 
+char		*get_cmd(char **cmd_args);
 int			cmd_handler(void *arg);
 void		exec_cmd(char **cmd);
 

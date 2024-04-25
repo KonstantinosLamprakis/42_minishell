@@ -6,13 +6,13 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 11:31:55 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/25 10:36:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	*get_cmd(char **cmd_args)
+char	*get_cmd(char **cmd_args)
 {
 	t_program	*program;
 	char		*cmd;
