@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 07:41:02 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:44:55 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int			builtin_execve(const char *pathname, char *const argv[], \
 			char *envp[]);
 char		*get_line(void);
 
-//			BUILTIN DUNCS
+//			BUILTIN FUNCS
 int			b_cd(char *const argv[], char *envp[]);
 int			b_echo(char *const argv[], char *envp[]);
 int			b_pwd(char *const argv[], char *envp[]);
@@ -71,6 +71,11 @@ int			b_exit(char *const argv[], char *envp[]);
 int			b_export(char *const argv[], char *envp[]);
 int			b_unset(char *const argv[], char *envp[]);
 int			b_env(char *const argv[], char *envp[]);
+
+//			B_CD_UTILS
+char	*trim_slashes(char *str, int is_alocated);
+char		*remove_2_dots(char *path, int index);
+char		*remove_dot(char *path, int index);
 
 //			STRUCT_RELATED
 t_program	*get_program(void);

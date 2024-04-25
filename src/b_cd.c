@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 19:23:59 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:48:11 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 static char	*get_final_path(char *arg, char *envp[]);
 static char	*get_initial_path(char *path, char *envp[]);
-static char	*remove_2_dots(char *path, int index);
-static char	*remove_dot(char *path, int index);
-static char	*trim_slashes(char *str, int is_alocated);
+static char	*get_path(char *arg, char *envp[]);
+static int	change_dir(char *path, char **envp);
 
 /*
 	Edge cases:
@@ -40,7 +39,6 @@ static char	*trim_slashes(char *str, int is_alocated);
 int	b_cd(char *const argv[], char *envp[])
 {
 	char	*path;
-	char	*old_pwd;
 
 	envp = get_program()->envp;
 	if (argv[1] && argv[1][0] == '-' && argv[1][1] == '\0')
@@ -54,6 +52,18 @@ int	b_cd(char *const argv[], char *envp[])
 	path = trim_slashes(path, 1);
 	if (!path)
 		return (-1);
+	if (change_dir(path, envp) == -1)
+		return (-1);
+	if (argv[1] && argv[1][0] == '-' && argv[1][1] == '\0')
+		printf("%s\n", path);
+	free(path);
+	return (0);
+}
+
+static int	change_dir(char *path, char **envp)
+{
+	char	*old_pwd;
+
 	if (chdir(path) == -1)
 	{
 		printf ("cd: %s: No such file or directory\n", path);
@@ -68,95 +78,7 @@ int	b_cd(char *const argv[], char *envp[])
 	if (path[ft_strlen(path) - 1] == '/' && ft_strlen(path) > 1)
 		path[ft_strlen(path) - 1] = '\0';
 	replace_envp_key(&get_program()->envp, "PWD", path);
-	if (argv[1] && argv[1][0] == '-' && argv[1][1] == '\0')
-		printf("%s\n", path);
-	free(path);
-	return (0);
-}
-
-/**
- * @brief Get the final path after geting initiale one
- * and replace .., . and relative to absolute
- *
- * @param path
- * @param envp
- * @return char*
- */
-static char	*get_final_path(char *arg, char *envp[])
-{
-	char	*temp;
-	char	*path;
-	int		i;
-
-	arg = trim_slashes(arg, 0);
-	temp = get_initial_path(arg, envp);
-	if (!temp)
-		return (NULL);
-	if (arg && (arg[0] == '/' || arg[0] == '~'))
-		path = ft_strjoin(temp, arg + 1);
-	else if (arg)
-		path = ft_strjoin(temp, arg);
-	else
-		path = ft_strdup(temp);
-	i = -1;
-	while (path[++i] != '\0')
-	{
-		if (path[i] == '/' && path[i + 1] == '.' && path[i + 2] == '.' \
-		&& (path[i + 3] == '/' || path[i + 3] == '\0'))
-			path = remove_2_dots(path, i);
-		else if (path[i] == '/' && path[i + 1] == '.' \
-		&& (path[i + 2] == '/' || path[i + 2] == '\0'))
-			path = remove_dot(path, i + 1);
-		else
-			continue ;
-		i = -1;
-	}
-	free(arg);
-	return (free(temp), path);
-}
-
-/**
- * @brief trim multiple slashes // of str
- *
- * @param str
- * @param is_alocated it frees the str is this is 1
- * @return char* the returned str is alocated and should be freed,
- * NULL on error
- */
-static char	*trim_slashes(char *str, int is_alocated)
-{
-	int		i;
-	int		len;
-	int		j;
-	char	*new_str;
-
-	if (!str)
-		return (NULL);
-	len = 0;
-	i = -1;
-	while (str[++i])
-		len += (str[i] == '/' && str[i + 1] == '/');
-	len = ft_strlen(str) - len + 1;
-	new_str = malloc (sizeof(char) * len);
-	if (!new_str && is_alocated)
-	{
-		free(str);
-		return (set_error((char *)__func__, ALLOC), NULL);
-	}
-	else if (!new_str)
-		return (NULL);
-	i = -1;
-	j = 0;
-	while (str[++i])
-	{
-		if ((str[i] == '/' && str[i + 1] == '/'))
-			continue ;
-		new_str[j++] = str[i];
-	}
-	new_str[j] = '\0';
-	if (is_alocated)
-		free(str);
-	return (new_str);
+	return (1);
 }
 
 /**
@@ -195,70 +117,53 @@ static char	*get_initial_path(char *path, char *envp[])
 }
 
 /**
- * @brief create a new path, as result of the current one after removing ..
- * and navigating to the parrent folder
+ * @brief Get the final path after geting initiale one
+ * and replace .., . and relative to absolute
  *
- * @param path should be allocated, because this fucntion will free it
- * @param index the index of '/' char before 2 dots, ex. /../ or /..EOF
- * @return char* it is allocated and need to be freed
+ * @param path
+ * @param envp
+ * @return char*
  */
-static char	*remove_2_dots(char *path, int index)
+static char	*get_final_path(char *arg, char *envp[])
 {
+	char	*path;
 	int		i;
-	int		j;
-	int		start;
-	char	*result;
 
-	start = index - 1;
-	while (start > 0 && path[start] != '/')
-		start--;
-	result = malloc((ft_strlen(path) - (path[index + 3] == '/') \
-	- 1 - ((index - start - 1) * (start != -1))) * sizeof(char));
-	if (!result)
-		return (set_error((char *)__func__, ALLOC), NULL);
+	path = get_path(arg, envp);
+	if (!path)
+		return (NULL);
 	i = -1;
-	j = 0;
 	while (path[++i] != '\0')
 	{
-		if (i > start && i <= index + 2 && i != 0)
+		if (path[i] == '/' && path[i + 1] == '.' && path[i + 2] == '.' \
+		&& (path[i + 3] == '/' || path[i + 3] == '\0'))
+			path = remove_2_dots(path, i);
+		else if (path[i] == '/' && path[i + 1] == '.' \
+		&& (path[i + 2] == '/' || path[i + 2] == '\0'))
+			path = remove_dot(path, i + 1);
+		else
 			continue ;
-		if (i == index + 3 && path[i] == '/')
-			continue ;
-		result[j++] = path[i];
+		i = -1;
 	}
-	result[j] = '\0';
-	free(path);
-	return (result);
+	return (path);
 }
 
-/**
- * @brief create a new path, as result of the current one after removing .
- *
- * @param path should be allocated, because this fucntion will free it
- * @param index the index of '.' char before dot ex. /./ or /.EOF
- * @return char* it is allocated and need to be freed
- */
-static char	*remove_dot(char *path, int index)
+static char	*get_path(char *arg, char *envp[])
 {
-	int		i;
-	int		j;
-	char	*result;
+	char	*temp;
+	char	*path;
 
-	result = malloc((ft_strlen(path) - (path[index + 1] == '/')) \
-	* sizeof(char));
-	if (!result)
-		return (set_error((char *)__func__, ALLOC), NULL);
-	i = -1;
-	j = 0;
-	while (path[++i] != '\0')
-	{
-		if (i == index)
-			continue ;
-		if (i == index + 1 && path[i] == '/')
-			continue ;
-		result[j++] = path[i];
-	}
-	result[j] = '\0';
-	free(path);
-	return (result);
+	arg = trim_slashes(arg, 0);
+	temp = get_initial_path(arg, envp);
+	if (!temp)
+		return (NULL);
+	if (arg && (arg[0] == '/' || arg[0] == '~'))
+		path = ft_strjoin(temp, arg + 1);
+	else if (arg)
+		path = ft_strjoin(temp, arg);
+	else
+		path = ft_strdup(temp);
+	free(temp);
+	free(arg);
+	return (path);
 }
