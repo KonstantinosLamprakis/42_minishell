@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 19:19:39 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:24:25 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ static void	sort_array(char **ar)
 	int		swaped;
 
 	if (!ar || !ar[0] || !ar[1])
-		return;
+		return ;
 	i = 0;
 	swaped = 1;
 	while (ar[i] && swaped)

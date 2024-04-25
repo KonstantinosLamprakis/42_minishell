@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:00:08 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 17:23:41 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:25:37 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ void	free_arr(void **arr, int is_alloc)
 		return ;
 	while (arr[++i])
 		free(arr[i]);
-	// if (arr)
-	// 	while (*arr)
-	// 		free(*arr++);
 	if (is_alloc)
 		free(arr);
 }

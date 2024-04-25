@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 16:15:10 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:23:59 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,8 @@ static char	*trim_slashes(char *str, int is_alocated)
 	len = 0;
 	i = -1;
 	while (str[++i])
-		len += (str[i] == '/' && str[i + 1]== '/');
-	len = ft_strlen(str) - len  + 1;
+		len += (str[i] == '/' && str[i + 1] == '/');
+	len = ft_strlen(str) - len + 1;
 	new_str = malloc (sizeof(char) * len);
 	if (!new_str && is_alocated)
 	{
@@ -149,8 +149,8 @@ static char	*trim_slashes(char *str, int is_alocated)
 	j = 0;
 	while (str[++i])
 	{
-		if ((str[i] == '/' && str[i + 1]== '/'))
-			continue;
+		if ((str[i] == '/' && str[i + 1] == '/'))
+			continue ;
 		new_str[j++] = str[i];
 	}
 	new_str[j] = '\0';
@@ -190,9 +190,7 @@ static char	*get_initial_path(char *path, char *envp[])
 	}
 	temp = get_env_value(envp, "PWD", "/");
 	if (!temp)
-		return(printf("cd: PWD not set\n"), NULL);
-	// if (temp[0] == '/' && temp[1] == '/')
-	// 	return (free(temp), get_env_value(envp, "PWD", NULL));
+		return (printf("cd: PWD not set\n"), NULL);
 	return (temp);
 }
 

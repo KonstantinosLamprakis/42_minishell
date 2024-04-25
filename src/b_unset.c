@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:14 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 16:35:58 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:24:37 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	b_unset(char *const argv[], char *envp[])
 		if (argv[i][0] == '-')
 		{
 			printf("unset: `%s': not a valid identifier\n", argv[i]);
-			continue;
+			continue ;
 		}
 		ar = program->envp;
 		unset_if_exists(argv[i], ar);
