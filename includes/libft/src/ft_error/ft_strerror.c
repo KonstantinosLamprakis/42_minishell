@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:09:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/18 09:43:51 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 08:00:30 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	**get_strerror(void)
 	error_messages[QUEUE_EMPTY] = QUEUE_EMPTY_ERR;
 	error_messages[SYNTAX] = SYNTAX_ERR;
 	error_messages[DUP] = DUP_ERR;
+	error_messages[FORK] = FORK_ERR;
+	error_messages[COMMAND_NOT_FOUND] = COMMAND_NOT_FOUND_ERR;
 	return (error_messages);
 }
 

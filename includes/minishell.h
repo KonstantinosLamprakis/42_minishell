@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 21:31:00 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:57:46 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@
 	that they are not displayed at normal "env", only at "export"
 	status: the status of the last command that excecuted
  */
+# ifndef CHILD_PROCESS
+#  define CHILD_PROCESS 0
+# endif
+
+# define HERE_DOC_FILE ".here_doc_tmp"
+# define HERE_DOC_PROMPT "heredoc> "
+
+# define PIPE_WRITE 1
+# define PIPE_READ 0
+
 typedef struct s_program
 {
 	char	**envp;
@@ -46,6 +56,8 @@ typedef struct s_program
 	int		opened_files[OPEN_MAX];
 	int		opened_count;
 	int		std_fd[3];
+	char	*delimiter;
+	int		pipe_end[2];
 }				t_program;
 
 //			ENV_UTILS.c
@@ -90,16 +102,35 @@ void		clean_struct(void);
 //			QUIT_UTILS.c
 void		free_arr(void **arr, int is_alloc);
 int			ft_open(char *file_name, int flags, int mode);
+int			ft_open_first(char *file_name, int flags, int mode);
 
 //			CLEAN_STRUCT.c
 void		clean_struct(void);
 
-//			OPERATORS
-// int			l_redirect_handler(void *arg);
+int			l_redirect_handler(void *arg);
 void		left_redirection(char *arg, char *left_arg);
+
+int			l_delimiter_handler(void *arg);
+void		left_delimiter(char *arg, char *left_arg);
+
+int			and_handler(void *arg);
+void		and_operation(char *left_arg);
+
+int			or_handler(void *arg);
+void		or_operation(char *left_arg);
+
+int			pipe_handler(void *arg);
+void		pipe_operation(char *left_arg);
+
+//			COMMAND_RELATED
+
+char		*get_cmd(char **cmd_args);
+int			cmd_handler(void *arg);
+void		exec_cmd(char **cmd);
 
 //			MISC.c
 void		print_opened_fd(void);
 void		print_std_fd(void);
+void		print_environment(void);
 
 #endif

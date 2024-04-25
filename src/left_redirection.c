@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 16:41:08 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:59:08 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 // 	if (!tmp)
 // 		return (set_error((char *)__func__, ALLOC), -1);
 // 	right_arg = ft_strtrim_if(tmp, ft_iswspace);
+// 	free(tmp);
 // 	if (!right_arg)
 // 		return (-1);
 // 	printf("  |- right_arg = %s\n\n", right_arg);
@@ -50,7 +51,7 @@
 // 	if (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) == NULL)
 // 		return (-1);
 // 	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) - token->str) + ft_strlen(right_arg);
-// 	return (free(tmp), offset);
+// 	return (offset);
 // }
 
 /**
@@ -71,7 +72,7 @@ void	left_redirection(char *arg, char *left_arg)
 			set_error((char *)__func__, OPEN));
 	if (!left_arg)
 	{
-		printf("Redirecting %d to %d\n\n", right_fd, STDIN);
+		printf("Redirecting %d (%s) to %d\n\n", right_fd, arg, STDIN);
 		if (dup2(right_fd, STDIN) < 0)
 			return (set_error((char *)__func__, DUP));
 	}

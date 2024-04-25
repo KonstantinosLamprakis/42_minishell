@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strlen_if.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 20:24:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 08:40:20 by lgreau           ###   ########.fr       */
+/*   Created: 2024/04/24 09:47:32 by lgreau            #+#    #+#             */
+/*   Updated: 2024/04/24 09:49:49 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+/**
+ * @brief Returns the lenght of what a trimmed str by cmp would be
+ *
+ * @param str
+ * @param cmp
+ * @return size_t
+ */
+size_t	ft_strlen_if(char *str, int (*cmp)(int))
 {
-	char	*ptr;
-	size_t	offset;
+	size_t	len;
+	char	*tmp;
 
-	if (!*needle)
-		return ((char *)haystack);
-	ptr = (char *)haystack;
-	offset = 0;
-	while (*ptr && len)
-	{
-		if (*ptr == *needle)
-		{
-			offset = 0;
-			while (ptr[offset] && ptr[offset] == needle[offset] && (len
-					- offset))
-				offset++;
-			if (!needle[offset])
-				return (ptr);
-		}
-		ptr++;
-	}
-	return (NULL);
+	if (!str || !cmp)
+		return (set_error((char *)__func__, INVALID_ARG), 0);
+	tmp = ft_strtrim_if(str, cmp);
+	if (!tmp)
+		return (set_error((char *)__func__, ALLOC), 0);
+	len = ft_strlen(tmp);
+	return (free(tmp), len);
 }

@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strchr_if.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 20:24:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 08:40:20 by lgreau           ###   ########.fr       */
+/*   Created: 2024/04/23 13:43:16 by lgreau            #+#    #+#             */
+/*   Updated: 2024/04/23 13:44:32 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+/**
+ * @brief Returns the pointer the first char in str that returns 1 with cmp
+ *
+ * @param str
+ * @param cmp
+ * @return char*
+ */
+char	*ft_strchr_if(char *str, int (*cmp)(int))
 {
-	char	*ptr;
-	size_t	offset;
+	int	index;
 
-	if (!*needle)
-		return ((char *)haystack);
-	ptr = (char *)haystack;
-	offset = 0;
-	while (*ptr && len)
-	{
-		if (*ptr == *needle)
-		{
-			offset = 0;
-			while (ptr[offset] && ptr[offset] == needle[offset] && (len
-					- offset))
-				offset++;
-			if (!needle[offset])
-				return (ptr);
-		}
-		ptr++;
-	}
-	return (NULL);
+	index = -1;
+	while (str[++index])
+		if ((*cmp)(str[index]))
+			break ;
+	return (str + index);
 }

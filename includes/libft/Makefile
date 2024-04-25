@@ -27,7 +27,8 @@ FT_CHAR_SRCS =	ft_islower.c				\
 				ft_isinbase.c				\
 				ft_toupper.c				\
 				ft_tolower.c				\
-				ft_isword.c
+				ft_isword.c					\
+				ft_isquote.c
 FT_CHAR_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_CHAR_SRCS}}
 
 FT_STRING_SRCS =	ft_strlen.c					\
@@ -53,7 +54,11 @@ FT_STRING_SRCS =	ft_strlen.c					\
 					ft_strtrim_if.c				\
 					ft_substr_if.c				\
 					ft_strskip.c				\
-					ft_getnth_word.c
+					ft_getnth_word.c			\
+					ft_fctsplit.c				\
+					ft_escsplit.c				\
+					ft_strchr_if.c				\
+					ft_strlen_if.c
 FT_STRING_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_STRING_SRCS}}
 
 FT_MEMORY_SRCS =	ft_memchr.c				\

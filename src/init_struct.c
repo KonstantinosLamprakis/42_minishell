@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 12:39:11 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 22:01:15 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,14 @@ static void	save_std_fd(t_program *program)
 static void	get_env_paths(t_program *program)
 {
 	char	*line;
-	int		index;
 
-	line = NULL;
-	index = -1;
-	while (program->envp[++index])
-	{
-		if (ft_strncmp(program->envp[index], "PATH=", 5) == 0)
-		{
-			line = ft_substr(program->envp[index], 5,
-					ft_strlen(program->envp[index] - 5));
-			if (!line)
-				return (set_error((char *)__func__, ALLOC));
-			break ;
-		}
-	}
+	line = get_env_value(program->envp, "PATH", NULL);
+	if (!line)
+		return (set_error((char *)__func__, INVALID_ARG));
 	program->env_path = ft_split(line, ':');
-	if (!program->env_path)
-		return (free(line), set_error((char *)__func__, ALLOC));
 	free(line);
+	if (!program->env_path)
+		return (set_error((char *)__func__, ALLOC));
 }
 
 /**

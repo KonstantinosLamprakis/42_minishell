@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 08:21:20 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/17 08:55:17 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 09:39:16 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 static int	ft_is_doperator(const char *str, t_operators op)
 {
 	if (op == AND)
-		return (ft_strnstr(str, AND_OP, 2) != NULL);
+		return (ft_strncmp(str, AND_OP, 2) == 0);
 	if (op == OR)
-		return (ft_strnstr(str, OR_OP, 2) != NULL);
+		return (ft_strncmp(str, OR_OP, 2) == 0);
 	if (op == L_DELIMITER)
-		return (ft_strnstr(str, L_DELIMITER_OP, 2) != NULL);
+		return (ft_strncmp(str, L_DELIMITER_OP, 2) == 0);
 	if (op == R_APPEND)
-		return (ft_strnstr(str, R_APPEND_OP, 2) != NULL);
+		return (ft_strncmp(str, R_APPEND_OP, 2) == 0);
 	return (-1);
 }
 
@@ -57,7 +57,7 @@ int	ft_which_op(char *str)
 
 	index = -1;
 	while (++index < OPERATOR_COUNT)
-		if (ft_is_operator(str, index))
+		if (ft_is_operator(str, index) > 0)
 			return (index);
 	return (-1);
 }

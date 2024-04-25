@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:44:37 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/19 13:39:01 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/23 10:14:54 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_getnth_word(char *str, int n, int (*is_sep)(int), int (*cmp)(int))
 		return (set_error((char *)__func__, INVALID_ARG), NULL);
 	index = -1;
 	n -= !(*is_sep)(str[0]);
-	start = !(*is_sep)(str[0]);
+	start = (*is_sep)(str[0]);
 	while (str[++index] && n >= 0)
 	{
 		if (ft_isword(str + index, is_sep))
