@@ -20,6 +20,7 @@ SRCS =	main.c					\
 		b_env.c					\
 		b_exit.c				\
 		b_export.c				\
+		b_export_utils.c		\
 		b_pwd.c					\
 		b_unset.c				\
 		utils.c					\

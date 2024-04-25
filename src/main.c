@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 19:25:20 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:34:50 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 /*
 	tester: https://github.com/zstenger93/42_minishell_tester
 	bugs:
-		- check for mem leaks
-		- fix norminette
+		- export test="" -> adds multiple "", same export test="test1"
 		- echo "          f    fg " -> should modify split
 	todo: function ft_free to free only if is not NULL
  */

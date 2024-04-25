@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 19:44:55 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:31:00 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,14 @@ int			b_unset(char *const argv[], char *envp[]);
 int			b_env(char *const argv[], char *envp[]);
 
 //			B_CD_UTILS
-char	*trim_slashes(char *str, int is_alocated);
+char		*trim_slashes(char *str, int is_alocated);
 char		*remove_2_dots(char *path, int index);
 char		*remove_dot(char *path, int index);
+
+//			B_EXPORT_UTILS
+void		sort_array(char **ar);
+void		print_record(char *rec);
+void		print_sorted(char **p_envp, char **p_exp_v);
 
 //			STRUCT_RELATED
 t_program	*get_program(void);
