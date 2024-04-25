@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 18:28:17 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:19:39 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,8 +176,8 @@ static void	print_sorted(char **p_envp, char **p_exp_v)
 		else
 			print_record(exp_v[j++]);
 	}
-	free(envp);
-	free(exp_v);
+	free_arr((void *)envp, 1);
+	free_arr((void *)exp_v, 1);
 }
 
 /**
