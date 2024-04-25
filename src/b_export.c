@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 10:59:14 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 12:30:23 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	b_export(char *const argv[], char *envp[])
 			del_from_envp(program->exp_v, key);
 			del_from_envp(program->loc_v, key);
 			replace_envp_key(&program->envp, key, value);
+			free(value);
 		}
 		else if (argv[i][j] == '=')
 		{
@@ -114,6 +115,7 @@ int	b_export(char *const argv[], char *envp[])
 			del_from_envp(program->exp_v, key);
 			del_from_envp(program->loc_v, key);
 			replace_envp_key(&program->envp, key, value);
+			free(value);
 		}
 		else
 		{
@@ -123,11 +125,18 @@ int	b_export(char *const argv[], char *envp[])
 			{
 				del_from_envp(program->loc_v, key);
 				replace_envp_key(&program->envp, key, value);
+				free(value);
 			}
-			else if (!get_env_value(program->envp, key, NULL))
+			else
 			{
-				del_from_envp(program->exp_v, key);
-				add_to_envp(&program->exp_v, key, -1);
+				value = get_env_value(program->envp, key, NULL);
+				if (!value)
+				{
+					del_from_envp(program->exp_v, key);
+					add_to_envp(&program->exp_v, key, -1);
+				}
+				else
+					free(value);
 			}
 		}
 	}

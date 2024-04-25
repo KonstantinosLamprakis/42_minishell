@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:21:09 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 10:12:14 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 12:13:44 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,12 +161,12 @@ void	replace_envp_key(char ***envp, char *key, char *new_value)
 	char	*temp;
 	int		pos;
 
-	if (!envp || !*envp || !key || !new_value)
+	if (!envp || !*envp || !key)
 		return ;
 	temp = ft_strjoin_3(key, "=", new_value);
 	pos = del_from_envp(*envp, key);
 	if (pos == -1 && ft_strcmp("OLDPWD", key) == 0)
-		pos = 17;
+		pos = 0;
 	add_to_envp(envp, temp, pos);
 	free(temp);
 }

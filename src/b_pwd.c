@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:19 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 08:52:36 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 12:33:29 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int	b_pwd(char *const argv[], char *envp[])
 	}
 	path = get_env_value(envp, "PWD", NULL);
 	if (!path)
+	{
+		printf("pwd: PWD not set\n");
 		return (-1);
+	}
 	printf("%s\n", path);
 	free(path);
 	return (0);

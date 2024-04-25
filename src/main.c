@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 11:00:09 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 12:28:24 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 		- check for mem leaks
 		- fix norminette
 		- echo "          f    fg " -> should modify split
+	todo: function ft_free to free only if is not NULL
  */
 
 int	main(int argc, char *argv[], char *envp[])

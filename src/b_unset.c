@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:14 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 07:37:38 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:35:58 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static int	unset_if_exists(char *key, char **ar);
 		- unset [name] [name2] ...
 			- delete every name if exists from any place, local, env, exported
 			- if name doesn't exists just continue
-		- unset -adsfds : wrong options, return 1
-		- unset dasf -asdf: wrong identifier, return 1
+		- unset -adsfds : -a: invalid option, return 1
+		- unset dasf -asdf: not a valid identifier, return 1
  */
 
 /**
@@ -36,19 +36,35 @@ int	b_unset(char *const argv[], char *envp[])
 {
 	int			i;
 	char		**ar;
+	char		*temp;
 	t_program	*program;
 
 	envp = NULL;
 	if (!argv[1])
 		return (0);
 	if (argv[1][0] == '-')
-		return (printf("Error: not valid option\n"), 1);
+		return (printf("unset: -%c: invalid option\n", argv[1][1]), 1);
 	program = get_program();
+	if (argv[1][0] == '~' && argv[1][1] == '\0')
+	{
+		temp = get_env_value(program->loc_v, "~", NULL);
+		if (!temp)
+		{
+			printf("unset: ~ not set\n");
+			return (1);
+		}
+		printf("unset: `%s': not a valid identifier\n", temp);
+		free(temp);
+		return (1);
+	}
 	i = 0;
 	while (argv[++i])
 	{
 		if (argv[i][0] == '-')
-			return (printf("Error: not valid identifier\n"), 1);
+		{
+			printf("unset: `%s': not a valid identifier\n", argv[i]);
+			continue;
+		}
 		ar = program->envp;
 		unset_if_exists(argv[i], ar);
 		ar = program->loc_v;

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 12:00:33 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 12:39:11 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ void	init_struct(char **envp)
 	program->opened_count = 0;
 	program->exp_v = malloc(1 * sizeof(char *));
 	if (!program->exp_v)
-		return (set_error((char *)__func__, ALLOC), NULL);
+		return (set_error((char *)__func__, ALLOC));
 	program->exp_v[0] = NULL;
 	program->loc_v = malloc(1 * sizeof(char *));
 	if (!program->loc_v)
-		return (set_error((char *)__func__, ALLOC), NULL);
+		return (set_error((char *)__func__, ALLOC));
 	program->loc_v[0] = NULL;
 	home = get_env_value(program->envp, "HOME", NULL);
 	if (home)
@@ -127,6 +127,11 @@ static void	update_shlvl(void)
 	int		shlvl;
 
 	value = get_env_value(get_program()->envp, "SHLVL", NULL);
+	if (!value)
+	{
+		replace_envp_key(&get_program()->envp, "SHLVL", "1");
+		return ;
+	}
 	i = 0;
 	while (value[i] >= '0' && value[i] <= '9')
 		i++;

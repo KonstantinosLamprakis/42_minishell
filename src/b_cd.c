@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 11:59:31 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:15:10 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,27 @@ int	b_cd(char *const argv[], char *envp[])
 
 	envp = get_program()->envp;
 	if (argv[1] && argv[1][0] == '-' && argv[1][1] == '\0')
+	{
 		path = get_env_value(envp, "OLDPWD", "/");
+		if (!path)
+			return (printf("cd: OLDPWD not set\n"), -1);
+	}
 	else
 		path = get_final_path(argv[1], envp);
 	path = trim_slashes(path, 1);
+	if (!path)
+		return (-1);
 	if (chdir(path) == -1)
 	{
-		printf ("Error moving to %s\n", path);
-		free(path);
+		printf ("cd: %s: No such file or directory\n", path);
+		if (path)
+			free(path);
 		return (-1);
 	}
 	old_pwd = get_env_value(envp, "PWD", NULL);
-	if (!old_pwd)
-		return (free(path), -1);
 	replace_envp_key(&get_program()->envp, "OLDPWD", old_pwd);
-	free(old_pwd);
+	if (old_pwd)
+		free(old_pwd);
 	if (path[ft_strlen(path) - 1] == '/' && ft_strlen(path) > 1)
 		path[ft_strlen(path) - 1] = '\0';
 	replace_envp_key(&get_program()->envp, "PWD", path);
@@ -84,6 +90,8 @@ static char	*get_final_path(char *arg, char *envp[])
 
 	arg = trim_slashes(arg, 0);
 	temp = get_initial_path(arg, envp);
+	if (!temp)
+		return (NULL);
 	if (arg && (arg[0] == '/' || arg[0] == '~'))
 		path = ft_strjoin(temp, arg + 1);
 	else if (arg)
@@ -165,14 +173,26 @@ static char	*get_initial_path(char *path, char *envp[])
 	char	*temp;
 
 	if (!path)
-		return (get_env_value(envp, "HOME", "/"));
+	{
+		temp = get_env_value(envp, "HOME", "/");
+		if (!temp)
+			printf("cd: HOME not set\n");
+		return (temp);
+	}
 	if (path[0] == '/')
 		return (ft_strdup("/"));
 	if (path[0] == '~')
-		return (get_env_value(get_program()->loc_v, "~", "/"));
+	{
+		temp = get_env_value(get_program()->loc_v, "~", "/");
+		if (!temp)
+			printf("unset: ~ not set\n");
+		return (temp);
+	}
 	temp = get_env_value(envp, "PWD", "/");
-	if (temp[0] == '/' && temp[1] == '/')
-		return (free(temp), get_env_value(envp, "PWD", NULL));
+	if (!temp)
+		return(printf("cd: PWD not set\n"), NULL);
+	// if (temp[0] == '/' && temp[1] == '/')
+	// 	return (free(temp), get_env_value(envp, "PWD", NULL));
 	return (temp);
 }
 
