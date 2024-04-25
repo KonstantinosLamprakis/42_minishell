@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:02:48 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 21:58:00 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 22:06:41 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	clean_struct(void)
 
 	program = get_program();
 	close_files(program);
-	free_arr((void *)program->envp, 1);
-	free_arr((void *)program->loc_v, 1);
-	free_arr((void *)program->exp_v, 1);
-	free_arr((void *)program->env_path, 1);
+	free_arr(program->envp, 1);
+	free_arr(program->loc_v, 1);
+	free_arr(program->exp_v, 1);
+	free_arr(program->env_path, 1);
 }

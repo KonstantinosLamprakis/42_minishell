@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 22:02:22 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 22:06:41 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int argc, char *argv[], char *envp[])
 		cmd_ar = ft_split(line, ' ');
 		builtin_execve(cmd_ar[0], cmd_ar, program->envp);
 		free(line);
-		free_arr((void *)cmd_ar, 1);
+		free_arr(cmd_ar, 1);
 	}
 	set_handler(L_REDIRECT, l_redirect_handler);
 	set_handler(OPERATOR_COUNT, cmd_handler);

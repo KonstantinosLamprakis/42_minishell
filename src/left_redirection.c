@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 21:59:08 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 22:05:55 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,42 @@
  *
  * @param arg t_token received from the parser
  */
-// int	l_redirect_handler(void *arg)
-// {
-// 	t_token	*token;
-// 	char	*left_arg;
-// 	char	*right_arg;
-// 	char	*tmp;
-// 	int		offset;
+int	l_redirect_handler(void *arg)
+{
+	t_token	*token;
+	char	*left_arg;
+	char	*right_arg;
+	char	*tmp;
+	int		offset;
 
-// 	token = (t_token *)arg;
-// 	if (!token)
-// 		return (-1);
-// 	printf("\n%s: received token:\n", (char *)__func__);
-// 	printf("  |- string: %s\n", token->str);
-// 	printf("  |- start : %s\n", token->str + token->start);
-// 	left_arg = NULL;
-// 	if (token->start > 0)
-// 	{
-// 		left_arg = ft_substr_if(token->str, 0, token->start - 1, ft_iswspace);
-// 		if (!left_arg)
-// 			return (set_error((char *)__func__, ALLOC), -1);
-// 	}
-// 	printf("  |- left_arg  = %s\n", left_arg);
-// 	tmp = ft_getnth_word(token->str + token->start + 1, 1, ft_iswspace, NULL);
-// 	if (!tmp)
-// 		return (set_error((char *)__func__, ALLOC), -1);
-// 	right_arg = ft_strtrim_if(tmp, ft_iswspace);
-// 	free(tmp);
-// 	if (!right_arg)
-// 		return (-1);
-// 	printf("  |- right_arg = %s\n\n", right_arg);
-// 	left_redirection(right_arg, left_arg);
-// 	if (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) == NULL)
-// 		return (-1);
-// 	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) - token->str) + ft_strlen(right_arg);
-// 	return (offset);
-// }
+	token = (t_token *)arg;
+	if (!token)
+		return (-1);
+	printf("\n%s: received token:\n", (char *)__func__);
+	printf("  |- string: %s\n", token->str);
+	printf("  |- start : %s\n", token->str + token->start);
+	left_arg = NULL;
+	if (token->start > 0)
+	{
+		left_arg = ft_substr_if(token->str, 0, token->start - 1, ft_iswspace);
+		if (!left_arg)
+			return (set_error((char *)__func__, ALLOC), -1);
+	}
+	printf("  |- left_arg  = %s\n", left_arg);
+	tmp = ft_getnth_word(token->str + token->start + 1, 1, ft_iswspace, NULL);
+	if (!tmp)
+		return (set_error((char *)__func__, ALLOC), -1);
+	right_arg = ft_strtrim_if(tmp, ft_iswspace);
+	free(tmp);
+	if (!right_arg)
+		return (-1);
+	printf("  |- right_arg = %s\n\n", right_arg);
+	left_redirection(right_arg, left_arg);
+	if (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) == NULL)
+		return (-1);
+	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) - token->str) + ft_strlen(right_arg);
+	return (offset);
+}
 
 /**
  * @brief Redirect arg's file descriptor to stdin

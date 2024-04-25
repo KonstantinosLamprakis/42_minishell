@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 21:57:46 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 22:06:14 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void		init_struct(char **envp);
 void		clean_struct(void);
 
 //			QUIT_UTILS.c
-void		free_arr(void **arr, int is_alloc);
+void		free_arr(char **arr, int is_alloc);
 int			ft_open(char *file_name, int flags, int mode);
 int			ft_open_first(char *file_name, int flags, int mode);
 
