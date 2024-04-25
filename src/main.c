@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 10:06:04 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:25:50 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,13 @@
 /*
 	tester: https://github.com/zstenger93/42_minishell_tester
 	bugs:
-		- commands with uppercase -> not doing them, because they are
-		different  executables
 		- export name+=value(to existing and new ones vars)
 		- SHLVL: equal to +1 if valid or 1 if invalid(ex negative or string)
+		- fix cd without HOME and cd - without OLDPWD
 		- error msgs to be the same
 		- check for mem leaks
 		- fix norminette
-		- TODO: replace ~ with value right before you call for builtins
-		- OLDPWD doesn't exists initally~!!
-		- CDPATH
+		- echo "          f    fg " -> should modify split
  */
 
 int	main(int argc, char *argv[], char *envp[])
