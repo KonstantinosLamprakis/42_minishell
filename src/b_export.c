@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 12:30:23 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:28:17 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int	b_export(char *const argv[], char *envp[])
 					free(value);
 			}
 		}
+		free(key);
 	}
 	return (0);
 }
