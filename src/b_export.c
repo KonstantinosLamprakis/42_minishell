@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 17:44:27 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:59:14 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 			- same with export test=value
 		export
 			- just print env and exported vars but sorted
+		export name+=value
+			- equal to export name= if value is NULL
+			- equal to name=value if not name exists
+			- equal to name=cur_valuevalue
+			add value at the end of current value of name if name exits
  */
 
 #include "../includes/minishell.h"
@@ -49,6 +54,7 @@ int	b_export(char *const argv[], char *envp[])
 	int			j;
 	t_program	*program;
 	char		*key;
+	char		*temp;
 	char		*value;
 
 	envp = NULL;
@@ -58,6 +64,7 @@ int	b_export(char *const argv[], char *envp[])
 	i = 0;
 	while (argv[++i])
 	{
+		value = NULL;
 		if (!ft_isalpha(argv[i][0]))
 		{
 			printf("export: %s: not valid identifier\n", argv[i]);
@@ -66,29 +73,52 @@ int	b_export(char *const argv[], char *envp[])
 		j = 1;
 		while (ft_isalnum(argv[i][j]))
 			j++;
-		if (argv[i][j] != '=' && argv[i][j] != '\0')
+		if (argv[i][j] != '=' && argv[i][j] != '\0' && \
+		(argv[i][j] != '+' || argv[i][j + 1] != '='))
 		{
 			printf("export: %s: not valid identifier\n", argv[i]);
 			continue ;
 		}
 		key = ft_substr(argv[i], 0, j);
+		if (argv[i][j] == '+' && argv[i][j + 1] == '=')
+		{
+			if (argv[i][j + 2] == '\0')
+				j++;
+			else
+			{
+				temp = get_env_value(program->envp, key, NULL);
+				if (!temp)
+					temp = get_env_value(program->loc_v, key, NULL);
+				if (!temp)
+					j++;
+				else
+				{
+					value = ft_strjoin(temp, argv[i] + j + 2);
+					free(temp);
+					j++;
+				}
+			}
+		}
 		if (argv[i][j] == '=' && argv[i][j + 1] != '\0')
 		{
-			value = ft_substr(argv[i], j + 1, ft_strlen(argv[i]));
+			if (!value)
+				value = ft_substr(argv[i], j + 1, ft_strlen(argv[i]));
 			del_from_envp(program->exp_v, key);
 			del_from_envp(program->loc_v, key);
 			replace_envp_key(&program->envp, key, value);
 		}
 		else if (argv[i][j] == '=')
 		{
-			value = ft_strdup("");
+			if (!value)
+				value = ft_strdup("");
 			del_from_envp(program->exp_v, key);
 			del_from_envp(program->loc_v, key);
 			replace_envp_key(&program->envp, key, value);
 		}
 		else
 		{
-			value = get_env_value(program->loc_v, key, NULL);
+			if (!value)
+				value = get_env_value(program->loc_v, key, NULL);
 			if (value)
 			{
 				del_from_envp(program->loc_v, key);

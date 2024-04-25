@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 10:36:30 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 11:00:09 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /*
 	tester: https://github.com/zstenger93/42_minishell_tester
 	bugs:
-		- export name+=value(to existing and new ones vars)
 		- fix cd without HOME and cd - without OLDPWD
 		- error msgs to be the same
 		- check for mem leaks
