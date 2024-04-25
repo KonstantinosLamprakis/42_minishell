@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 09:38:30 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 09:45:56 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static char	*trim_slashes(char *str, int is_alocated);
 		- cd /../../../../../././././
 		- cd -
 		- cd ~
+			- even if home is unseted
 		- cd ../////../////
  */
 
@@ -41,7 +42,6 @@ int	b_cd(char *const argv[], char *envp[])
 	char	*path;
 	char	*old_pwd;
 
-	// TODO CDPATH implementation
 	envp = get_program()->envp;
 	if (argv[1] && argv[1][0] == '-' && argv[1][1] == '\0')
 		path = get_env_value(envp, "OLDPWD", "/");
@@ -107,6 +107,13 @@ static char	*get_final_path(char *arg, char *envp[])
 	return (free(temp), path);
 }
 
+/**
+ * @brief trim multiple slashes // of str
+ *
+ * @param str
+ * @param is_alocated it frees the str is this is 1
+ * @return char* the returned str is alocated and should be freed
+ */
 static char	*trim_slashes(char *str, int is_alocated)
 {
 	int		i;

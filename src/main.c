@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 09:37:47 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:06:04 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@
 		- error msgs to be the same
 		- check for mem leaks
 		- fix norminette
-		- ~ should give home dir even if HOME unseted
 		- TODO: replace ~ with value right before you call for builtins
-		- OLDPWD doesn't exists initally
+		- OLDPWD doesn't exists initally~!!
 		- CDPATH
  */
 

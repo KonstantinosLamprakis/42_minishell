@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:36 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 19:30:28 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 10:06:45 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	is_option_n(char *const argv[], int *i);
 		- echo -nnnnnnnadsfasdf -n -n -n test
 		- echo -asdfadsf
 		- echo ~
+			- even if home is unseted
 */
 
 /**
@@ -32,8 +33,10 @@ static int	is_option_n(char *const argv[], int *i);
  */
 int	b_echo(char *const argv[], char *envp[])
 {
-	int	is_n;
-	int	i;
+	int		is_n;
+	int		i;
+	char	*temp;
+	char	*str;
 
 	envp = NULL;
 	i = 0;
@@ -43,7 +46,16 @@ int	b_echo(char *const argv[], char *envp[])
 	i--;
 	while (argv[++i])
 	{
-		printf("%s", argv[i]);
+		if (argv[i][0] == '~' && argv[i][1] == '/')
+		{
+			temp = get_env_value(get_program()->loc_v, "~", NULL);
+			str = ft_strjoin(temp, argv[i] + 1);
+			printf("%s", str);
+			free(temp);
+			free(str);
+		}
+		else
+			printf("%s", argv[i]);
 		if (argv[i + 1])
 			printf(" ");
 	}
