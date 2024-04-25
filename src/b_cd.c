@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 09:45:56 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 11:59:31 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ static char	*get_final_path(char *arg, char *envp[])
  *
  * @param str
  * @param is_alocated it frees the str is this is 1
- * @return char* the returned str is alocated and should be freed
+ * @return char* the returned str is alocated and should be freed,
+ * NULL on error
  */
 static char	*trim_slashes(char *str, int is_alocated)
 {
@@ -130,7 +131,10 @@ static char	*trim_slashes(char *str, int is_alocated)
 	len = ft_strlen(str) - len  + 1;
 	new_str = malloc (sizeof(char) * len);
 	if (!new_str && is_alocated)
-		return (free(str), NULL);
+	{
+		free(str);
+		return (set_error((char *)__func__, ALLOC), NULL);
+	}
 	else if (!new_str)
 		return (NULL);
 	i = -1;
@@ -193,7 +197,7 @@ static char	*remove_2_dots(char *path, int index)
 	result = malloc((ft_strlen(path) - (path[index + 3] == '/') \
 	- 1 - ((index - start - 1) * (start != -1))) * sizeof(char));
 	if (!result)
-		return (NULL);
+		return (set_error((char *)__func__, ALLOC), NULL);
 	i = -1;
 	j = 0;
 	while (path[++i] != '\0')
@@ -225,7 +229,7 @@ static char	*remove_dot(char *path, int index)
 	result = malloc((ft_strlen(path) - (path[index + 1] == '/')) \
 	* sizeof(char));
 	if (!result)
-		return (NULL);
+		return (set_error((char *)__func__, ALLOC), NULL);
 	i = -1;
 	j = 0;
 	while (path[++i] != '\0')

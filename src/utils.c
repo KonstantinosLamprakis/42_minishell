@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 08:31:24 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 12:01:14 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,10 @@ static char	*trim_spaces_between(char *line_read, int start, int end)
 			count++;
 	result = malloc (sizeof(char) * (1 + end - start + 1 - count));
 	if (!result)
-		return (free(line_read), NULL);
+	{
+		free(line_read);
+		return (set_error((char *)__func__, ALLOC), NULL);
+	}
 	i = start - 1;
 	count = 0;
 	while (++i <= end)
