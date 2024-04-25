@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error_caller.c                                  :+:      :+:    :+:   */
+/*   ft_handlers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 07:23:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/16 10:33:17 by lgreau           ###   ########.fr       */
+/*   Created: 2024/04/18 10:41:32 by lgreau            #+#    #+#             */
+/*   Updated: 2024/04/19 13:45:19 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_error.h"
+#include "ft_parser.h"
 
-char	**get_error_caller(void)
+t_operator_handler	*get_handlers(void)
 {
-	static char	*error_caller = "";
+	static t_operator_handler	handlers[OPERATOR_COUNT + 1] = {0};
 
-	return (&error_caller);
+	return (&handlers[0]);
 }
 
-void	set_error_caller(char *caller_name)
+void	set_handler(t_operators op, t_operator_handler new_handler)
 {
-	char	**error_caller;
+	t_operator_handler	*handlers;
 
-	error_caller = get_error_caller();
-	*error_caller = caller_name;
+	handlers = get_handlers();
+	handlers[op] = new_handler;
 }

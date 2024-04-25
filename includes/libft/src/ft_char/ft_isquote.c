@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error_caller.c                                  :+:      :+:    :+:   */
+/*   ft_isquote.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 07:23:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/16 10:33:17 by lgreau           ###   ########.fr       */
+/*   Created: 2024/04/23 09:52:09 by lgreau            #+#    #+#             */
+/*   Updated: 2024/04/23 09:54:41 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_error.h"
+#include "ft_char.h"
 
-char	**get_error_caller(void)
+int	ft_issquote(int c)
 {
-	static char	*error_caller = "";
-
-	return (&error_caller);
+	return (c == '\'');
 }
 
-void	set_error_caller(char *caller_name)
+int	ft_isdquote(int c)
 {
-	char	**error_caller;
+	return (c == '\"');
+}
 
-	error_caller = get_error_caller();
-	*error_caller = caller_name;
+int	ft_isquote(int c)
+{
+	return (ft_issquote(c) || ft_isdquote(c));
 }

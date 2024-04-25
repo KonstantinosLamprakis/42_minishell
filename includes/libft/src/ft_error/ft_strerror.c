@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:09:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/14 12:46:17 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/24 08:00:30 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@ char	**get_strerror(void)
 	error_messages[INVALID_ARG] = INVALID_ARG_ERR;
 	error_messages[ALLOC] = ALLOC_ERR;
 	error_messages[OPEN] = OPEN_ERR;
+	error_messages[CLOSE] = CLOSE_ERR;
 	error_messages[READ] = READ_ERR;
 	error_messages[WRONG_ERRNO] = WRONG_ERRNO_ERR;
 	error_messages[BITMAP_MASK] = BITMAP_MASK_ERR;
 	error_messages[QUEUE_AT_CAPACITY] = QUEUE_AT_CAPACITY_ERR;
 	error_messages[QUEUE_EMPTY] = QUEUE_EMPTY_ERR;
+	error_messages[SYNTAX] = SYNTAX_ERR;
+	error_messages[DUP] = DUP_ERR;
+	error_messages[FORK] = FORK_ERR;
+	error_messages[COMMAND_NOT_FOUND] = COMMAND_NOT_FOUND_ERR;
 	return (error_messages);
 }
 
