@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/24 19:31:12 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 09:38:30 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static char	*get_final_path(char *arg, char *envp[]);
 static char	*get_initial_path(char *path, char *envp[]);
 static char	*remove_2_dots(char *path, int index);
 static char	*remove_dot(char *path, int index);
+static char	*trim_slashes(char *str, int is_alocated);
 
 /*
 	Edge cases:
@@ -24,6 +25,7 @@ static char	*remove_dot(char *path, int index);
 		- cd /../../../../../././././
 		- cd -
 		- cd ~
+		- cd ../////../////
  */
 
 /**
@@ -45,6 +47,7 @@ int	b_cd(char *const argv[], char *envp[])
 		path = get_env_value(envp, "OLDPWD", "/");
 	else
 		path = get_final_path(argv[1], envp);
+	path = trim_slashes(path, 1);
 	if (chdir(path) == -1)
 	{
 		printf ("Error moving to %s\n", path);
@@ -79,8 +82,9 @@ static char	*get_final_path(char *arg, char *envp[])
 	char	*path;
 	int		i;
 
+	arg = trim_slashes(arg, 0);
 	temp = get_initial_path(arg, envp);
-	if (arg && arg[0] == '/')
+	if (arg && (arg[0] == '/' || arg[0] == '~'))
 		path = ft_strjoin(temp, arg + 1);
 	else if (arg)
 		path = ft_strjoin(temp, arg);
@@ -99,7 +103,41 @@ static char	*get_final_path(char *arg, char *envp[])
 			continue ;
 		i = -1;
 	}
+	free(arg);
 	return (free(temp), path);
+}
+
+static char	*trim_slashes(char *str, int is_alocated)
+{
+	int		i;
+	int		len;
+	int		j;
+	char	*new_str;
+
+	if (!str)
+		return (NULL);
+	len = 0;
+	i = -1;
+	while (str[++i])
+		len += (str[i] == '/' && str[i + 1]== '/');
+	len = ft_strlen(str) - len  + 1;
+	new_str = malloc (sizeof(char) * len);
+	if (!new_str && is_alocated)
+		return (free(str), NULL);
+	else if (!new_str)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (str[++i])
+	{
+		if ((str[i] == '/' && str[i + 1]== '/'))
+			continue;
+		new_str[j++] = str[i];
+	}
+	new_str[j] = '\0';
+	if (is_alocated)
+		free(str);
+	return (new_str);
 }
 
 /**
@@ -119,6 +157,8 @@ static char	*get_initial_path(char *path, char *envp[])
 		return (get_env_value(envp, "HOME", "/"));
 	if (path[0] == '/')
 		return (ft_strdup("/"));
+	if (path[0] == '~')
+		return (get_env_value(get_program()->loc_v, "~", "/"));
 	temp = get_env_value(envp, "PWD", "/");
 	if (temp[0] == '/' && temp[1] == '/')
 		return (free(temp), get_env_value(envp, "PWD", NULL));
