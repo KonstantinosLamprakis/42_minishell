@@ -6,13 +6,14 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:36 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 16:11:29 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:55:05 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 static int	is_option_n(char *const argv[], int *i);
+static void	echo_arg(char *arg);
 
 /*
 	edge cases:
@@ -35,8 +36,6 @@ int	b_echo(char *const argv[], char *envp[])
 {
 	int		is_n;
 	int		i;
-	char	*temp;
-	char	*str;
 
 	envp = NULL;
 	i = 0;
@@ -46,22 +45,30 @@ int	b_echo(char *const argv[], char *envp[])
 	i--;
 	while (argv[++i])
 	{
-		if (argv[i][0] == '~' && (argv[i][1] == '/' || argv[i][1] == '\0'))
-		{
-			temp = get_env_value(get_program()->loc_v, "~", NULL);
-			str = ft_strjoin(temp, argv[i] + 1);
-			printf("%s", str);
-			free(temp);
-			free(str);
-		}
-		else
-			printf("%s", argv[i]);
+		echo_arg(argv[i]);
 		if (argv[i + 1])
 			printf(" ");
 	}
 	if (!is_n)
 		printf("\n");
 	return (0);
+}
+
+static void	echo_arg(char *arg)
+{
+	char	*temp;
+	char	*str;
+
+	if (arg[0] == '~' && (arg[1] == '/' || arg[1] == '\0'))
+	{
+		temp = get_env_value(get_program()->loc_v, "~", NULL);
+		str = ft_strjoin(temp, arg + 1);
+		printf("%s", str);
+		free(temp);
+		free(str);
+	}
+	else
+		printf("%s", arg);
 }
 
 /**
