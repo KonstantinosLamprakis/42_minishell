@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 09:45:06 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 10:04:58 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,21 @@ static char	*get_left_arg(t_token *token)
 			return (set_error((char *)__func__, ALLOC), NULL);
 	}
 	return (left_arg);
-	// tmp = ft_getnth_word(token->str + token->start + 2, 1, ft_iswspace, NULL);
-	// if (!tmp)
-	// 	return (set_error((char *)__func__, ALLOC));
-	// *right_arg = ft_strtrim_if(tmp, ft_iswspace);
-	// free(tmp);
-	// if (!*right_arg)
-	// 	return ;
+}
+
+static char	*get_right_arg(t_token *token)
+{
+	char	*tmp;
+	char	*right_arg;
+
+	tmp = ft_getnth_word(token->str + token->start + 2, 1, ft_iswspace, NULL);
+	if (!tmp)
+		return (set_error((char *)__func__, ALLOC), NULL);
+	right_arg = ft_strtrim_if(tmp, ft_iswspace);
+	free(tmp);
+	if (!right_arg)
+		return (NULL);
+	return (right_arg);
 }
 
 /**
@@ -49,6 +57,9 @@ int	l_delimiter_handler(void *arg)
 
 	token = (t_token *)arg;
 	left_arg = get_left_arg(token);
+	right_arg = get_right_arg(token);
+	printf("  |- left_arg   = %s\n", left_arg);
+	printf("  |- right_arg  = %s\n", right_arg);
 	if (*get_errno() != 0)
 		return (-1);
 
