@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 13:39:02 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:50:56 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,9 @@ int	cmd_handler(void *arg)
 	char	**cmd;
 
 	token = (t_token *)arg;
-	//printf("\n%s: received token:\n", (char *)__func__);
-	//printf("  |- string: %s\n", token->str);
 	cmd = ft_escsplit(token->str, ft_iswspace, ft_isquote);
-	//printf("  |- cmd:\n");
-	// if (cmd)
-	// {
-	// 	int	i = -1;
-	// 	while (cmd[++i])
-	// 		printf("    |- cmd[%d] = %s\n", i, cmd[i]);
-	// }
-	//printf("\n");
+	if (!cmd)
+		return (-1);
 	exec_cmd(cmd);
 	free_arr(cmd, 1);
 	return (-1);
@@ -71,7 +63,7 @@ void	exec_cmd(char **cmd_args)
 	else
 		cmd = cmd_args[0];
 	if (!cmd)
-		return (set_error((char *)__func__, INVALID_ARG));
+		return ;
 	program = get_program();
 	child = fork();
 	if (child < 0)

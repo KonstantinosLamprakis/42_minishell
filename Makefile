@@ -35,7 +35,9 @@ SRCS =	main.c					\
 		or_handler.c			\
 		signals.c				\
 		pipe_handler.c			\
-		reset_struct.c
+		reset_struct.c			\
+		right_redirection.c		\
+		right_append.c
 
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 

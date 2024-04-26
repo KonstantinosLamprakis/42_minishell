@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:17:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 09:16:07 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 12:07:14 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	exec_pipe_cmd(char **left_cmd_args)
 		return (set_error((char *)__func__, FORK));
 	if (child == CHILD_PROCESS)
 	{
-		printf("Redirecting pipe_write_end to %d\n", STDOUT);
 		if (dup2(program->pipe_end[PIPE_WRITE], STDOUT) < 0)
 			return (set_error((char *)__func__, DUP));
 		close(program->pipe_end[PIPE_READ]);
@@ -43,11 +42,6 @@ int	pipe_handler(void *arg)
 	char	*left_arg;
 
 	token = (t_token *)arg;
-
-	printf("\n%s: received token:\n", (char *)__func__);
-	printf("  |- string: %s\n", token->str);
-	printf("  |- start : %s\n", token->str + token->start);
-
 	left_arg = NULL;
 	if (token->start > 0)
 	{
@@ -55,10 +49,6 @@ int	pipe_handler(void *arg)
 		if (!left_arg)
 			return (set_error((char *)__func__, ALLOC), -1);
 	}
-	printf("  |- left_arg  = %s\n", left_arg);
-
-	printf("\n");
-
 	pipe_operation(left_arg);
 	if (left_arg)
 		free(left_arg);
@@ -78,7 +68,6 @@ void	pipe_operation(char *left_arg)
 	exec_pipe_cmd(cmd_args);
 	free_arr(cmd_args, 1);
 	close(program->pipe_end[PIPE_WRITE]);
-	printf("Redirecting pipe_read_end to %d\n", STDIN);
 	if (dup2(program->pipe_end[PIPE_READ], STDIN) < 0)
 		return (set_error((char *)__func__, DUP));
 }

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 09:14:56 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 15:07:54 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 12:08:15 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	print_opened_fd(void)
 	int			count;
 
 	program = get_program();
-	printf("\nOpenend files table:\t(%d opened files)\n", program->opened_count);
+	printf("\nOpenend files table:\t(%d opened files)\n",
+			program->opened_count);
 	index = -1;
 	count = program->opened_count;
 	while (++index >= 0 && count > 0)

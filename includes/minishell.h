@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 11:21:30 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:50:32 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <stdlib.h>
 # include <unistd.h> // chdir, write, getcwd
 # include <stdlib.h> // getenv
-#include <signal.h> // signals
-#include <strings.h> // SIGINT, SIGOUT
+# include <signal.h> // signals
+# include <strings.h> // SIGINT, SIGOUT
 
 # include <unistd.h> // open, read, write, access, close, fork, dup, dup2, pause
 # include <sys/fcntl.h> // open_flags
@@ -144,6 +144,12 @@ void		or_operation(char *left_arg);
 
 int			pipe_handler(void *arg);
 void		pipe_operation(char *left_arg);
+
+int			r_redirect_handler(void *arg);
+void		right_redirection(char *arg, char *left_arg);
+
+int			r_append_handler(void *arg);
+void		right_append(char *arg, char *left_arg);
 
 //			COMMAND_RELATED
 

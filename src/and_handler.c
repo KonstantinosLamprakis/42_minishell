@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:39:34 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 08:19:44 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 09:39:16 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ int	and_handler(void *arg)
 	char		*left_arg;
 
 	token = (t_token *)arg;
-
-	printf("\n%s: received token:\n", (char *)__func__);
-	printf("  |- string: %s\n", token->str);
-	printf("  |- start : %s\n", token->str + token->start);
-
 	left_arg = NULL;
 	if (token->start > 0)
 	{
@@ -31,8 +26,6 @@ int	and_handler(void *arg)
 		if (!left_arg)
 			return (set_error((char *)__func__, ALLOC), -1);
 	}
-	printf("  |- left_arg  = %s\n", left_arg);
-
 	and_operation(left_arg);
 	if (left_arg)
 		free(left_arg);
