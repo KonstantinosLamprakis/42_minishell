@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 14:37:20 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 14:48:34 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static char	*get_right_arg(t_token *token)
 	return (right_arg);
 }
 
-// static char	*extract_used_part(t_token *token, char *left_arg, char *right_arg)
+// static char	*extract_used_part(t_token *token, char *left_arg
+// , char *right_arg)
 // {
 // 	char	*res;
 // 	char	*tmp;
@@ -80,8 +81,6 @@ int	r_redirect_handler(void *arg)
 	right_arg = get_right_arg(token);
 	if (*get_errno() != 0)
 		return (-1);
-	printf("  |- left_arg  = %s\n", left_arg);
-	printf("  |- right_arg = %s\n", right_arg);
 	right_redirection(right_arg, left_arg);
 	if (left_arg)
 		free(left_arg);
