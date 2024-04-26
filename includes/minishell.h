@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 22:06:14 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 07:27:54 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@
 # include <stdlib.h>
 # include <unistd.h> // chdir, write, getcwd
 # include <stdlib.h> // getenv
+#include <signal.h> // signals
+#include <strings.h> // SIGINT, SIGOUT
 
-# include <unistd.h> // open, read, write, access, close, fork, dup, dup2
+# include <unistd.h> // open, read, write, access, close, fork, dup, dup2, pause
 # include <sys/fcntl.h> // open_flags
 
 # define STDIN 0
@@ -59,6 +61,11 @@ typedef struct s_program
 	char	*delimiter;
 	int		pipe_end[2];
 }				t_program;
+
+//			SIGNALS.c
+int			init_signal(void);
+void		handler_on_idle(int signal, siginfo_t *info, void *ucontext);
+void		handler_on_cmd(int signal, siginfo_t *info, void *ucontext);
 
 //			ENV_UTILS.c
 void		add_to_envp(char ***envp_ptr, char *new_var, int pos);

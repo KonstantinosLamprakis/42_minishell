@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 12:01:14 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 07:21:52 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char	*ft_strjoin_3(char const *s1, char const *s2, char const *s3)
 
 /**
  * @brief Get the line object
+ * readline returns NULL if Ctrl D received and "\0" if empty
+ * command received
  *
  * @return char* should free the line after use, returns NULL
  * on error, otherwise it return the line from user
@@ -78,8 +80,11 @@ char	*get_line(void)
 
 	line_read = readline("minishell > ");
 	if (!line_read)
-		return (NULL);
-	if (line_read && line_read[0] == '\0')
+	{
+		clean_struct();
+		exit(0);
+	}
+	else if (!line_read[0])
 		return (free(line_read), NULL);
 	add_history(line_read);
 	start = 0;

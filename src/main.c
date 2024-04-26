@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 22:06:41 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 07:28:42 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 	bugs:
 		- export test="" -> adds multiple "", same export test="test1"
 		- echo "          f    fg " -> should modify split
+		- ctrl D should decrease SHLVL if its > 1 and clean everything
 	todo: function ft_free to free only if is not NULL
  */
 
@@ -36,10 +37,14 @@ int	main(int argc, char *argv[], char *envp[])
 	argc = 0;
 	argv = NULL;
 	init_struct(envp);
+	if (init_signal() == 1)
+		exit (1);
 	program = get_program();
 	while (42)
 	{
 		line = get_line();
+		if (!line)
+			continue ;
 		cmd_ar = ft_split(line, ' ');
 		builtin_execve(cmd_ar[0], cmd_ar, program->envp);
 		free(line);
