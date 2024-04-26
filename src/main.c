@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 08:29:21 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:27:01 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@
 	tester: https://github.com/zstenger93/42_minishell_tester
 	bugs:
 		- export test="" -> adds multiple "", same export test="test1"
+			- maybe split's return value should also include "", and not remove
+			them
 		- echo " test -> seg fault
 		- ctrl D should decrease SHLVL if its > 1 and clean everything
-	todo: function ft_free to free only if is not NULL
+	todo:
+		- function ft_free to free only if is not NULL
+		- add return (set_error((char *)__func__, INVALID_ARG)); at get_env_value errors
+		- clean_struct should clean everythink because we use it at signals and at exit
  */
 
 void	leaks(void)
