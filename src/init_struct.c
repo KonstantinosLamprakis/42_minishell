@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 14:20:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 14:51:15 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	init_environment(t_program *program)
 	set_handler(L_REDIRECT, l_redirect_handler);
 	set_handler(R_REDIRECT, r_redirect_handler);
 	set_handler(L_DELIMITER, l_delimiter_handler);
+	set_handler(R_APPEND, r_append_handler);
 	set_handler(OPERATOR_COUNT, cmd_handler);
 }
 
