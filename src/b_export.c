@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 21:32:29 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:24:46 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,17 @@ int	b_export(char *const argv[], char *envp[])
 {
 	int			i;
 	t_program	*program;
+	int			status;
 
 	envp = NULL;
+	status = 0;
 	program = get_program();
 	if (!argv[1])
 		return (print_sorted(program->envp, program->exp_v), 0);
 	i = 0;
 	while (argv[++i])
-		handle_arg(argv[i]);
-	return (0);
+		status += handle_arg(argv[i]);
+	return (-1 * (status != 0));
 }
 
 static int	handle_arg(char *arg)
@@ -71,13 +73,13 @@ static int	handle_arg(char *arg)
 	int		j;
 
 	if (!ft_isalpha(arg[0]))
-		return (printf("export: %s: not valid identifier\n", arg), 0);
+		return (printf("export: %s: not valid identifier\n", arg), 1);
 	j = 1;
 	while (ft_isalnum(arg[j]))
 		j++;
 	if (arg[j] != '=' && arg[j] != '\0' && \
 	(arg[j] != '+' || arg[j + 1] != '='))
-		return (printf("export: %s: not valid identifier\n", arg), 0);
+		return (printf("export: %s: not valid identifier\n", arg), 1);
 	value = NULL;
 	key = ft_substr(arg, 0, j);
 	if (arg[j] == '+' && arg[j + 1] == '=')

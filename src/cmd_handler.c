@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 12:02:09 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 13:56:57 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ void	exec_cmd(char **cmd_args)
 	pid_t		child;
 	char		*cmd;
 
-	cmd = get_cmd(cmd_args);
+	if (!is_builtin(cmd_args[0]))
+		cmd = get_cmd(cmd_args);
+	else
+		cmd = cmd_args[0];
 	if (!cmd)
 		return ;
 	program = get_program();
@@ -66,7 +69,13 @@ void	exec_cmd(char **cmd_args)
 	if (child < 0)
 		return (set_error((char *)__func__, FORK));
 	if (child == CHILD_PROCESS)
-		execve(cmd, cmd_args, program->envp);
+	{
+		put_signal_handler(0);
+		if (!is_builtin(cmd_args[0]))
+			execve(cmd, cmd_args, program->envp);
+		else
+			builtin_execve(cmd, cmd_args, program->envp);
+	}
 	free(cmd);
 	waitpid(child, &program->status, 0);
 }

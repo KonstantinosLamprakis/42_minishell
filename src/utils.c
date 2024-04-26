@@ -6,11 +6,38 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 08:28:02 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 10:08:39 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/**
+ * @brief check if the name path is in builtin commands
+ *
+ * @param path
+ * @return int 0 if not builtin, 1 if it is builin
+ */
+int	is_builtin(char *path)
+{
+	if (!path || !path[0])
+		return (0);
+	if (ft_strcmp(path, "echo") == 0)
+		return (1);
+	else if (ft_strcmp(path, "cd") == 0)
+		return (1);
+	else if (ft_strcmp(path, "pwd") == 0)
+		return (1);
+	else if (ft_strcmp(path, "export") == 0)
+		return (1);
+	else if (ft_strcmp(path, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(path, "env") == 0)
+		return (1);
+	else if (ft_strcmp(path, "exit") == 0)
+		return (1);
+	return (0);
+}
 
 /**
  * @brief same as execve but for custom built-in functions spesified by task

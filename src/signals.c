@@ -6,11 +6,14 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:54 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 08:19:39 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 10:22:27 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	handler_on_idle(int signal, siginfo_t *info, void *ucontext);
+static void	handler_on_cmd(int signal, siginfo_t *info, void *ucontext);
 
 /**
  * @brief initializes the signals for Ctrl C and Ctrl \
@@ -21,20 +24,28 @@
  */
 int	init_signal(void)
 {
+	signal(SIGQUIT, SIG_IGN);
+	return (put_signal_handler(1));
+}
+
+int	put_signal_handler(int is_idle)
+{
 	struct sigaction	act;
 
-	signal(SIGQUIT, SIG_IGN);
 	ft_memset(&act, 0, sizeof(act));
 	if ((sigemptyset(&act.sa_mask) == -1) || \
 	(sigaddset(&act.sa_mask, SIGINT) == -1) || \
 	(sigaddset(&act.sa_mask, SIGQUIT) == -1))
 		return (1);
-	act.sa_sigaction = &handler_on_idle;
+	if (is_idle)
+		act.sa_sigaction = &handler_on_idle;
+	else
+		act.sa_sigaction = &handler_on_cmd;
 	sigaction(SIGINT, &act, NULL);
 	return (0);
 }
 
-void	handler_on_cmd(int signal, siginfo_t *info, void *ucontext)
+static void	handler_on_cmd(int signal, siginfo_t *info, void *ucontext)
 {
 	info = NULL;
 	ucontext = NULL;
@@ -46,7 +57,7 @@ void	handler_on_cmd(int signal, siginfo_t *info, void *ucontext)
 	}
 }
 
-void	handler_on_idle(int signal, siginfo_t *info, void *ucontext)
+static void	handler_on_idle(int signal, siginfo_t *info, void *ucontext)
 {
 	info = NULL;
 	ucontext = NULL;
