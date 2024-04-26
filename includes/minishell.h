@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 09:42:24 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 10:10:01 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_program
 //			SIGNALS.c
 
 int			init_signal(void);
-void		put_signal_handler(int is_idle);
+int			put_signal_handler(int is_idle);
 
 //			ENV_UTILS.c
 
@@ -85,7 +85,7 @@ char		*ft_strjoin_3(char const *s1, char const *s2, char const *s3);
 int			builtin_execve(const char *pathname, char *const argv[], \
 			char *envp[]);
 char		*get_line(void);
-int		is_builtin(char *path);
+int			is_builtin(char *path);
 
 //			BUILTIN FUNCS
 

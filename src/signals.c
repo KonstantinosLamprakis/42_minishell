@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:54 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 09:39:15 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 10:22:27 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@ static void	handler_on_cmd(int signal, siginfo_t *info, void *ucontext);
  */
 int	init_signal(void)
 {
-
 	signal(SIGQUIT, SIG_IGN);
-	put_signal_handler(1);
-	return (0);
+	return (put_signal_handler(1));
 }
 
-void	put_signal_handler(int is_idle)
+int	put_signal_handler(int is_idle)
 {
 	struct sigaction	act;
 
