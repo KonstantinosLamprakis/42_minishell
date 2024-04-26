@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 11:46:53 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 11:56:25 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,32 +79,13 @@ int	l_redirect_handler(void *arg)
  */
 void	left_redirection(char *arg, char *left_arg)
 {
-	int	left_fd;
 	int	right_fd;
 
 	right_fd = ft_open(arg, O_RDONLY, -1);
 	if (right_fd < 0)
 		return (set_error((char *)__func__, OPEN));
-	if (!left_arg)
-	{
-		if (dup2(right_fd, STDIN) < 0)
-			return (set_error((char *)__func__, DUP));
-	}
-	else
-	{
-		left_fd = ft_btoi(left_arg, "0123456789");
-		if (*get_errno() == INVALID_ARG)
-		{
-			set_errno(NO_ERROR);
-			if (dup2(right_fd, STDIN) < 0)
-				return (set_error((char *)__func__, DUP));
-			ft_parse(left_arg);
-		}
-		else
-		{
-			printf("TODO: verify that %d is an opened file.\n\n", left_fd);
-		}
-		// if (dup2(right_fd, left_fd) < 0)
-		// 	return (set_error((char *)__func__, DUP));
-	}
+	if (dup2(right_fd, STDIN) < 0)
+		return (set_error((char *)__func__, DUP));
+	if (left_arg)
+		ft_parse(left_arg);
 }

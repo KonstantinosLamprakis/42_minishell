@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 11:47:05 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 12:02:09 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,13 @@ void	exec_cmd(char **cmd_args)
 
 	cmd = get_cmd(cmd_args);
 	if (!cmd)
-		return (set_error((char *)__func__, INVALID_ARG));
+		return ;
 	program = get_program();
 	child = fork();
 	if (child < 0)
 		return (set_error((char *)__func__, FORK));
 	if (child == CHILD_PROCESS)
-	{
 		execve(cmd, cmd_args, program->envp);
-		// exit(0);
-	}
 	free(cmd);
 	waitpid(child, &program->status, 0);
-	//printf("Return status: %d\n", program->status);
 }

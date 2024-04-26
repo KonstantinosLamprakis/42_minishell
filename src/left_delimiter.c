@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 10:31:34 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 11:51:09 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static char	*get_right_arg(t_token *token)
 	char	*right_arg;
 
 	tmp = ft_escsplit(token->str + token->start + 2, ft_iswspace, ft_isquote);
-	printf("\ndelimiter: %s\n\n", tmp[0]);
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
 	right_arg = ft_strdup(tmp[0]);
