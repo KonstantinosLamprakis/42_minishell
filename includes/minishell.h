@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 18:30:32 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:35:26 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,10 @@ char		*remove_dot(char *path, int index);
 
 //			B_EXPORT_UTILS
 
-void		sort_array(char **ar);
-void		print_record(char *rec);
-void		print_sorted(char **p_envp, char **p_exp_v);
+int			handle_arg(char *arg, int is_exp);
+void		handle_eq(char *arg, char *value, char *key, int is_exp);
+char		*handle_plus(char *arg, int *index, char *key, int is_exp);
+
 
 //			STRUCT_RELATED
 

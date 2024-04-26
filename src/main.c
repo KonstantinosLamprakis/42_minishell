@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 18:29:53 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:36:33 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 			- maybe split's return value should also include "", and not remove
 			them
 		- echo " test -> seg fault
+		- export test_3421 -> not valid identifirer
+		- "echo test"
 		- seg fault when command not found
 		- ctrl D should decrease SHLVL if its > 1 and clean everything
 		- check the output of put_signal_handler for errors

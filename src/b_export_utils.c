@@ -6,101 +6,102 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 19:56:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 22:06:44 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:44:03 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/**
- * @brief sorts the array that is NULL terminated
- *
- * @param ar
- */
-void	sort_array(char **ar)
-{
-	int		i;
-	int		j;
-	char	*temp;
-	int		swaped;
+static void	handle_empty(char *value, char *key);
 
-	if (!ar || !ar[0] || !ar[1])
-		return ;
-	i = -1;
-	swaped = 1;
-	while (ar[++i] && swaped)
+int	handle_arg(char *arg, int is_exp)
+{
+	char	*value;
+	char	*key;
+	int		j;
+
+	printf("args: %s\n", arg);
+	if (!ft_isalpha(arg[0]))
+		return (printf("export: %s: not valid identifier\n", arg), 1);
+	j = 1;
+	while (ft_isalnum(arg[j]) || arg[j] == '_')
+		j++;
+	if (arg[j] != '=' && arg[j] != '\0' && \
+	(arg[j] != '+' || arg[j + 1] != '='))
+		return (printf("export: %s: not valid identifier\n", arg), 1);
+	value = NULL;
+	key = ft_substr(arg, 0, j);
+	if (arg[j] == '+' && arg[j + 1] == '=')
+		value = handle_plus(arg, &j, key, is_exp);
+	if (arg[j] == '=')
+		handle_eq(arg + j, value, key, is_exp);
+	else
+		handle_empty(value, key);
+	free(key);
+	return (0);
+}
+
+void	handle_eq(char *arg, char *value, char *key, int is_exp)
+{
+	is_exp++;
+	if (arg[1] != '\0' && !value)
+		value = ft_substr(arg, 1, ft_strlen(arg));
+	else if (!value)
+		value = ft_strdup("");
+	del_from_envp(get_program()->exp_v, key);
+	del_from_envp(get_program()->loc_v, key);
+	replace_envp_key(&get_program()->envp, key, value);
+	free(value);
+}
+
+char	*handle_plus(char *arg, int *index, char *key, int is_exp)
+{
+	char	*temp;
+	char	*value;
+	int		j;
+
+	is_exp++;
+	j = *index;
+	value = NULL;
+	if (arg[j + 2] == '\0')
+		j++;
+	else
 	{
-		j = 0;
-		swaped = 0;
-		while (ar[j] && ar[j + 1])
+		temp = get_env_value(get_program()->envp, key, NULL);
+		if (!temp)
+			temp = get_env_value(get_program()->loc_v, key, NULL);
+		if (!temp)
+			j++;
+		else
 		{
-			if (ft_strcmp(ar[j], ar[j + 1]) > 0)
-			{
-				temp = ar[j];
-				ar[j] = ar[j + 1];
-				ar[j + 1] = temp;
-				swaped = 1;
-			}
+			value = ft_strjoin(temp, arg + j + 2);
+			free(temp);
 			j++;
 		}
 	}
+	*index = j;
+	return (value);
 }
 
-/**
- * @brief prints a record for the export command
- *
- * @param rec
- */
-void	print_record(char *rec)
+static void	handle_empty(char *value, char *key)
 {
-	int	i;
-	int	is_eq;
-
-	i = -1;
-	is_eq = 0;
-	printf("declare -x ");
-	while (rec[++i] != '\0')
+	if (!value)
+		value = get_env_value(get_program()->loc_v, key, NULL);
+	if (value)
 	{
-		printf("%c", rec[i]);
-		if (rec[i] == '=' && !is_eq)
-			printf("\"");
-		is_eq += rec[i] == '=';
+		del_from_envp(get_program()->loc_v, key);
+		replace_envp_key(&get_program()->envp, key, value);
+		free(value);
 	}
-	if (is_eq)
-		printf("\"");
-	printf("\n");
-}
-
-/**
- * @brief takes 2 arrays, sort them temporary, print and print them sorted
- *
- * @param p_envp
- * @param p_exp_v
- */
-void	print_sorted(char **p_envp, char **p_exp_v)
-{
-	char		**envp;
-	char		**exp_v;
-	int			i;
-	int			j;
-
-	create_envp(&envp, p_envp);
-	create_envp(&exp_v, p_exp_v);
-	sort_array(envp);
-	sort_array(exp_v);
-	i = 0;
-	j = 0;
-	while (envp[i] && exp_v[j])
+	else
 	{
-		if (ft_strcmp(envp[i], exp_v[j]) < 0)
-			print_record(envp[i++]);
+		value = get_env_value(get_program()->envp, key, NULL);
+		if (!value)
+		{
+			del_from_envp(get_program()->exp_v, key);
+			add_to_envp(&get_program()->exp_v, key, -1);
+		}
 		else
-			print_record(exp_v[j++]);
+			free(value);
 	}
-	while (exp_v[j] && !envp[i])
-		print_record(exp_v[j++]);
-	while (envp[i] && !exp_v[j])
-		print_record(envp[i++]);
-	free_arr(envp, 1);
-	free_arr(exp_v, 1);
 }

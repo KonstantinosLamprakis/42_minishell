@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 09:24:46 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:37:37 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,9 @@
 
 #include "../includes/minishell.h"
 
-static int	handle_arg(char *arg);
-static void	handle_eq(char *arg, int j, char *value, char *key);
-static void	handle_empty(char *value, char *key);
-static char	*handle_plus(char *arg, int *index, char *key);
+static void	print_sorted(char **p_envp, char **p_exp_v);
+static void	print_record(char *rec);
+static void	sort_array(char **ar);
 
 /**
  * @brief reproduce the behavior of export with no options
@@ -62,95 +61,99 @@ int	b_export(char *const argv[], char *envp[])
 		return (print_sorted(program->envp, program->exp_v), 0);
 	i = 0;
 	while (argv[++i])
-		status += handle_arg(argv[i]);
+		status += handle_arg(argv[i], 1);
 	return (-1 * (status != 0));
 }
 
-static int	handle_arg(char *arg)
+/**
+ * @brief sorts the array that is NULL terminated
+ *
+ * @param ar
+ */
+static void	sort_array(char **ar)
 {
-	char	*value;
-	char	*key;
+	int		i;
 	int		j;
-
-	if (!ft_isalpha(arg[0]))
-		return (printf("export: %s: not valid identifier\n", arg), 1);
-	j = 1;
-	while (ft_isalnum(arg[j]))
-		j++;
-	if (arg[j] != '=' && arg[j] != '\0' && \
-	(arg[j] != '+' || arg[j + 1] != '='))
-		return (printf("export: %s: not valid identifier\n", arg), 1);
-	value = NULL;
-	key = ft_substr(arg, 0, j);
-	if (arg[j] == '+' && arg[j + 1] == '=')
-		value = handle_plus(arg, &j, key);
-	if (arg[j] == '=')
-		handle_eq(arg, j, value, key);
-	else
-		handle_empty(value, key);
-	free(key);
-	return (0);
-}
-
-static void	handle_eq(char *arg, int j, char *value, char *key)
-{
-	if (arg[j + 1] != '\0' && !value)
-		value = ft_substr(arg, j + 1, ft_strlen(arg));
-	else if (!value)
-		value = ft_strdup("");
-	del_from_envp(get_program()->exp_v, key);
-	del_from_envp(get_program()->loc_v, key);
-	replace_envp_key(&get_program()->envp, key, value);
-	free(value);
-}
-
-static void	handle_empty(char *value, char *key)
-{
-	if (!value)
-		value = get_env_value(get_program()->loc_v, key, NULL);
-	if (value)
-	{
-		del_from_envp(get_program()->loc_v, key);
-		replace_envp_key(&get_program()->envp, key, value);
-		free(value);
-	}
-	else
-	{
-		value = get_env_value(get_program()->envp, key, NULL);
-		if (!value)
-		{
-			del_from_envp(get_program()->exp_v, key);
-			add_to_envp(&get_program()->exp_v, key, -1);
-		}
-		else
-			free(value);
-	}
-}
-
-static char	*handle_plus(char *arg, int *index, char *key)
-{
 	char	*temp;
-	char	*value;
-	int		j;
+	int		swaped;
 
-	j = *index;
-	value = NULL;
-	if (arg[j + 2] == '\0')
-		j++;
-	else
+	if (!ar || !ar[0] || !ar[1])
+		return ;
+	i = -1;
+	swaped = 1;
+	while (ar[++i] && swaped)
 	{
-		temp = get_env_value(get_program()->envp, key, NULL);
-		if (!temp)
-			temp = get_env_value(get_program()->loc_v, key, NULL);
-		if (!temp)
-			j++;
-		else
+		j = 0;
+		swaped = 0;
+		while (ar[j] && ar[j + 1])
 		{
-			value = ft_strjoin(temp, arg + j + 2);
-			free(temp);
+			if (ft_strcmp(ar[j], ar[j + 1]) > 0)
+			{
+				temp = ar[j];
+				ar[j] = ar[j + 1];
+				ar[j + 1] = temp;
+				swaped = 1;
+			}
 			j++;
 		}
 	}
-	*index = j;
-	return (value);
+}
+
+/**
+ * @brief prints a record for the export command
+ *
+ * @param rec
+ */
+static void	print_record(char *rec)
+{
+	int	i;
+	int	is_eq;
+
+	i = -1;
+	is_eq = 0;
+	printf("declare -x ");
+	while (rec[++i] != '\0')
+	{
+		printf("%c", rec[i]);
+		if (rec[i] == '=' && !is_eq)
+			printf("\"");
+		is_eq += rec[i] == '=';
+	}
+	if (is_eq)
+		printf("\"");
+	printf("\n");
+}
+
+/**
+ * @brief takes 2 arrays, sort them temporary, print and print them sorted
+ *
+ * @param p_envp
+ * @param p_exp_v
+ */
+static void	print_sorted(char **p_envp, char **p_exp_v)
+{
+	char		**envp;
+	char		**exp_v;
+	int			i;
+	int			j;
+
+	create_envp(&envp, p_envp);
+	create_envp(&exp_v, p_exp_v);
+	sort_array(envp);
+	sort_array(exp_v);
+	i = 0;
+	j = 0;
+	while (envp[i] && exp_v[j])
+	{
+		if (ft_strcmp(envp[i], exp_v[j]) < 0)
+			print_record(envp[i++]);
+		else
+			print_record(exp_v[j++]);
+	}
+	while (exp_v[j] && !envp[i])
+		print_record(exp_v[j++]);
+	while (envp[i] && !exp_v[j])
+		print_record(envp[i++]);
+	free_arr(envp, 1);
+	free_arr(exp_v, 1);
 }
