@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 13:56:42 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 14:22:27 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,9 @@ void		or_operation(char *left_arg);
 
 int			pipe_handler(void *arg);
 void		pipe_operation(char *left_arg);
+
+int			r_redirect_handler(void *arg);
+void		right_redirection(char *arg, char *left_arg);
 
 //			COMMAND_RELATED
 
