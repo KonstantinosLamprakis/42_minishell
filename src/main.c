@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 15:51:03 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:06:35 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	main(int argc, char *argv[], char *envp[])
 	argc = 0;
 	argv = NULL;
 	init_struct(envp);
-	if (init_signal() == 1)
-		exit (1);
 	program = get_program();
 	while (42)
 	{

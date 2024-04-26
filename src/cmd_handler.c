@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 16:26:25 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:06:26 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,6 @@ void	exec_cmd(char **cmd_args)
 		return (set_error((char *)__func__, FORK));
 	if (child == CHILD_PROCESS)
 	{
-		if (put_signal_handler(0, SIGINT) || put_signal_handler(0, SIGQUIT))
-		{
-			printf("Error: handling signals\n");
-			return ;
-		}
 		get_program()->status = execve(cmd, cmd_args, program->envp);
 	}
 	waitpid(child, &program->status, 0);
