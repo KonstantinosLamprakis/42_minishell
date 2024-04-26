@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 09:34:40 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 11:48:16 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	// char	str[] = "infile < test/test.txt";
 	t_program	*program;
-	// char		**cmd_ar;
 	char		*line;
 
 	// atexit(leaks);
@@ -47,13 +45,8 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!line)
 			continue ;
 		ft_parse(line);
-		// printf("%s\n", line);
-		// cmd_ar = ft_escsplit(line, ft_iswspace, ft_isquote);
-		// printf("%s\n", cmd_ar[1]);
-		// builtin_execve(cmd_ar[0], cmd_ar, program->envp);
 		free(line);
 		reset_struct();
-		// free_arr(cmd_ar, 1);
 	}
 	clean_struct();
 	exit(*get_errno() != 0);

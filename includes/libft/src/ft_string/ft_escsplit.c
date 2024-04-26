@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:40:56 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/23 14:07:14 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 11:47:23 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	save_word(char **arr, char *str, int *count, int (*cmp)(int))
 	char	*tmp;
 
 	tmp = ft_strchr_if(str + 1, cmp);
-	arr[(*count)++] = ft_substr_if(str, 0, tmp - str + 1, cmp);
+	arr[(*count)++] = ft_substr_if(str, 0, tmp - str, cmp);
 	if (!arr[(*count) - 1])
 		set_error((char *)__func__, ALLOC);
 	return (*get_errno());

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 08:52:20 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 11:33:08 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	ft_parse(char *str)
 	printf("\n%s input: \"%s\"\n", (char *)__func__, str);
 	if (ft_strlen_if(str, ft_iswspace) > 0 && find_next_token(str, &token) >= 0)
 	{
-		if (token.start < 0)// && printf("No operators in \"%s\".\n", str))
+		if (token.start < 0)
 		{
 			printf(DEBUG_START_HANDLER);
 			offset = handlers[OPERATOR_COUNT]((void *)&token);

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:06:29 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 08:00:16 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 10:41:47 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 typedef enum e_errno
 {
+	NO_ERROR,
 	INVALID_ARG,
 	ALLOC,
 	OPEN,

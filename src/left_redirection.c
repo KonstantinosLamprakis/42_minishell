@@ -6,11 +6,40 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 09:18:32 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 11:46:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static char	*get_left_arg(t_token *token)
+{
+	char	*left_arg;
+
+	left_arg = NULL;
+	if (token->start > 0)
+	{
+		left_arg = ft_substr_if(token->str, 0, token->start - 1, ft_iswspace);
+		if (!left_arg)
+			return (set_error((char *)__func__, ALLOC), NULL);
+	}
+	return (left_arg);
+}
+
+static char	*get_right_arg(t_token *token)
+{
+	char	**tmp;
+	char	*right_arg;
+
+	tmp = ft_escsplit(token->str + token->start + 2, ft_iswspace, ft_isquote);
+	if (!tmp)
+		return (set_error((char *)__func__, ALLOC), NULL);
+	right_arg = ft_strdup(tmp[0]);
+	free_arr(tmp, 1);
+	if (!right_arg)
+		return (NULL);
+	return (right_arg);
+}
 
 /**
  * @brief Handler wrapper for '<' operator
@@ -22,37 +51,22 @@ int	l_redirect_handler(void *arg)
 	t_token	*token;
 	char	*left_arg;
 	char	*right_arg;
-	char	*tmp;
 	int		offset;
 
 	token = (t_token *)arg;
 	if (!token)
 		return (-1);
-	printf("\n%s: received token:\n", (char *)__func__);
-	printf("  |- string: %s\n", token->str);
-	printf("  |- start : %s\n", token->str + token->start);
-	left_arg = NULL;
-	if (token->start > 0)
-	{
-		left_arg = ft_substr_if(token->str, 0, token->start - 1, ft_iswspace);
-		if (!left_arg)
-			return (set_error((char *)__func__, ALLOC), -1);
-	}
-	printf("  |- left_arg  = %s\n", left_arg);
-	tmp = ft_getnth_word(token->str + token->start + 1, 1, ft_iswspace, NULL);
-	if (!tmp)
-		return (set_error((char *)__func__, ALLOC), -1);
-	right_arg = ft_strtrim_if(tmp, ft_iswspace);
-	free(tmp);
-	if (!right_arg)
+	left_arg = get_left_arg(token);
+	right_arg = get_right_arg(token);
+	if (*get_errno() != 0)
 		return (-1);
-	printf("  |- right_arg = %s\n\n", right_arg);
 	left_redirection(right_arg, left_arg);
 	if (left_arg)
 		free(left_arg);
 	if (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) == NULL)
 		return (-1);
-	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) - token->str) + ft_strlen(right_arg);
+	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
+			- token->str) + ft_strlen(right_arg) + 1;
 	return (free(right_arg), offset);
 }
 
@@ -70,21 +84,26 @@ void	left_redirection(char *arg, char *left_arg)
 
 	right_fd = ft_open(arg, O_RDONLY, -1);
 	if (right_fd < 0)
-		return (printf("Tried to open: |%s|\n", arg),
-			set_error((char *)__func__, OPEN));
+		return (set_error((char *)__func__, OPEN));
 	if (!left_arg)
 	{
-		printf("Redirecting %d (%s) to %d\n\n", right_fd, arg, STDIN);
 		if (dup2(right_fd, STDIN) < 0)
 			return (set_error((char *)__func__, DUP));
 	}
 	else
 	{
 		left_fd = ft_btoi(left_arg, "0123456789");
-		if (*get_errno() != 0)
-			return ;
-		printf("Redirecting %d to %d\n", right_fd, left_fd);
-		printf("TODO: verify that %d is an opened file.\n\n", left_fd);
+		if (*get_errno() == INVALID_ARG)
+		{
+			set_errno(NO_ERROR);
+			if (dup2(right_fd, STDIN) < 0)
+				return (set_error((char *)__func__, DUP));
+			ft_parse(left_arg);
+		}
+		else
+		{
+			printf("TODO: verify that %d is an opened file.\n\n", left_fd);
+		}
 		// if (dup2(right_fd, left_fd) < 0)
 		// 	return (set_error((char *)__func__, DUP));
 	}

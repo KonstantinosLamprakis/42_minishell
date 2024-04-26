@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 08:44:49 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 11:47:05 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,9 @@ int	cmd_handler(void *arg)
 	char	**cmd;
 
 	token = (t_token *)arg;
-	//printf("\n%s: received token:\n", (char *)__func__);
-	//printf("  |- string: %s\n", token->str);
 	cmd = ft_escsplit(token->str, ft_iswspace, ft_isquote);
-	//printf("  |- cmd:\n");
-	// if (cmd)
-	// {
-	// 	int	i = -1;
-	// 	while (cmd[++i])
-	// 		printf("    |- cmd[%d] = %s\n", i, cmd[i]);
-	// }
-	//printf("\n");
+	if (!cmd)
+		return (-1);
 	exec_cmd(cmd);
 	free_arr(cmd, 1);
 	return (-1);
