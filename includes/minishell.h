@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 09:27:05 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 11:49:52 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <stdlib.h>
 # include <unistd.h> // chdir, write, getcwd
 # include <stdlib.h> // getenv
-#include <signal.h> // signals
-#include <strings.h> // SIGINT, SIGOUT
+# include <signal.h> // signals
+# include <strings.h> // SIGINT, SIGOUT
 
 # include <unistd.h> // open, read, write, access, close, fork, dup, dup2, pause
 # include <sys/fcntl.h> // open_flags
