@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 17:06:26 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:49:24 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	exec_cmd(char **cmd_args)
 	if (!cmd)
 		return ;
 	child = fork();
+	signal(SIGINT, &handler_cmd);
+	signal(SIGQUIT, &handler_cmd);
 	if (child < 0)
 		return (set_error((char *)__func__, FORK));
 	if (child == CHILD_PROCESS)
@@ -76,6 +78,8 @@ void	exec_cmd(char **cmd_args)
 		get_program()->status = execve(cmd, cmd_args, program->envp);
 	}
 	waitpid(child, &program->status, 0);
+	signal(SIGINT, &handler_idle);
+	signal(SIGQUIT, &handler_idle);
 	free(cmd);
 	//printf("Return status: %d\n", program->status);
 }
