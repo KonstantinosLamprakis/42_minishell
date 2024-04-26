@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 09:27:01 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:43:27 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,20 @@
 		- clean_struct should clean everythink because we use it at signals and at exit
  */
 
-void	leaks(void)
-{
-	system("leaks minishell");
-}
+
+// void	leaks(void)
+// {
+// 	system("leaks minishell");
+// }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	// char	str[] = "infile < test/test.txt";
 	t_program	*program;
-	char		**cmd_ar;
+	// char		**cmd_ar;
 	char		*line;
 
-	atexit(leaks);
+	// atexit(leaks);
 	argc = 0;
 	argv = NULL;
 	init_struct(envp);
@@ -50,15 +51,15 @@ int	main(int argc, char *argv[], char *envp[])
 		line = get_line();
 		if (!line)
 			continue ;
-		cmd_ar = ft_escsplit(line, ft_iswspace, ft_isquote);
-		builtin_execve(cmd_ar[0], cmd_ar, program->envp);
+		ft_parse(line);
+		// printf("%s\n", line);
+		// cmd_ar = ft_escsplit(line, ft_iswspace, ft_isquote);
+		// printf("%s\n", cmd_ar[1]);
+		// builtin_execve(cmd_ar[0], cmd_ar, program->envp);
 		free(line);
-		free_arr(cmd_ar, 1);
+		reset_struct();
+		// free_arr(cmd_ar, 1);
 	}
-	set_handler(L_REDIRECT, l_redirect_handler);
-	set_handler(OPERATOR_COUNT, cmd_handler);
-	char	str[] = "< Makefile cat";
-	ft_parse(str);
 	clean_struct();
 	exit(*get_errno() != 0);
 }

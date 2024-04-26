@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 09:39:42 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:43:15 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,19 @@ int	cmd_handler(void *arg)
 	char	**cmd;
 
 	token = (t_token *)arg;
-	printf("\n%s: received token:\n", (char *)__func__);
-	printf("  |- string: %s\n", token->str);
+	//printf("\n%s: received token:\n", (char *)__func__);
+	//printf("  |- string: %s\n", token->str);
 	cmd = ft_escsplit(token->str, ft_iswspace, ft_isquote);
-	printf("  |- cmd:\n");
-	if (cmd)
-	{
-		int	i = -1;
-		while (cmd[++i])
-			printf("    |- cmd[%d] = %s\n", i, cmd[i]);
-	}
-	printf("\n");
+	//printf("  |- cmd:\n");
+	// if (cmd)
+	// {
+	// 	int	i = -1;
+	// 	while (cmd[++i])
+	// 		printf("    |- cmd[%d] = %s\n", i, cmd[i]);
+	// }
+	//printf("\n");
 	exec_cmd(cmd);
-	// free_arr(cmd, 1);
+	free_arr(cmd, 1);
 	return (-1);
 }
 
@@ -84,6 +84,7 @@ void	exec_cmd(char **cmd_args)
 		else
 			builtin_execve(cmd, cmd_args, program->envp);
 	}
+	free(cmd);
 	waitpid(child, &program->status, 0);
-	printf("Return status: %d\n", program->status);
+	//printf("Return status: %d\n", program->status);
 }

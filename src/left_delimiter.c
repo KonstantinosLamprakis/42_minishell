@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 11:18:54 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 08:18:18 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ int	l_delimiter_handler(void *arg)
 	printf("  |- right_arg = %s\n\n", right_arg);
 
 	left_delimiter(right_arg, left_arg);
-
+	if (left_arg)
+		free(left_arg);
 	if (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) == NULL)
 		return (-1);
 	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) - token->str) + ft_strlen(right_arg);
-	return (offset);
+	return (free(right_arg), offset);
 }
 
 /**
