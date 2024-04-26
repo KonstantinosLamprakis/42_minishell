@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 11:56:25 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 12:45:45 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,27 @@ static char	*get_right_arg(t_token *token)
 	return (right_arg);
 }
 
+static char	*extract_used_part(t_token *token, char *left_arg, char *right_arg)
+{
+	char	*res;
+	char	*tmp;
+	int		offset;
+
+	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
+			- token->str) + ft_strlen(right_arg) + 1;
+	tmp = ft_substr(token->str, offset, ft_strlen(token->str + offset));
+	if (!tmp)
+		return (set_error((char *)__func__, ALLOC), NULL);
+	if (left_arg)
+		res = ft_strjoin_3(left_arg, " ", tmp);
+	else
+		res = ft_strdup(tmp);
+	free(tmp);
+	if (!res)
+		return (set_error((char *)__func__, ALLOC), NULL);
+	return (res);
+}
+
 /**
  * @brief Handler wrapper for '<' operator
  *
@@ -51,7 +72,7 @@ int	l_redirect_handler(void *arg)
 	t_token	*token;
 	char	*left_arg;
 	char	*right_arg;
-	int		offset;
+	char	*sub_right;
 
 	token = (t_token *)arg;
 	if (!token)
@@ -60,14 +81,13 @@ int	l_redirect_handler(void *arg)
 	right_arg = get_right_arg(token);
 	if (*get_errno() != 0)
 		return (-1);
-	left_redirection(right_arg, left_arg);
+	sub_right = extract_used_part(token, left_arg, right_arg);
+	if (!sub_right)
+		return (-1);
+	left_redirection(right_arg, sub_right);
 	if (left_arg)
 		free(left_arg);
-	if (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) == NULL)
-		return (-1);
-	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
-			- token->str) + ft_strlen(right_arg) + 1;
-	return (free(right_arg), offset);
+	return (free(right_arg), -1);
 }
 
 /**
@@ -77,7 +97,7 @@ int	l_redirect_handler(void *arg)
  * @param arg openable filename expected
  * @param left_arg optionnal (= NULL) left part of the redirection
  */
-void	left_redirection(char *arg, char *left_arg)
+void	left_redirection(char *arg, char *sub_right)
 {
 	int	right_fd;
 
@@ -86,6 +106,6 @@ void	left_redirection(char *arg, char *left_arg)
 		return (set_error((char *)__func__, OPEN));
 	if (dup2(right_fd, STDIN) < 0)
 		return (set_error((char *)__func__, DUP));
-	if (left_arg)
-		ft_parse(left_arg);
+	if (sub_right)
+		ft_parse(sub_right);
 }
