@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 17:49:24 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:23:45 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,4 @@ void	exec_cmd(char **cmd_args)
 	signal(SIGINT, &handler_idle);
 	signal(SIGQUIT, &handler_idle);
 	free(cmd);
-	//printf("Return status: %d\n", program->status);
 }

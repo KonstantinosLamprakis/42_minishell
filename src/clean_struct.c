@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:02:48 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 22:06:41 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:23:36 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ static void	close_files(t_program *program)
 {
 	int	index;
 
-	// should remove the if below
-	if (program)
-		return ;
 	index = -1;
 	while (program->opened_count >= 0 && ++index >= 0)
 		if (program->opened_files[index] >= 0 && program->opened_count--)

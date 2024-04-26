@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   misc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 09:14:56 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 12:08:15 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 18:24:19 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_opened_fd(void)
 
 	program = get_program();
 	printf("\nOpenend files table:\t(%d opened files)\n",
-			program->opened_count);
+		program->opened_count);
 	index = -1;
 	count = program->opened_count;
 	while (++index >= 0 && count > 0)

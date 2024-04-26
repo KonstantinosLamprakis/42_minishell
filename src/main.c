@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 17:49:05 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:24:07 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 		- replace maybe ~, $() etc. before parsing
 		- handling assigment operator
  */
-
 
 // void	leaks(void)
 // {
