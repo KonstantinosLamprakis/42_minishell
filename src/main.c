@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 10:22:53 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 10:26:28 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 		- Ctrl \, when you run a command should send SIG_QUIT ex. cat,
 		then ctrl \, exits the cat command
 		- check the output of put_signal_handler for errors
+		- delete and clean git branches
 	todo:
 		- function ft_free to free only if is not NULL
 		- add return (set_error((char *)__func__, INVALID_ARG)); at get_env_value errors
