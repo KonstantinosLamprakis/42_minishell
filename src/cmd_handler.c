@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 13:09:14 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:39:02 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,13 @@ void	exec_cmd(char **cmd_args)
 		if (!is_builtin(cmd_args[0]))
 			execve(cmd, cmd_args, program->envp);
 		else
-			builtin_execve(cmd, cmd_args, program->envp);
+			get_program()->status = builtin_execve(cmd, cmd_args, program->envp);
+		exit(get_program()->status);
 	}
+	waitpid(child, &program->status, 0);
 	if (!is_builtin(cmd_args[0]))
 		free(cmd);
 	if (is_builtin(cmd_args[0]) == 2)
 		exit (get_program()->status);
-	waitpid(child, &program->status, 0);
 	//printf("Return status: %d\n", program->status);
 }

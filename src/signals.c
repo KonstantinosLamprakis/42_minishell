@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:54 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 13:08:12 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:25:52 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ static void	handler_on_cmd(int signal, siginfo_t *info, void *ucontext)
 		get_program()->status = 130;
 		exit(130);
 	}
-	// if (signal == SIGQUIT)
-	// {
-	// 	printf("Quit: 3\n");
-	// 	get_program()->status = 131;
-	// 	exit(131);
-	// }
+	if (signal == SIGQUIT)
+	{
+		printf("Quit: 3\n");
+		get_program()->status = 131;
+		exit(131);
+	}
 }
 
 static void	handler_on_idle(int signal, siginfo_t *info, void *ucontext)

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:03 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 09:26:29 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:38:25 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	b_exit(char *const argv[], char *envp[])
 	else
 		status = 0;
 	clean_struct();
+	get_program()->status = status;
 	exit(status);
 }
 

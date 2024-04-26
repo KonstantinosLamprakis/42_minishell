@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 12:40:09 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:37:45 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 			them
 		- echo " test -> seg fault
 		- ctrl D should decrease SHLVL if its > 1 and clean everything
-		- exit error after merging, the pointer that freed is not allocated
-		- Ctrl C should only erase ^C, not other prommt
 		- Ctrl \, when you run a command should send SIG_QUIT ex. cat,
 		then ctrl \, exits the cat command
 		- check the output of put_signal_handler for errors
