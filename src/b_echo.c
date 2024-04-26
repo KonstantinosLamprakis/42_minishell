@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:36 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 19:55:05 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 11:04:16 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ static void	echo_arg(char *arg)
 		temp = get_env_value(get_program()->loc_v, "~", NULL);
 		str = ft_strjoin(temp, arg + 1);
 		printf("%s", str);
-		free(temp);
+		if (temp)
+			free(temp);
 		free(str);
 	}
 	else

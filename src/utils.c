@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 10:08:39 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 12:43:09 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
  * @brief check if the name path is in builtin commands
  *
  * @param path
- * @return int 0 if not builtin, 1 if it is builin
+ * @return int 0 if not builtin, 1 if it is builin, 2
+ * if it is exit
  */
 int	is_builtin(char *path)
 {
@@ -35,7 +36,7 @@ int	is_builtin(char *path)
 	else if (ft_strcmp(path, "env") == 0)
 		return (1);
 	else if (ft_strcmp(path, "exit") == 0)
-		return (1);
+		return (2);
 	return (0);
 }
 
