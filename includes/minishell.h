@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 17:48:58 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:30:32 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ typedef struct s_program
 }				t_program;
 
 //			SIGNALS.c
-void	handler_idle(int sig);
-void	handler_cmd(int sig);
+void		handler_idle(int sig);
+void		handler_cmd(int sig);
 
 //			ENV_UTILS.c
 

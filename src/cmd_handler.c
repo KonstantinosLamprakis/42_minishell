@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 18:27:08 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:29:08 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ void	exec_cmd(char **cmd_args)
 	program = get_program();
 	if (is_builtin(cmd_args[0]))
 	{
-		cmd = cmd_args[0];
-		get_program()->status = builtin_execve(cmd, cmd_args, program->envp);
+		get_program()->status = builtin_execve(cmd_args[0], cmd_args, program->envp);
 		return ;
 	}
 	cmd = get_cmd(cmd_args);
@@ -74,9 +73,7 @@ void	exec_cmd(char **cmd_args)
 	if (child < 0)
 		return (set_error((char *)__func__, FORK));
 	if (child == CHILD_PROCESS)
-	{
 		get_program()->status = execve(cmd, cmd_args, program->envp);
-	}
 	waitpid(child, &program->status, 0);
 	signal(SIGINT, &handler_idle);
 	signal(SIGQUIT, SIG_IGN);

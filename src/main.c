@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 18:26:10 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:29:53 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@
 			- maybe split's return value should also include "", and not remove
 			them
 		- echo " test -> seg fault
+		- seg fault when command not found
 		- ctrl D should decrease SHLVL if its > 1 and clean everything
-		- Ctrl \, when you run a command should send SIG_QUIT ex. cat,
-		then ctrl \, exits the cat command
 		- check the output of put_signal_handler for errors
 	todo:
-		- clean_struct should clean everythink because we use it at signals and at exit
+		- clean_struct should clean everything because we use it at signals and at exit
 		- delete and clean git branches
 		- replace maybe ~, $() etc. before parsing
 		- handling assigment operator
