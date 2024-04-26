@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 09:29:23 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 10:08:39 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	is_builtin(char *path)
 		return (1);
 	else if (ft_strcmp(path, "exit") == 0)
 		return (1);
+	return (0);
 }
 
 /**
