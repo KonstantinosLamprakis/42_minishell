@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 07:28:42 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 08:29:21 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	tester: https://github.com/zstenger93/42_minishell_tester
 	bugs:
 		- export test="" -> adds multiple "", same export test="test1"
-		- echo "          f    fg " -> should modify split
+		- echo " test -> seg fault
 		- ctrl D should decrease SHLVL if its > 1 and clean everything
 	todo: function ft_free to free only if is not NULL
  */
@@ -45,7 +45,7 @@ int	main(int argc, char *argv[], char *envp[])
 		line = get_line();
 		if (!line)
 			continue ;
-		cmd_ar = ft_split(line, ' ');
+		cmd_ar = ft_escsplit(line, ft_iswspace, ft_isquote);
 		builtin_execve(cmd_ar[0], cmd_ar, program->envp);
 		free(line);
 		free_arr(cmd_ar, 1);
