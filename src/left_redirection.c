@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   left_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 22:05:55 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:18:32 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ int	l_redirect_handler(void *arg)
 		return (-1);
 	printf("  |- right_arg = %s\n\n", right_arg);
 	left_redirection(right_arg, left_arg);
+	if (left_arg)
+		free(left_arg);
 	if (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) == NULL)
 		return (-1);
 	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) - token->str) + ft_strlen(right_arg);
-	return (offset);
+	return (free(right_arg), offset);
 }
 
 /**

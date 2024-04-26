@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 22:02:41 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:29:42 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,14 @@ static void	init_environment(t_program *program)
 {
 	get_env_paths(program);
 	save_std_fd(program);
+	set_handler(AND, and_handler);
+	set_handler(OR, or_handler);
+	set_handler(PIPE, pipe_handler);
+	set_handler(L_REDIRECT, l_redirect_handler);
+	// set_handler(R_REDIRECT, l_redirect_handler); ">"
+	set_handler(L_DELIMITER, and_handler);
+	// set_handler(R_APPEND, and_handler); ">>"
+	set_handler(OPERATOR_COUNT, cmd_handler);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:56:13 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 12:59:22 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 08:18:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	or_handler(void *arg)
 	printf("  |- left_arg  = %s\n", left_arg);
 
 	or_operation(left_arg);
+	if (left_arg)
+		free(left_arg);
 	program = get_program();
 	if (program->status == 0)
 		return (-1);

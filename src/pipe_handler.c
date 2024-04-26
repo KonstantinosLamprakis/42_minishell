@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:17:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/25 10:46:44 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 09:16:07 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	exec_pipe_cmd(char **left_cmd_args)
 		close(program->pipe_end[PIPE_READ]);
 		execve(cmd, left_cmd_args, program->envp);
 	}
+	free(cmd);
 	waitpid(child, &program->status, 0);
 }
 
@@ -59,7 +60,8 @@ int	pipe_handler(void *arg)
 	printf("\n");
 
 	pipe_operation(left_arg);
-
+	if (left_arg)
+		free(left_arg);
 	return (token->start + 1);
 }
 
@@ -74,6 +76,7 @@ void	pipe_operation(char *left_arg)
 	program = get_program();
 	pipe(program->pipe_end);
 	exec_pipe_cmd(cmd_args);
+	free_arr(cmd_args, 1);
 	close(program->pipe_end[PIPE_WRITE]);
 	printf("Redirecting pipe_read_end to %d\n", STDIN);
 	if (dup2(program->pipe_end[PIPE_READ], STDIN) < 0)

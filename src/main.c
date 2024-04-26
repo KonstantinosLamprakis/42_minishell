@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 07:28:42 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 09:27:46 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,25 @@
 	tester: https://github.com/zstenger93/42_minishell_tester
 	bugs:
 		- export test="" -> adds multiple "", same export test="test1"
-		- echo "          f    fg " -> should modify split
+		- echo "          f    fg " -> in get_line()
 		- ctrl D should decrease SHLVL if its > 1 and clean everything
 	todo: function ft_free to free only if is not NULL
  */
 
-void	leaks(void)
-{
-	system("leaks minishell");
-}
+
+// void	leaks(void)
+// {
+// 	system("leaks minishell");
+// }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	// char	str[] = "infile < test/test.txt";
 	t_program	*program;
-	char		**cmd_ar;
+	// char		**cmd_ar;
 	char		*line;
 
-	atexit(leaks);
+	// atexit(leaks);
 	argc = 0;
 	argv = NULL;
 	init_struct(envp);
@@ -45,15 +46,15 @@ int	main(int argc, char *argv[], char *envp[])
 		line = get_line();
 		if (!line)
 			continue ;
-		cmd_ar = ft_split(line, ' ');
-		builtin_execve(cmd_ar[0], cmd_ar, program->envp);
+		ft_parse(line);
+		// printf("%s\n", line);
+		// cmd_ar = ft_escsplit(line, ft_iswspace, ft_isquote);
+		// printf("%s\n", cmd_ar[1]);
+		// builtin_execve(cmd_ar[0], cmd_ar, program->envp);
 		free(line);
-		free_arr(cmd_ar, 1);
+		reset_struct();
+		// free_arr(cmd_ar, 1);
 	}
-	set_handler(L_REDIRECT, l_redirect_handler);
-	set_handler(OPERATOR_COUNT, cmd_handler);
-	char	str[] = "< Makefile cat";
-	ft_parse(str);
 	clean_struct();
 	exit(*get_errno() != 0);
 }
