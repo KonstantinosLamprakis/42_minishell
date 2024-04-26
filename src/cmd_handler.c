@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 18:23:45 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:27:08 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ void	exec_cmd(char **cmd_args)
 	}
 	waitpid(child, &program->status, 0);
 	signal(SIGINT, &handler_idle);
-	signal(SIGQUIT, &handler_idle);
+	signal(SIGQUIT, SIG_IGN);
 	free(cmd);
 }
