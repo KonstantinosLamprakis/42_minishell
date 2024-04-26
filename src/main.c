@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 09:27:46 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/26 09:34:40 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	tester: https://github.com/zstenger93/42_minishell_tester
 	bugs:
 		- export test="" -> adds multiple "", same export test="test1"
-		- echo "          f    fg " -> in get_line()
+		- echo " test -> seg fault
 		- ctrl D should decrease SHLVL if its > 1 and clean everything
 	todo: function ft_free to free only if is not NULL
  */

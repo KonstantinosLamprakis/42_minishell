@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:54 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 07:27:28 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 08:19:39 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,3 @@ void	handler_on_idle(int signal, siginfo_t *info, void *ucontext)
 		get_program()->status = 130;
 	}
 }
-
