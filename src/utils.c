@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 12:43:09 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:27:16 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int	is_builtin(char *path)
  */
 int	builtin_execve(const char *path, char *const argv[], char *envp[])
 {
+	if (put_signal_handler(0, SIGINT) || put_signal_handler(0, SIGQUIT))
+	{
+		printf("Error: handling signals\n");
+		return (-1);
+	}
 	if (!path || !argv || !argv[0] || !envp)
 		return (-1);
 	if (ft_strcmp(path, "echo") == 0)

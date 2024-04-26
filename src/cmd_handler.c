@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 15:50:56 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:26:25 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,16 @@ void	exec_cmd(char **cmd_args)
 	pid_t		child;
 	char		*cmd;
 
-	if (!is_builtin(cmd_args[0]))
-		cmd = get_cmd(cmd_args);
-	else
+	program = get_program();
+	if (is_builtin(cmd_args[0]))
+	{
 		cmd = cmd_args[0];
+		get_program()->status = builtin_execve(cmd, cmd_args, program->envp);
+		return ;
+	}
+	cmd = get_cmd(cmd_args);
 	if (!cmd)
 		return ;
-	program = get_program();
 	child = fork();
 	if (child < 0)
 		return (set_error((char *)__func__, FORK));
@@ -75,16 +78,9 @@ void	exec_cmd(char **cmd_args)
 			printf("Error: handling signals\n");
 			return ;
 		}
-		if (!is_builtin(cmd_args[0]))
-			execve(cmd, cmd_args, program->envp);
-		else
-			get_program()->status = builtin_execve(cmd, cmd_args, program->envp);
-		exit(get_program()->status);
+		get_program()->status = execve(cmd, cmd_args, program->envp);
 	}
 	waitpid(child, &program->status, 0);
-	if (!is_builtin(cmd_args[0]))
-		free(cmd);
-	if (is_builtin(cmd_args[0]) == 2)
-		exit (get_program()->status);
+	free(cmd);
 	//printf("Return status: %d\n", program->status);
 }
