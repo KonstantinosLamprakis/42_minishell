@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 18:29:53 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 13:32:00 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,13 @@ int	main(int argc, char *argv[], char *envp[])
 	program = get_program();
 	while (42)
 	{
-		line = get_line();
-		if (!line)
-			continue ;
+		if (isatty(fileno(stdin)))
+			line = get_line();
+		else
+			line = ft_get_next_line_nonl(fileno(stdin));
+		// line = get_line();
+		// if (!line)
+		// 	continue ;
 		ft_parse(line);
 		free(line);
 		reset_struct();

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 14:48:34 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/27 16:18:50 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*get_right_arg(t_token *token)
 	char	**tmp;
 	char	*right_arg;
 
-	tmp = ft_escsplit(token->str + token->start + 2, ft_iswspace, ft_isquote);
+	tmp = ft_escsplit(token->str + token->start + 1, ft_iswspace, ft_isquote);
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
 	right_arg = ft_strdup(tmp[0]);
@@ -40,28 +40,6 @@ static char	*get_right_arg(t_token *token)
 		return (NULL);
 	return (right_arg);
 }
-
-// static char	*extract_used_part(t_token *token, char *left_arg
-// , char *right_arg)
-// {
-// 	char	*res;
-// 	char	*tmp;
-// 	int		offset;
-
-// 	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
-// 			- token->str) + ft_strlen(right_arg) + 1;
-// 	tmp = ft_substr(token->str, offset, ft_strlen(token->str + offset));
-// 	if (!tmp)
-// 		return (set_error((char *)__func__, ALLOC), NULL);
-// 	if (left_arg)
-// 		res = ft_strjoin_3(left_arg, " ", tmp);
-// 	else
-// 		res = ft_strdup(tmp);
-// 	free(tmp);
-// 	if (!res)
-// 		return (set_error((char *)__func__, ALLOC), NULL);
-// 	return (res);
-// }
 
 /**
  * @brief Handler wrapper for '>' operator
@@ -97,11 +75,12 @@ void	right_redirection(char *arg, char *left_arg)
 {
 	int	right_fd;
 
-	right_fd = ft_open(arg, O_WRONLY | O_CREAT, 0644);
+	right_fd = ft_open_first(arg, O_WRONLY | O_CREAT, 0644);
 	if (right_fd < 0)
 		return (set_error((char *)__func__, OPEN));
 	if (dup2(right_fd, STDOUT) < 0)
 		return (set_error((char *)__func__, DUP));
 	if (left_arg)
 		ft_parse(left_arg);
+	printf("DEBUG\n");
 }

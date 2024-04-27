@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 12:10:33 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/27 16:54:40 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@ static int	handle_found_encapsulator(t_token *token, char *str, int start,
 	token->op = -1;
 	if (enc == L_PARANTHESE)
 		token->end = token->start + endof_paranthese(str, start);
-	// if (enc == L_CBRACKET)
-	// 	token->end = token->start + endof_cbrackets(str, start);
-	// if (enc == L_BRACKET)
-	// 	token->end = token->start + endof_brackets(str, start);
 	return (1);
 }
 
@@ -53,9 +49,13 @@ static int	find_next_token(char *str, t_token *token)
 	while (str[++index])
 	{
 		token_c = ft_which_op(str + index);
+		if (*get_errno() != NO_ERROR)
+			break ;
 		if (token_c >= 0 && handle_found_operator(token, index, token_c))
 			break ;
 		token_c = ft_which_enc(str + index);
+		if (*get_errno() != NO_ERROR)
+			break ;
 		if (token_c >= 0 && handle_found_encapsulator(token, str, index,
 				token_c))
 			break ;
@@ -65,22 +65,22 @@ static int	find_next_token(char *str, t_token *token)
 	return (1);
 }
 
-static void	save_next(char *str, t_token *token)
-{
-	int	index;
+// static void	save_next(char *str, t_token *token)
+// {
+// 	int	index;
 
-	index = token->start;
-	token->next_operator = -1;
-	while (str[++index])
-	{
-		if (ft_which_op(str + index) >= 0 || ft_which_enc(str
-					+ index) >= 0)
-		{
-			token->next_operator = index;
-			break ;
-		}
-	}
-}
+// 	index = token->start;
+// 	token->next_operator = -1;
+// 	while (str[++index])
+// 	{
+// 		if (ft_which_op(str + index) >= 0 || ft_which_enc(str
+// 					+ index) >= 0)
+// 		{
+// 			token->next_operator = index;
+// 			break ;
+// 		}
+// 	}
+// }
 
 /**
  * @brief Parses str respecting operators such as '()' or '""'
@@ -107,7 +107,7 @@ void	ft_parse(char *str)
 	token.op = -1;
 	token.str = str;
 	handlers = get_handlers();
-	//printf("\n%s input: \"%s\"\n", (char *)__func__, str);
+	printf("\n%s input: \"%s\"\n", (char *)__func__, str);
 	if (ft_strlen_if(str, ft_iswspace) > 0 && find_next_token(str, &token) >= 0)
 	{
 		if (token.start < 0)
@@ -128,7 +128,7 @@ void	ft_parse(char *str)
 		else
 		{
 			//printf("Next token is \"%s\"\n", str + token.start);
-			save_next(str, &token);
+			// save_next(str, &token);
 			if ((int)token.op >= 0)
 			{
 				//printf("Operator found %d : %s.\n", token.op, operators[token.op]);

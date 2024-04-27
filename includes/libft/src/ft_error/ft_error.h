@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:06:29 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 10:41:47 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/27 16:30:54 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,19 @@ typedef enum e_errno
 	ERR_COUNT
 }				t_errno;
 
-# define INVALID_ARG_ERR "Invalid argument: "
-# define ALLOC_ERR "Error allocating memory: "
-# define OPEN_ERR "Error opening a file: "
-# define CLOSE_ERR "Eroor closing a file: "
-# define READ_ERR "Error reading the file: "
-# define WRONG_ERRNO_ERR "Wrong error number: "
-# define BITMAP_MASK_ERR "Wrong number of bits to create the mask: "
-# define QUEUE_AT_CAPACITY_ERR "Queue is overpopulated: "
-# define QUEUE_EMPTY_ERR "Queue is empty: "
-# define SYNTAX_ERR "Syntax error: "
-# define DUP_ERR "Error dupliacting file descriptors: "
-# define FORK_ERR "Error forking: "
-# define COMMAND_NOT_FOUND_ERR "Command not found: "
+# define INVALID_ARG_ERR "invalid argument "
+# define ALLOC_ERR "error allocating memory "
+# define OPEN_ERR "error opening a file "
+# define CLOSE_ERR "error closing a file "
+# define READ_ERR "error reading the file "
+# define WRONG_ERRNO_ERR "wrong error number "
+# define BITMAP_MASK_ERR "wrong number of bits to create the mask "
+# define QUEUE_AT_CAPACITY_ERR "queue is overpopulated "
+# define QUEUE_EMPTY_ERR "queue is empty "
+# define SYNTAX_ERR "syntax error "
+# define DUP_ERR "error dupliacting file descriptors "
+# define FORK_ERR "error forking "
+# define COMMAND_NOT_FOUND_ERR "command not found "
 
 int				*get_errno(void);
 void			set_errno(int err_value);
