@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:57:49 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 19:11:11 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:04:39 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ void	check_for_assigments(char *str)
 	i = -1;
 	while (str[++i])
 	{
-
+		
 	}
 }

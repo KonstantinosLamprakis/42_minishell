@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 19:56:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 19:44:03 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:20:55 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void	handle_eq(char *arg, char *value, char *key, int is_exp)
 {
 	is_exp++;
 	if (arg[1] != '\0' && !value)
-		value = ft_substr(arg, 1, ft_strlen(arg));
+	{
+		if (!(ft_strlen(arg) >= 3 && (arg[1] == '\"' && arg[2] == '\"')))
+			value = ft_substr(arg, 1, ft_strlen(arg));
+	}
 	else if (!value)
 		value = ft_strdup("");
 	del_from_envp(get_program()->exp_v, key);

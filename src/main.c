@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 19:36:33 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:19:51 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 			them
 		- echo " test -> seg fault
 		- export test_3421 -> not valid identifirer
+		- export test1="" => not valid identifier -> split gives a NULL arg extra
+			- I fixed that in my code(b_export()), but I thing is parser error
+		- parser error when provides a wrong command, then you can not continue
 		- "echo test"
 		- seg fault when command not found
 		- ctrl D should decrease SHLVL if its > 1 and clean everything

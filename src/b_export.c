@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 19:37:37 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:10:24 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,15 @@ int	b_export(char *const argv[], char *envp[])
 
 	envp = NULL;
 	status = 0;
+	if (!argv || !argv[0])
+		return (1);
 	program = get_program();
 	if (!argv[1])
 		return (print_sorted(program->envp, program->exp_v), 0);
 	i = 0;
 	while (argv[++i])
-		status += handle_arg(argv[i], 1);
+		if (argv[i][0])
+			status += handle_arg(argv[i], 1);
 	return (-1 * (status != 0));
 }
 
