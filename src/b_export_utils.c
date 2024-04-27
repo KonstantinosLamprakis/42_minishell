@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 19:56:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/27 21:50:32 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 22:14:05 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	handle_eq(char *arg, char *value, char *key, int is_exp)
 	}
 	else
 	{
-		printf("key is: %s, value is:%s\n", key, value);
 		if (find_env(get_program()->exp_v, key) != -1)
 		{
 			del_from_envp(get_program()->exp_v, key);
@@ -126,7 +125,6 @@ char	*handle_plus(char *arg, int *index, char *key)
 		}
 	}
 	*index = j;
-	printf("it is a plus\n");
 	return (value);
 }
 
@@ -140,7 +138,6 @@ static void	handle_empty(char *value, char *key)
 {
 	if (!value)
 		value = get_env_value(get_program()->loc_v, key, NULL);
-	printf("export empty:\n\tkey is: %s, value is:%s\n", key, value);
 	if (value)
 	{
 		del_from_envp(get_program()->loc_v, key);

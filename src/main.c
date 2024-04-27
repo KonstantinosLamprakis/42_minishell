@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 21:35:57 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 22:42:31 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,20 @@
 		- "echo test" -> wrong error number instead of command not found
 		- test2=" df" -> invalid arg-> wrong
 		- export test2=" this is" -> not valid identifier -> wrong
+		- ERROR with split ex. export test="value"
+			- returns test="value" and value. Should return only the first
+			- should split "" only when they are between spaces
 		- ctrl D should decrease SHLVL if its > 1 and clean everything
 	todo:
 		- clean_struct should clean everything because we use it at signals and at exit
 		- delete and clean git branches
-		- replace maybe ~, $() etc. before parsing
-		- handling assigment operator
- */
+		- replace maybe $() etc. before parsing
+		- $
+			- $name: if name exists at loc_v or envp replace it with its value else with ""
+			replace until space ' '
+			- ${name}: replace until }
+			- $? : replace it with the get_program()->status
+*/
 
 // void	leaks(void)
 // {

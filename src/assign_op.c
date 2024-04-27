@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:57:49 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/27 21:38:40 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 22:56:38 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,56 @@ int	is_assign(char *const argv[])
 			return (0);
 	}
 	return (1);
+}
+
+int	dollar_op(char	*str)
+{
+	int	i;
+	char	*cmd;
+	int	start;
+	int	end;
+	int	is_bracket;
+
+	is_bracket = 0;
+	i = -1;
+	cmd = ft_strdup(str);
+	while (cmd[++i])
+	{
+		if (cmd[i] == '$')
+		{
+			is_bracket += (cmd[i + 1] == '{');
+			if (is_bracket)
+				cmd = replace_dollar(cmd, i, '}');
+			else
+				cmd = replace_dollar(cmd, i, ' ');
+		}
+	}
+}
+
+/**
+ * @brief
+ *
+ * @param str the string that contains the $, should be allocated because
+ * this function will free it at the end
+ * @param index the index that contains dollar
+ * @param del the delimiter is { or ' ', for ${name} and $name
+ * @return char *, new string allocated and should be freed after use.
+ * this string is the same as the str but replaced the $ at the index
+ * with its value
+ * Returns NULL on error
+ */
+char	*replace_dollar(char *str, int index, char del)
+{
+	int		j;
+	int		end;
+	char	*result;
+	char	*value;
+
+	j = index + 1;
+	while (str[j] && str[j] != del)
+		j++;
+	if (str[j] == '\0' && del == '}')
+		return (free(str), NULL);
+	end = j;
+	// value is the value of the key at $key
 }

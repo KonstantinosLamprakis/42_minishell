@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 21:17:50 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 22:22:56 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,12 @@ void	exec_cmd(char **cmd_args)
 	pid_t		child;
 	char		*cmd;
 
+	// int i = -1;
+	// while (cmd_args[++i])
+	// 	printf("arg: -%s-\n", cmd_args[i]);
 	program = get_program();
 	if (is_assign(cmd_args))
 	{
-		printf("it is assign\n");
 		exec_assign(cmd_args, program->envp);
 		return ;
 	}
