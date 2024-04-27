@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:21:09 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/25 12:13:44 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 20:26:15 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param key the value that it will be founded ex. "HOME"
  * @return int, position of key at envp or -1 if not founded
  */
-static int	find_env(char **envp, char *key)
+int	find_env(char **envp, char *key)
 {
 	int		i;
 	int		found;

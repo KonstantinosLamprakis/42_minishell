@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 13:57:20 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/27 21:17:50 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ void	exec_cmd(char **cmd_args)
 	char		*cmd;
 
 	program = get_program();
+	if (is_assign(cmd_args))
+	{
+		printf("it is assign\n");
+		exec_assign(cmd_args, program->envp);
+		return ;
+	}
 	if (is_builtin(cmd_args[0]))
 	{
 		program->status = builtin_execve(cmd_args[0], cmd_args, program->envp);

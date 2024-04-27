@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 19:27:40 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 21:35:57 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 		- export test1="" => not valid identifier -> split gives a NULL arg extra
 			- I fixed that in my code(b_export()), but I thing is parser error
 		- "echo test" -> wrong error number instead of command not found
+		- test2=" df" -> invalid arg-> wrong
+		- export test2=" this is" -> not valid identifier -> wrong
 		- ctrl D should decrease SHLVL if its > 1 and clean everything
 	todo:
 		- clean_struct should clean everything because we use it at signals and at exit
@@ -49,9 +51,6 @@ int	main(int argc, char *argv[], char *envp[])
 			line = get_line();
 		else
 			line = ft_get_next_line_nonl(fileno(stdin));
-		// line = get_line();
-		// if (!line)
-		// 	continue ;
 		ft_parse(line);
 		free(line);
 		reset_struct();

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 19:35:26 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 21:37:00 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ typedef struct s_program
 	int		pipe_end[2];
 }				t_program;
 
+//			ASSIGN_OP.c
+int			is_assign(char *const argv[]);
+int			exec_assign(char *const argv[], char *envp[]);
+
 //			SIGNALS.c
 void		handler_idle(int sig);
 void		handler_cmd(int sig);
@@ -73,6 +77,7 @@ void		add_to_envp(char ***envp_ptr, char *new_var, int pos);
 char		*get_env_value(char *envp[], char *const key, char *suffix);
 int			del_from_envp(char **envp, char *key);
 void		replace_envp_key(char ***envp, char *key, char *new_value);
+int			find_env(char **envp, char *key);
 
 //			ENV_UTILS_2.c
 
@@ -106,7 +111,7 @@ char		*remove_dot(char *path, int index);
 
 int			handle_arg(char *arg, int is_exp);
 void		handle_eq(char *arg, char *value, char *key, int is_exp);
-char		*handle_plus(char *arg, int *index, char *key, int is_exp);
+char		*handle_plus(char *arg, int *index, char *key);
 
 
 //			STRUCT_RELATED
