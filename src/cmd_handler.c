@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 18:29:08 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 13:57:20 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_cmd(char **cmd_args)
 	if (cmd_args[0][0] == '/')
 	{
 		if (access(cmd_args[0], F_OK) >= 0)
-			return (cmd_args[0]);
+			return (ft_strdup(cmd_args[0]));
 	}
 	else
 	{
@@ -61,17 +61,17 @@ void	exec_cmd(char **cmd_args)
 	program = get_program();
 	if (is_builtin(cmd_args[0]))
 	{
-		get_program()->status = builtin_execve(cmd_args[0], cmd_args, program->envp);
+		program->status = builtin_execve(cmd_args[0], cmd_args, program->envp);
 		return ;
 	}
 	cmd = get_cmd(cmd_args);
 	if (!cmd)
 		return ;
 	child = fork();
-	signal(SIGINT, &handler_cmd);
-	signal(SIGQUIT, &handler_cmd);
 	if (child < 0)
 		return (set_error((char *)__func__, FORK));
+	signal(SIGINT, &handler_cmd);
+	signal(SIGQUIT, &handler_cmd);
 	if (child == CHILD_PROCESS)
 		get_program()->status = execve(cmd, cmd_args, program->envp);
 	waitpid(child, &program->status, 0);

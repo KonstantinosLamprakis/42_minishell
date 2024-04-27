@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:20:15 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 09:28:28 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/27 13:35:07 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ void	reset_struct(void)
 {
 	close_opened_files();
 	reset_std_fd();
+	set_errno(NO_ERROR);
 }

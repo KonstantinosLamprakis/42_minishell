@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 19:19:51 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:23:47 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,13 @@ int	main(int argc, char *argv[], char *envp[])
 	program = get_program();
 	while (42)
 	{
-		line = get_line();
-		if (!line)
-			continue ;
+		if (isatty(fileno(stdin)))
+			line = get_line();
+		else
+			line = ft_get_next_line_nonl(fileno(stdin));
+		// line = get_line();
+		// if (!line)
+		// 	continue ;
 		ft_parse(line);
 		free(line);
 		reset_struct();
