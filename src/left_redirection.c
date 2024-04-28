@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 16:34:44 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/28 08:34:49 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*get_left_arg(t_token *token)
 	left_arg = NULL;
 	if (token->start > 0)
 	{
-		left_arg = ft_substr_if(token->str, 0, token->start - 1, ft_iswspace);
+		left_arg = ft_substr_if(token->str, 0, token->start, ft_iswspace);
 		if (!left_arg)
 			return (set_error((char *)__func__, ALLOC), NULL);
 	}
