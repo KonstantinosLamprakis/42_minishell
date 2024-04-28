@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handlers.c                                      :+:      :+:    :+:   */
+/*   ft_handle_found.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 10:41:32 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 11:38:08 by lgreau           ###   ########.fr       */
+/*   Created: 2024/04/28 09:46:43 by lgreau            #+#    #+#             */
+/*   Updated: 2024/04/28 09:59:43 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_parser.h"
 
-t_operator_handler	*get_handlers(void)
+int	handle_found_encapsulator(t_token *token, char *str, int start,
+		t_encapsulators enc)
 {
-	static t_operator_handler	handlers[OPERATOR_COUNT + 2] = {0};
-
-	return (&handlers[0]);
+	token->start = start;
+	token->enc = enc;
+	token->op = -1;
+	if (enc == L_PARANTHESE)
+		token->end = token->start + endof_paranthese(str, start);
+	return (1);
 }
 
-void	set_handler(t_operators op, t_operator_handler new_handler)
+int	handle_found_operator(t_token *token, int index, t_operators op)
 {
-	t_operator_handler	*handlers;
-
-	handlers = get_handlers();
-	handlers[op] = new_handler;
+	token->op = op;
+	token->enc = -1;
+	token->start = index;
+	return (1);
 }

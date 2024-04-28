@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:18:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 12:08:58 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/28 09:47:28 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define DEBUG_START_HANDLER "\n/+ ----- Start of Handler ----- +\\\n"
 # define DEBUG_END_OF_HANDLER "\\+ ------ End of Handler ------ +/\n\n"
 
-typedef int	(*t_operator_handler)(void *);
+typedef int			(*t_operator_handler)(void *);
 
 typedef enum e_operators
 {
@@ -69,6 +69,13 @@ typedef struct s_parser_utils
 }					t_parser_utils;
 
 void				ft_parse(char *str);
+
+int					find_next_token(char *str, t_token *token);
+
+int					handle_found_operator(t_token *token, int index,
+						t_operators op);
+int					handle_found_encapsulator(t_token *token, char *str,
+						int start, t_encapsulators enc);
 
 char				**get_operators(void);
 char				**get_encapsulators(void);

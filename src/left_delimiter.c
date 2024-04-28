@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 08:47:23 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/28 09:14:23 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,9 @@ int	l_delimiter_handler(void *arg)
 	left_delimiter(right_arg, left_arg);
 	if (left_arg)
 		free(left_arg);
-	if (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) == NULL)
-		return (-1);
-	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
-			- token->str) + ft_strlen(right_arg) + 1;
+	offset = ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
+		- token->str + ft_strlen(right_arg);
+	offset += ft_isquote(token->str[offset]);
 	return (free(right_arg), offset);
 }
 
@@ -79,8 +78,7 @@ static int	is_delimiter(char *buffer)
 		return (set_error((char *)__func__, INVALID_ARG), -1);
 	program = get_program();
 	return (ft_strlen(buffer) == (1 + ft_strlen(program->delimiter))
-		&& ft_strncmp(buffer, program->delimiter, ft_strlen(buffer)
-			- 1) == 0);
+		&& ft_strncmp(buffer, program->delimiter, ft_strlen(buffer) - 1) == 0);
 }
 
 /**
