@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 22:22:56 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/28 19:28:06 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,15 @@ void	exec_cmd(char **cmd_args)
 	signal(SIGINT, &handler_cmd);
 	signal(SIGQUIT, &handler_cmd);
 	if (child == CHILD_PROCESS)
-		get_program()->status = execve(cmd, cmd_args, program->envp);
+	{
+		if (program->is_piped)
+		{
+			if (dup2(program->pipe_save_write[program->depth], STDOUT) < 0)
+				return (set_error((char *)__func__, DUP));
+			close(program->pipe_save_read[program->depth]);
+		}
+		program->status = execve(cmd, cmd_args, program->envp);
+	}
 	waitpid(child, &program->status, 0);
 	signal(SIGINT, &handler_idle);
 	signal(SIGQUIT, SIG_IGN);

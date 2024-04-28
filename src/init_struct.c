@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 18:23:53 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/28 11:38:02 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static void	init_environment(t_program *program)
 	set_handler(L_DELIMITER, l_delimiter_handler);
 	set_handler(R_APPEND, r_append_handler);
 	set_handler(OPERATOR_COUNT, cmd_handler);
+	set_handler(OPERATOR_COUNT + 1, parantheses_handler);
 }
 
 /**

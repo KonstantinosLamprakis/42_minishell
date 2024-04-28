@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 16:35:46 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/28 09:14:23 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*get_left_arg(t_token *token)
 	left_arg = NULL;
 	if (token->start > 0)
 	{
-		left_arg = ft_substr_if(token->str, 0, token->start - 1, ft_iswspace);
+		left_arg = ft_substr_if(token->str, 0, token->start, ft_iswspace);
 		if (!left_arg)
 			return (set_error((char *)__func__, ALLOC), NULL);
 	}
@@ -31,7 +31,6 @@ static char	*get_right_arg(t_token *token)
 	char	**tmp;
 	char	*right_arg;
 
-	printf("|%s|\n", token->str + token->start + 2);
 	if (ft_strlen_if(token->str + token->start + 2, ft_iswspace) == 0)
 		return (set_error((char *)__func__, SYNTAX), NULL);
 	tmp = ft_escsplit(token->str + token->start + 2, ft_iswspace, ft_isquote);
@@ -65,10 +64,9 @@ int	l_delimiter_handler(void *arg)
 	left_delimiter(right_arg, left_arg);
 	if (left_arg)
 		free(left_arg);
-	if (ft_strnstr(token->str, right_arg, ft_strlen(right_arg)) == NULL)
-		return (-1);
-	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
-			- token->str) + ft_strlen(right_arg) + 1;
+	offset = ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
+		- token->str + ft_strlen(right_arg);
+	offset += ft_isquote(token->str[offset]);
 	return (free(right_arg), offset);
 }
 
@@ -80,8 +78,7 @@ static int	is_delimiter(char *buffer)
 		return (set_error((char *)__func__, INVALID_ARG), -1);
 	program = get_program();
 	return (ft_strlen(buffer) == (1 + ft_strlen(program->delimiter))
-		&& ft_strncmp(buffer, program->delimiter, ft_strlen(buffer)
-			- 1) == 0);
+		&& ft_strncmp(buffer, program->delimiter, ft_strlen(buffer) - 1) == 0);
 }
 
 /**
@@ -104,7 +101,7 @@ void	left_delimiter(char *arg, char *left_arg)
 	if (here_doc < 0)
 		return ;
 	write(STDOUT, HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
-	buffer = ft_get_next_line(STDIN);
+	buffer = ft_get_next_line(program->std_fd[STDIN]);
 	while (buffer)
 	{
 		if (is_delimiter(buffer))
@@ -115,7 +112,7 @@ void	left_delimiter(char *arg, char *left_arg)
 		write(here_doc, buffer, ft_strlen(buffer));
 		free(buffer);
 		write(STDOUT, HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
-		buffer = ft_get_next_line(STDIN);
+		buffer = ft_get_next_line(program->std_fd[STDIN]);
 	}
 	close(here_doc);
 	left_redirection(HERE_DOC_FILE, left_arg);

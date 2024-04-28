@@ -151,7 +151,9 @@ FT_PARSER_SRCS =	ft_is_operator.c			\
 					ft_encapsulators.c			\
 					ft_parser.c					\
 					ft_operators.c				\
-					ft_handlers.c
+					ft_handlers.c				\
+					ft_findnext.c				\
+					ft_handle_found.c
 FT_PARSER_OBJS = ${patsubst %.c, ${OBJ_DIR}/%.o, ${FT_PARSER_SRCS}}
 
 

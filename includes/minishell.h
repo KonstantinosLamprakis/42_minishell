@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 21:37:00 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/28 19:27:55 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define STDOUT 1
 # define STDERR 2
 # define STDCOUNT 3
+
+# define MAX_SUB_DEPTH 256
 
 /*
 	envp: an always up-to-date array that holds environment vars
@@ -61,6 +63,10 @@ typedef struct s_program
 	int		std_fd[3];
 	char	*delimiter;
 	int		pipe_end[2];
+	int		is_piped;
+	int		pipe_save_write[MAX_SUB_DEPTH];
+	int		pipe_save_read[MAX_SUB_DEPTH];
+	int		depth;
 }				t_program;
 
 //			ASSIGN_OP.c
@@ -155,6 +161,8 @@ void		right_redirection(char *arg, char *left_arg);
 
 int			r_append_handler(void *arg);
 void		right_append(char *arg, char *left_arg);
+
+int			parantheses_handler(void *arg);
 
 //			COMMAND_RELATED
 
