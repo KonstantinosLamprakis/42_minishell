@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:14 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 09:25:37 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/28 23:07:49 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ int	b_unset(char *const argv[], char *envp[])
 	if (!argv[1])
 		return (0);
 	if (argv[1][0] == '-')
-		return (printf("unset: -%c: invalid option\n", argv[1][1]), 1);
+		return (fprintf(stderr, "unset: -%c: invalid option\n", argv[1][1]), 1);
 	if (argv[1][0] == '~' && argv[1][1] == '\0')
 	{
 		temp = get_env_value(get_program()->loc_v, "~", NULL);
 		if (!temp)
-			return (printf("unset: ~ not set\n"), 1);
-		printf("unset: `%s': not a valid identifier\n", temp);
+			return (fprintf(stderr, "unset: ~ not set\n"), 1);
+		fprintf(stderr, "unset: `%s': not a valid identifier\n", temp);
 		return (free(temp), 1);
 	}
 	i = 0;
 	while (argv[++i])
 	{
 		if (argv[i][0] == '-')
-			printf("unset: `%s': not a valid identifier\n", argv[i]);
+			fprintf(stderr, "unset: `%s': not a valid identifier\n", argv[i]);
 		else
 			unset_all_lists(argv[i]);
 	}
