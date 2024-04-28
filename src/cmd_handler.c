@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 20:55:34 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/28 22:25:25 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	exec_cmd(char **cmd_args)
 	if (is_builtin(cmd_args[0]))
 	{
 		program->status = builtin_execve(cmd_args[0], cmd_args, program->envp);
+		if (program->status == -1)
+			program->status = 1;
 		return ;
 	}
 	cmd = get_cmd(cmd_args);
