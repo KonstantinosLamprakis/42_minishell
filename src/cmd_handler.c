@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 22:25:25 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/28 22:58:35 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,10 @@ void	exec_cmd(char **cmd_args)
 				return (set_error((char *)__func__, DUP));
 			close(program->pipe_save_read[program->depth]);
 		}
-		program->status = execve(cmd, cmd_args, program->envp);
+		execve(cmd, cmd_args, program->envp);
 	}
 	waitpid(child, &program->status, 0);
+	program->status %= 255;
 	signal(SIGINT, &handler_idle);
 	signal(SIGQUIT, SIG_IGN);
 	free(cmd);
