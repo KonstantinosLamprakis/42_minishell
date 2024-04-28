@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 19:28:06 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/28 20:55:34 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,17 @@ int	cmd_handler(void *arg)
 {
 	t_token	*token;
 	char	**cmd;
+	char	*cmd_str;
 
 	token = (t_token *)arg;
-	cmd = ft_escsplit(token->str, ft_iswspace, ft_isquote);
+	cmd_str = dollar_op(token->str);
+	if (!cmd_str)
+	{
+		printf("TODO: Error\n");
+		return (-1);
+	}
+	cmd = ft_escsplit(cmd_str, ft_iswspace, ft_isquote);
+	free(cmd_str);
 	if (!cmd)
 		return (-1);
 	exec_cmd(cmd);

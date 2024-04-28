@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 19:27:55 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/28 21:02:37 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ typedef struct s_program
 //			ASSIGN_OP.c
 int			is_assign(char *const argv[]);
 int			exec_assign(char *const argv[], char *envp[]);
+
+//			DOLLAR_OP.c
+char		*dollar_op(char	*str);
 
 //			SIGNALS.c
 void		handler_idle(int sig);

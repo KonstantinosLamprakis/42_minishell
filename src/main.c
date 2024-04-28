@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 22:42:31 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/28 20:58:39 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@
 	todo:
 		- clean_struct should clean everything because we use it at signals and at exit
 		- delete and clean git branches
-		- replace maybe $() etc. before parsing
-		- $
-			- $name: if name exists at loc_v or envp replace it with its value else with ""
-			replace until space ' '
-			- ${name}: replace until }
-			- $? : replace it with the get_program()->status
 */
 
 // void	leaks(void)

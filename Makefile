@@ -15,6 +15,7 @@ SRCS =	main.c					\
 		clean_struct.c			\
 		quit_utils.c			\
 		assign_op.c				\
+		dollar_op.c				\
 		b_cd.c					\
 		b_cd_utils.c			\
 		b_echo.c				\
