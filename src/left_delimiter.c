@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 08:35:03 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/28 08:47:23 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static char	*get_right_arg(t_token *token)
 	char	**tmp;
 	char	*right_arg;
 
-	printf("|%s|\n", token->str + token->start + 2);
 	if (ft_strlen_if(token->str + token->start + 2, ft_iswspace) == 0)
 		return (set_error((char *)__func__, SYNTAX), NULL);
 	tmp = ft_escsplit(token->str + token->start + 2, ft_iswspace, ft_isquote);
@@ -104,7 +103,7 @@ void	left_delimiter(char *arg, char *left_arg)
 	if (here_doc < 0)
 		return ;
 	write(STDOUT, HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
-	buffer = ft_get_next_line(STDIN);
+	buffer = ft_get_next_line(program->std_fd[STDIN]);
 	while (buffer)
 	{
 		if (is_delimiter(buffer))
@@ -115,7 +114,7 @@ void	left_delimiter(char *arg, char *left_arg)
 		write(here_doc, buffer, ft_strlen(buffer));
 		free(buffer);
 		write(STDOUT, HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
-		buffer = ft_get_next_line(STDIN);
+		buffer = ft_get_next_line(program->std_fd[STDIN]);
 	}
 	close(here_doc);
 	left_redirection(HERE_DOC_FILE, left_arg);
