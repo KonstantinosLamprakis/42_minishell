@@ -6,11 +6,11 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:41:32 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 11:38:08 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 13:37:19 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_parser.h"
+#include "../includes/minishell.h"
 
 t_operator_handler	*get_handlers(void)
 {

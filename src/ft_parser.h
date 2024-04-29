@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:18:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 09:47:28 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 13:38:03 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 # include "../ft_btree/ft_btree.h"
 # include "../ft_error/ft_error.h"
 # include "../ft_string/ft_string.h"
-
-# define DEBUG_START_HANDLER "\n/+ ----- Start of Handler ----- +\\\n"
-# define DEBUG_END_OF_HANDLER "\\+ ------ End of Handler ------ +/\n\n"
 
 typedef int			(*t_operator_handler)(void *);
 
@@ -60,13 +57,7 @@ typedef struct s_token
 	t_encapsulators	enc;
 	int				start;
 	int				end;
-	int				next_operator;
 }					t_token;
-
-typedef struct s_parser_utils
-{
-	t_btree			*strings;
-}					t_parser_utils;
 
 void				ft_parse(char *str);
 
@@ -81,10 +72,11 @@ char				**get_operators(void);
 char				**get_encapsulators(void);
 int					*get_lengths(void);
 
-int					ft_is_operator(char *str, t_operators op);
+int					ft_is_operator(char *str, int op);
 int					ft_which_op(char *str);
 int					ft_which_enc(char *str);
 
+int					ft_is_encapsulator(int c);
 int					endof_paranthese(char *str, int start);
 
 t_operator_handler	*get_handlers(void);

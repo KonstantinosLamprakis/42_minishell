@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:06:29 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 16:30:54 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 11:18:10 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef enum e_errno
 	DUP,
 	FORK,
 	COMMAND_NOT_FOUND,
+	NO_SUCH_FILE_OR_DIR,
 	ERR_COUNT
 }				t_errno;
 
@@ -49,6 +50,7 @@ typedef enum e_errno
 # define DUP_ERR "error dupliacting file descriptors "
 # define FORK_ERR "error forking "
 # define COMMAND_NOT_FOUND_ERR "command not found "
+# define NO_SUCH_FILE_OR_DIR_ERR "no such file or directory "
 
 int				*get_errno(void);
 void			set_errno(int err_value);

@@ -6,11 +6,11 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 09:42:34 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 10:09:06 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 13:37:13 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_parser.h"
+#include "../includes/minishell.h"
 
 /**
  * @brief Finds the next token
