@@ -6,11 +6,11 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 13:41:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 10:54:14 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 13:37:04 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_parser.h"
+#include "../includes/minishell.h"
 
 int	ft_which_enc(char *str)
 {

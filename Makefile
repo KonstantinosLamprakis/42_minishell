@@ -41,7 +41,14 @@ SRCS =	main.c					\
 		right_redirection.c		\
 		right_append.c			\
 		parantheses_handler.c	\
-		op_utils.c
+		op_utils.c				\
+		ft_is_operator.c		\
+		ft_encapsulators.c		\
+		ft_parser.c				\
+		ft_operators.c			\
+		ft_handlers.c			\
+		ft_findnext.c			\
+		ft_handle_found.c
 
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 

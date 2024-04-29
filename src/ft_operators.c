@@ -6,11 +6,11 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 08:36:49 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 12:09:12 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 13:37:25 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_parser.h"
+#include "../includes/minishell.h"
 
 char	**get_encapsulators(void)
 {

@@ -6,11 +6,11 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 08:21:20 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 11:05:27 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 13:37:21 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_parser.h"
+#include "../includes/minishell.h"
 
 static int	ft_is_doperator(const char *str, int op)
 {

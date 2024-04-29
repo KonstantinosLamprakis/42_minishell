@@ -6,11 +6,11 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 09:46:43 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 09:59:43 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 13:37:16 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_parser.h"
+#include "../includes/minishell.h"
 
 int	handle_found_encapsulator(t_token *token, char *str, int start,
 		t_encapsulators enc)
