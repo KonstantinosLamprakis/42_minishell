@@ -40,7 +40,8 @@ SRCS =	main.c					\
 		reset_struct.c			\
 		right_redirection.c		\
 		right_append.c			\
-		parantheses_handler.c
+		parantheses_handler.c	\
+		op_utils.c
 
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 

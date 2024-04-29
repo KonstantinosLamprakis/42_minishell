@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 13:41:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 10:04:02 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 10:54:14 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@ int	ft_which_enc(char *str)
 		if (str[index] == encapsulators[index][0])
 			return (index);
 	return (-1);
+}
+
+int	ft_is_encapsulator(int c)
+{
+	char	**encapsulators;
+	int		index;
+
+	encapsulators = get_encapsulators();
+	index = -1;
+	while (++index < ENCAPSULATOR_COUNT)
+		if (c == encapsulators[index][0])
+			return (1);
+	return (0);
 }
 
 int	endof_paranthese(char *str, int start)

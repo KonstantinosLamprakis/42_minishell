@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 08:46:26 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 11:27:17 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,10 @@ typedef struct s_program
 	int		depth;
 }				t_program;
 
+# define SYNTAX_STATUS 258
+# define CMD_NF_STATUS 127
+# define NO_FD_STATUS 1
+
 //			ASSIGN_OP.c
 
 int			is_assign(char *const argv[]);
@@ -102,6 +106,9 @@ int			builtin_execve(const char *pathname, char *const argv[], \
 			char *envp[]);
 char		*get_line(void);
 int			is_builtin(char *path);
+void		set_status(int status);
+int			contains_op(char *str);
+int			is_valid_fname(char *str, int had_quotes);
 
 //			BUILTIN FUNCS
 

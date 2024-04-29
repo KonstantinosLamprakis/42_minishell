@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:18:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 09:47:28 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 11:02:28 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,11 @@ char				**get_operators(void);
 char				**get_encapsulators(void);
 int					*get_lengths(void);
 
-int					ft_is_operator(char *str, t_operators op);
+int					ft_is_operator(char *str, int op);
 int					ft_which_op(char *str);
 int					ft_which_enc(char *str);
 
+int					ft_is_encapsulator(int c);
 int					endof_paranthese(char *str, int start);
 
 t_operator_handler	*get_handlers(void);

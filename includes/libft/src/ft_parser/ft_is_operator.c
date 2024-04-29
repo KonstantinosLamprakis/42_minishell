@@ -6,13 +6,13 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 08:21:20 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/27 16:52:10 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 11:05:27 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_parser.h"
 
-static int	ft_is_doperator(const char *str, t_operators op)
+static int	ft_is_doperator(const char *str, int op)
 {
 	if (op == AND && ft_strncmp(str, AND_OP, 2) == 0)
 	{
@@ -41,7 +41,7 @@ static int	ft_is_doperator(const char *str, t_operators op)
 	return (-1);
 }
 
-static int	ft_is_soperator(const char *str, t_operators op)
+static int	ft_is_soperator(const char *str, int op)
 {
 	if (op == PIPE)
 		return (str[0] == PIPE_OP[0] && (ft_strlen(str) <= 1
@@ -55,7 +55,7 @@ static int	ft_is_soperator(const char *str, t_operators op)
 	return (-1);
 }
 
-int	ft_is_operator(char *str, t_operators op)
+int	ft_is_operator(char *str, int op)
 {
 	char	**operators;
 
