@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 23:08:47 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 09:38:12 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 		- delete and clean git branches
 		- check mem leaks
 		- check TODO: error at dollar operator
+		- after ctrl c -> reset
 */
 
 // void	leaks(void)
