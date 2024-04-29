@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 23:02:13 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 09:01:46 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*get_cmd(char **cmd_args)
 			free(cmd);
 		}
 	}
+	program->status = 127;
 	return (set_error((char *)__func__, COMMAND_NOT_FOUND), NULL);
 }
 
