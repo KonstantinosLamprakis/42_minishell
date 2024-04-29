@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:14 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/29 10:07:31 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:52:23 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	b_unset(char *const argv[], char *envp[])
 	i = 0;
 	while (argv[++i])
 	{
-		if (argv[i][0] == '-')
+		if (!is_valid_name(argv[i], 0))
 			fprintf(stderr, "unset: `%s': not a valid identifier\n", argv[i]);
 		else
 			unset_all_lists(argv[i]);
@@ -88,4 +88,30 @@ static int	unset_if_exists(char *key, char **ar)
 		if (del_from_envp(ar, key) != -1)
 			return (1);
 	return (0);
+}
+
+/**
+ * @brief check if a name is a valid identifier, started with
+ * [a-z][A-Z] or '_' and after containing only these or [0-9]
+ *
+ * @param name the name to check
+ * @param start starting point included
+ * @return int 0 if not valid, 1 if valid
+ */
+int	is_valid_name(char *name, int start)
+{
+	int	i;
+
+	if (!name)
+		return (1);
+	i = start;
+	if (ft_isalpha(name[i]) || name[i] == '_')
+		i++;
+	else
+		return (0);
+	while (ft_isalnum(name[i]) || name[i] == '_')
+		i++;
+	if (name[i] != '\0')
+		return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 16:41:46 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:51:28 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ typedef struct s_token
 }					t_token;
 
 //			GET_NEXT_LINE_CUSTOM
-char		*ft_get_next_line_custom(int fd);
+char			*ft_get_next_line_custom(int fd);
 
 //			ASSIGN_OP.c
 
@@ -166,6 +166,7 @@ int					b_exit(char *const argv[], char *envp[]);
 int					b_export(char *const argv[], char *envp[]);
 int					b_unset(char *const argv[], char *envp[]);
 int					b_env(char *const argv[], char *envp[]);
+int					is_valid_name(char *name, int start);
 
 //			B_CD_UTILS
 
