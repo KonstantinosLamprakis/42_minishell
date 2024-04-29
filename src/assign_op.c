@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:57:49 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/28 20:58:04 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:06:47 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	exec_assign(char *const argv[], char *envp[])
 	int	i;
 	int	status;
 
-	envp = NULL;
+	envp++;
 	status = 0;
 	if (!argv || !argv[0])
 		return (-1);

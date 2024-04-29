@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:54 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 18:31:04 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:09:35 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void	handler_idle(int sig)
 {
-	int		len;
 	char	*temp;
 
 	if (sig == SIGINT)
 	{
-		len = ft_strlen(rl_line_buffer);
 		temp = ft_strjoin(rl_line_buffer, "  ");
 		rl_replace_line(temp, 0);
 		rl_redisplay();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bitmap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 09:43:01 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/14 09:58:47 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 10:38:37 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@
 
 # define MAX_BITS 32
 
+// u_int32_t: for linux
+// uint32_t: for MAC
 typedef struct s_bitmap
 {
-	uint32_t	bits;
+	u_int32_t	bits;
 }			t_bitmap;
 
-uint32_t	ft_mask(int len, ...);
+u_int32_t	ft_mask(int len, ...);
 
 #endif

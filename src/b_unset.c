@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:14 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/28 23:07:49 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:07:31 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	b_unset(char *const argv[], char *envp[])
 	int		i;
 	char	*temp;
 
-	envp = NULL;
+	envp++;
 	if (!argv[1])
 		return (0);
 	if (argv[1][0] == '-')

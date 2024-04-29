@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 09:19:39 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 10:17:33 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,9 @@ void	ft_parse(char *str)
 	// char				*sub;
 
 	/*	For printing purposes	*/
-	int		*lengths;
-	char	**operators;
-	char	**encapsulators;
-	operators = get_operators();
-	encapsulators = get_encapsulators();
-	lengths = get_lengths();
+	get_operators();
+	get_encapsulators();
+	get_lengths();
 
 	token.start = -1;
 	token.enc = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:51:14 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/09 14:53:08 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 10:39:53 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*read_line(int fd, char *buf, int *r_len)
 		if (ft_strchr(line, '\n') != NULL)
 			return (line);
 		*r_len = read_buffer(fd, buf);
-		if (r_len < 0)
+		if (*r_len < 0)
 			return (NULL);
 	}
 	return (line);
@@ -88,9 +88,11 @@ char	*place_next(char *buf)
 	return (NULL);
 }
 
+// FOPEN_MAX: for linux
+// OPEN_MAX: for MAC
 char	*ft_get_next_line(int fd)
 {
-	static char	*buf[OPEN_MAX];
+	static char	*buf[FOPEN_MAX];
 	char		*line;
 	int			r_len;
 

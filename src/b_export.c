@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/27 19:10:24 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:07:18 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	b_export(char *const argv[], char *envp[])
 	t_program	*program;
 	int			status;
 
-	envp = NULL;
+	envp++;
 	status = 0;
 	if (!argv || !argv[0])
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:36 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/26 11:04:16 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:06:59 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	b_echo(char *const argv[], char *envp[])
 	int		is_n;
 	int		i;
 
-	envp = NULL;
+	envp++;
 	i = 0;
 	is_n = is_option_n(argv, &i);
 	if (!argv[i])

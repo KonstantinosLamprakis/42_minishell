@@ -1,3 +1,5 @@
+#apt-get install libreadline-dev : on linux
+
 CC = cc
 
 CFLAGS = -Wall -Werror -Wextra

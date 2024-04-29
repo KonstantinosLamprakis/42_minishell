@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:20:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/09 12:32:55 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 10:13:43 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static int	ft_put_buffer_fd(char *buffer, int fd, int is_neg)
 
 	buffer_len = ft_strlen(buffer);
 	count = is_neg;
-	if (is_neg && write(fd, "-", 1) >= 0)
-		;
-	while (--buffer_len >= 0)
+	if (is_neg)
+		write(fd, "-", 1);
+	while (--buffer_len)
 		count += write(fd, &buffer[buffer_len], 1);
 	return (count);
 }

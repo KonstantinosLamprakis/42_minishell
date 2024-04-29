@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:03 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/28 23:07:49 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:07:08 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	b_exit(char *const argv[], char *envp[])
 {
 	int	status;
 
-	envp = NULL;
+	envp++;
 	printf("exit\n");
 	if (argv[1] && argv[2])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 08:46:26 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 10:40:29 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <stdlib.h> // getenv
 # include <signal.h> // signals
 # include <strings.h> // SIGINT, SIGOUT
+
+#include <sys/types.h> // waitpid for linuc
+#include <sys/wait.h> // waitpid for linuc
 
 # include <unistd.h> // open, read, write, access, close, fork, dup, dup2, pause
 # include <sys/fcntl.h> // open_flags
@@ -51,6 +54,8 @@
 # define PIPE_WRITE 1
 # define PIPE_READ 0
 
+// FOPEN_MAX: for lunux
+// OPEN_MAX: for MAC
 typedef struct s_program
 {
 	char	**envp;
@@ -58,7 +63,7 @@ typedef struct s_program
 	char	**exp_v;
 	char	**env_path;
 	int		status;
-	int		opened_files[OPEN_MAX];
+	int		opened_files[FOPEN_MAX];
 	int		opened_count;
 	int		std_fd[3];
 	char	*delimiter;
