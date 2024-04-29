@@ -1,41 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcount.c                                      :+:      :+:    :+:   */
+/*   op_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 07:41:20 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 10:53:17 by lgreau           ###   ########.fr       */
+/*   Created: 2024/04/29 11:01:14 by lgreau            #+#    #+#             */
+/*   Updated: 2024/04/29 11:05:11 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
+#include "../includes/minishell.h"
 
-int	ft_strcount(const char *str, int (*cmp)(int))
+int	contains_op(char *str)
 {
-	int	count;
-	int	index;
+	int		index;
 
-	if (!str)
-		return (-1);
 	index = -1;
-	count = 0;
 	while (str[++index])
-		count += (*cmp)(str[index]);
-	return (count);
-}
-
-int	ft_strcount_arg(const char *str, int (*cmp)(int, void*), void *arg)
-{
-	int	count;
-	int	index;
-
-	if (!str)
-		return (-1);
-	index = -1;
-	count = 0;
-	while (str[++index])
-		count += (*cmp)(str[index], arg);
-	return (count);
+		if (ft_which_op(str + index) >= 0 || ft_which_enc(str + index) >= 0)
+			return (1);
+	return (0);
 }

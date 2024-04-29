@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:17:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 12:55:11 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 11:33:34 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ int	pipe_handler(void *arg)
 
 	token = (t_token *)arg;
 	if (ft_strlen_if(token->str + token->start + 1, ft_iswspace) == 0)
-		return (set_error((char *)__func__, SYNTAX), -1);
+		return (set_status(SYNTAX_STATUS), set_error((char *)__func__, SYNTAX),
+			-1);
 	left_arg = ft_substr_if(token->str, 0, token->start, ft_iswspace);
 	if (*get_errno() != NO_ERROR)
 		return (-1);
 	if (ft_strlen(left_arg) == 0)
-		return (free(left_arg), set_error((char *)__func__, SYNTAX),  -1);
+		return (free(left_arg), set_status(SYNTAX_STATUS),
+			set_error((char *)__func__, SYNTAX), -1);
 	pipe_operation(left_arg);
 	free(left_arg);
 	return (token->start + 1);

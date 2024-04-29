@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 09:14:52 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 11:32:30 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static char	*get_right_arg(t_token *token)
 	char	*right_arg;
 
 	if (ft_strlen_if(token->str + token->start + 2, ft_iswspace) == 0)
-		return (set_error((char *)__func__, SYNTAX), NULL);
+		return (set_status(SYNTAX_STATUS), set_error((char *)__func__, SYNTAX),
+			NULL);
 	tmp = ft_escsplit(token->str + token->start + 2, ft_iswspace, ft_isquote);
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
@@ -133,7 +134,8 @@ void	left_delimiter(char *arg)
 		}
 		write(here_doc, buffer, ft_strlen(buffer));
 		free(buffer);
-		write(program->std_fd[STDOUT], HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
+		write(program->std_fd[STDOUT], HERE_DOC_PROMPT,
+				ft_strlen(HERE_DOC_PROMPT));
 		buffer = ft_get_next_line(program->std_fd[STDIN]);
 	}
 	close(here_doc);

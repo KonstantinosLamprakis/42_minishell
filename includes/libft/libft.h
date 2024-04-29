@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:32:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/15 08:30:44 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 13:36:16 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@
 # include "src/ft_bitmap/ft_bitmap.h"
 # include "src/ft_btree/ft_btree.h"
 # include "src/ft_queue/ft_queue.h"
-# include "src/ft_parser/ft_parser.h"
 
 #endif
