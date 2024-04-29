@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 08:55:43 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 11:33:19 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static char	*get_right_arg(t_token *token)
 	char	*right_arg;
 
 	if (ft_strlen_if(token->str + token->start + 1, ft_iswspace) == 0)
-		return (set_error((char *)__func__, SYNTAX), NULL);
+		return (set_status(SYNTAX_STATUS), set_error((char *)__func__, SYNTAX),
+			NULL);
 	tmp = ft_escsplit(token->str + token->start + 1, ft_iswspace, ft_isquote);
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
@@ -104,14 +105,11 @@ void	left_redirection(char *arg, char *sub_right)
 	int	right_fd;
 
 	right_fd = ft_open(arg, O_RDONLY, -1);
-	printf("Opening %s: %d\n", arg, right_fd);
 	if (right_fd < 0)
 		return (set_error((char *)__func__, OPEN));
-	printf("Redirecting %d as %d\n", right_fd, STDIN);
 	if (dup2(right_fd, STDIN) < 0)
 		return (set_error((char *)__func__, DUP));
 	if (sub_right)
 		ft_parse(sub_right);
 	close(right_fd);
-	printf("Closing %d\n", right_fd);
 }
