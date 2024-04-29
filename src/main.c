@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 20:58:39 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/28 23:08:47 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 	todo:
 		- clean_struct should clean everything because we use it at signals and at exit
 		- delete and clean git branches
+		- check mem leaks
+		- check TODO: error at dollar operator
 */
 
 // void	leaks(void)
