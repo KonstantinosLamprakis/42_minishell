@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 09:16:59 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 08:55:43 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*extract_used_part(t_token *token, char *left_arg, char *right_arg)
 	int		offset;
 
 	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
-			- token->str) + ft_strlen(right_arg) + 1;
+			- token->str) + ft_strlen(right_arg);
 	tmp = ft_substr(token->str, offset, ft_strlen(token->str + offset));
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
@@ -89,7 +89,7 @@ int	l_redirect_handler(void *arg)
 	left_redirection(right_arg, sub_right);
 	if (left_arg)
 		free(left_arg);
-	return (free(right_arg), -1);
+	return (free(right_arg), free(sub_right), -1);
 }
 
 /**
@@ -104,10 +104,14 @@ void	left_redirection(char *arg, char *sub_right)
 	int	right_fd;
 
 	right_fd = ft_open(arg, O_RDONLY, -1);
+	printf("Opening %s: %d\n", arg, right_fd);
 	if (right_fd < 0)
 		return (set_error((char *)__func__, OPEN));
+	printf("Redirecting %d as %d\n", right_fd, STDIN);
 	if (dup2(right_fd, STDIN) < 0)
 		return (set_error((char *)__func__, DUP));
 	if (sub_right)
 		ft_parse(sub_right);
+	close(right_fd);
+	printf("Closing %d\n", right_fd);
 }
