@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 16:27:17 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:42:22 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,11 @@
 		- clean_struct should clean everything because we use it at signals and at exit
 		- delete and clean git branches
 		- check mem leaks
-		- check TODO: error at dollar operator
+		- replace fprintf because is forbitten
+		- echo << test <<
+		- TODO OPTIONAL
+			- error at dollar operator ${name -> bad substitution
+			- CDPATH at cd builtin
 */
 
 // void	leaks(void)

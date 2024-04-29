@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 12:14:35 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 18:35:56 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	cmd_handler(void *arg)
 	token = (t_token *)arg;
 	cmd_str = dollar_op(token->str);
 	if (!cmd_str)
-	{
-		printf("TODO: Error\n");
 		return (-1);
-	}
 	cmd = ft_escsplit(cmd_str, ft_iswspace, ft_isquote);
 	free(cmd_str);
 	if (!cmd)

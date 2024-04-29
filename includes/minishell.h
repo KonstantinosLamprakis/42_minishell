@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 16:51:28 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:40:37 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_program
 	char			**exp_v;
 	char			**env_path;
 	int				status;
-	int				opened_files[OPEN_MAX];
+	int				opened_files[FOPEN_MAX];
 	int				opened_count;
 	int				std_fd[3];
 	char			*delimiter;
