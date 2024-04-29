@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 09:01:46 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:14:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static int	is_valid_cmd_path(char *str)
+{
+	if (str[0] == '.' && (ft_strlen(str) <= 1 || str[1] == '.'))
+		return (0);
+	return (1);
+}
 
 char	*get_cmd(char **cmd_args)
 {
@@ -21,16 +28,16 @@ char	*get_cmd(char **cmd_args)
 	program = get_program();
 	if (cmd_args[0][0] == '/')
 	{
-		if (access(cmd_args[0], F_OK) >= 0)
+		if (access(cmd_args[0], F_OK | X_OK) >= 0)
 			return (ft_strdup(cmd_args[0]));
 	}
-	else
+	else if (is_valid_cmd_path(cmd_args[0]) && cmd_args[0][0] != '/')
 	{
 		index = -1;
 		while (program->env_path[++index])
 		{
 			cmd = ft_strjoin_3(program->env_path[index], "/", cmd_args[0]);
-			if (access(cmd, F_OK) >= 0)
+			if (access(cmd, F_OK | X_OK) >= 0)
 				return (cmd);
 			free(cmd);
 		}
