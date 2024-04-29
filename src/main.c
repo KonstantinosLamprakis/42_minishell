@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 18:42:22 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 22:08:20 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@
 		- ERROR with split ex. export test="value"
 			- returns test="value" and value. Should return only the first
 			- should split "" only when they are between spaces
+
 		- ctrl D should decrease SHLVL if its > 1 and clean everything
 		- echo << test << test2 << and then signals (fix it by fork after get_line
 		and just kill child)
+		- emtpy command gives invalid argument error
 		- Luen notes:
 			(Worked fine but broke it by addind () + | handling)
 			cmd | cmd2 << limiter :
@@ -96,6 +98,7 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_parse(line);
 		free(line);
 		reset_struct();
+		get_program()->status = 0;
 	}
 	clean_struct();
 	exit(*get_errno() != 0);
