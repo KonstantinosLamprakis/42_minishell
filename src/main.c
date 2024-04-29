@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 16:13:22 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:27:17 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 	tester: https://github.com/zstenger93/42_minishell_tester
 	tester2: https://github.com/LucasKuhn/minishell_tester
 	bugs:
+		- unset ? : invalid identifier
 		- export test1="" => not valid identifier -> split gives a NULL arg extra
 			- I fixed that in my code(b_export()), but I thing is parser error
 		- "echo test" -> wrong error number instead of command not found

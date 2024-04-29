@@ -29,6 +29,7 @@ SRCS =	main.c					\
 		b_export_utils.c		\
 		b_pwd.c					\
 		b_unset.c				\
+		get_next_line_custom.c	\
 		utils.c					\
 		env_utils.c				\
 		env_utils_2.c			\

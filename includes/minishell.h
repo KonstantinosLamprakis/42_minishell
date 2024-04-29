@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 13:51:33 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:41:46 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,9 @@ typedef struct s_token
 	int				start;
 	int				end;
 }					t_token;
+
+//			GET_NEXT_LINE_CUSTOM
+char		*ft_get_next_line_custom(int fd);
 
 //			ASSIGN_OP.c
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   left_delimiter.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 11:32:30 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 16:36:43 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	left_delimiter(char *arg)
 	if (here_doc < 0)
 		return ;
 	write(program->std_fd[STDOUT], HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
-	buffer = ft_get_next_line(program->std_fd[STDIN]);
+	buffer = ft_get_next_line_custom(program->std_fd[STDIN]);
 	while (buffer)
 	{
 		if (is_delimiter(buffer))
@@ -136,7 +136,7 @@ void	left_delimiter(char *arg)
 		free(buffer);
 		write(program->std_fd[STDOUT], HERE_DOC_PROMPT,
 				ft_strlen(HERE_DOC_PROMPT));
-		buffer = ft_get_next_line(program->std_fd[STDIN]);
+		buffer = ft_get_next_line_custom(program->std_fd[STDIN]);
 	}
 	close(here_doc);
 }
