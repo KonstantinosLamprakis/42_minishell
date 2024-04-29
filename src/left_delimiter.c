@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 09:14:23 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:14:52 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,27 @@ static char	*get_right_arg(t_token *token)
 	return (right_arg);
 }
 
+static char	*extract_used_part(t_token *token, char *left_arg, char *right_arg)
+{
+	char	*res;
+	char	*tmp;
+	int		offset;
+
+	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
+			- token->str) + ft_strlen(right_arg);
+	tmp = ft_substr(token->str, offset, ft_strlen(token->str + offset));
+	if (!tmp)
+		return (set_error((char *)__func__, ALLOC), NULL);
+	if (left_arg)
+		res = ft_strjoin(left_arg, tmp);
+	else
+		res = ft_strdup(tmp);
+	free(tmp);
+	if (!res)
+		return (set_error((char *)__func__, ALLOC), NULL);
+	return (res);
+}
+
 /**
  * @brief "<<" operator handler, expects a string as right argument
  *
@@ -52,22 +73,23 @@ static char	*get_right_arg(t_token *token)
 int	l_delimiter_handler(void *arg)
 {
 	t_token	*token;
-	int		offset;
 	char	*left_arg;
 	char	*right_arg;
+	char	*sub_right;
 
 	token = (t_token *)arg;
 	left_arg = get_left_arg(token);
 	right_arg = get_right_arg(token);
 	if (*get_errno() != 0)
 		return (-1);
-	left_delimiter(right_arg, left_arg);
+	sub_right = extract_used_part(token, left_arg, right_arg);
+	if (!sub_right)
+		return (-1);
+	left_delimiter(right_arg);
+	left_redirection(HERE_DOC_FILE, sub_right);
 	if (left_arg)
 		free(left_arg);
-	offset = ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
-		- token->str + ft_strlen(right_arg);
-	offset += ft_isquote(token->str[offset]);
-	return (free(right_arg), offset);
+	return (free(right_arg), free(sub_right), -1);
 }
 
 static int	is_delimiter(char *buffer)
@@ -89,7 +111,7 @@ static int	is_delimiter(char *buffer)
  * @param left_arg optionnal (= NULL) argument defining to which fd
  * the redirection occurs
  */
-void	left_delimiter(char *arg, char *left_arg)
+void	left_delimiter(char *arg)
 {
 	t_program	*program;
 	char		*buffer;
@@ -100,7 +122,7 @@ void	left_delimiter(char *arg, char *left_arg)
 	here_doc = ft_open_first(HERE_DOC_FILE, O_TRUNC | O_CREAT | O_WRONLY, 0644);
 	if (here_doc < 0)
 		return ;
-	write(STDOUT, HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
+	write(program->std_fd[STDOUT], HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
 	buffer = ft_get_next_line(program->std_fd[STDIN]);
 	while (buffer)
 	{
@@ -111,9 +133,8 @@ void	left_delimiter(char *arg, char *left_arg)
 		}
 		write(here_doc, buffer, ft_strlen(buffer));
 		free(buffer);
-		write(STDOUT, HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
+		write(program->std_fd[STDOUT], HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
 		buffer = ft_get_next_line(program->std_fd[STDIN]);
 	}
 	close(here_doc);
-	left_redirection(HERE_DOC_FILE, left_arg);
 }

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 11:24:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 12:47:28 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:19:39 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	ft_parse(char *str)
 			if (offset < 0)
 				return ;
 			ft_parse(str + offset);
-
 		}
 	}
 }

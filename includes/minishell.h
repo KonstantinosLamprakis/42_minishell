@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 21:02:37 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/29 08:46:26 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,16 @@ typedef struct s_program
 }				t_program;
 
 //			ASSIGN_OP.c
+
 int			is_assign(char *const argv[]);
 int			exec_assign(char *const argv[], char *envp[]);
 
 //			DOLLAR_OP.c
+
 char		*dollar_op(char	*str);
 
 //			SIGNALS.c
+
 void		handler_idle(int sig);
 void		handler_cmd(int sig);
 
@@ -148,7 +151,7 @@ int			l_redirect_handler(void *arg);
 void		left_redirection(char *arg, char *left_arg);
 
 int			l_delimiter_handler(void *arg);
-void		left_delimiter(char *arg, char *left_arg);
+void		left_delimiter(char *arg);
 
 int			and_handler(void *arg);
 void		and_operation(char *left_arg);
