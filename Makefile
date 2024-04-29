@@ -10,6 +10,8 @@ SRC_DIR = src
 
 OBJ_DIR = obj
 
+LIBFT_OBJS = ${LIBFT_DIR}/obj/*
+
 INCLUDES_DIR = includes
 
 SRCS =	main.c					\
@@ -53,7 +55,7 @@ INCLUDE_LIBFT = -L${LIBFT_DIR} -lft
 all : ${NAME}
 
 ${NAME} : ${OBJS} ${LIBFT}
-	@$(CC) $(CFLAGS) ${INCLUDE_LIBFT} ${OBJS} -o ${NAME} -lreadline
+	@$(CC) $(CFLAGS) ${INCLUDE_LIBFT} ${LIBFT_OBJS} ${OBJS} -o ${NAME} -lreadline
 
 ${OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c | ${OBJ_DIR}
 	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
