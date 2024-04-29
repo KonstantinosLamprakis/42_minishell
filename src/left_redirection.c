@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 11:33:19 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/29 11:46:39 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,17 @@ static char	*get_right_arg(t_token *token)
 {
 	char	**tmp;
 	char	*right_arg;
+	int		had_quotes;
 
 	if (ft_strlen_if(token->str + token->start + 1, ft_iswspace) == 0)
 		return (set_status(SYNTAX_STATUS), set_error((char *)__func__, SYNTAX),
 			NULL);
+	had_quotes = (ft_strcount(token->str + token->start + 1, ft_isquote) > 0);
 	tmp = ft_escsplit(token->str + token->start + 1, ft_iswspace, ft_isquote);
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
+	if (is_valid_fname(tmp[0], had_quotes) <= 0)
+		return (free_arr(tmp, 1), NULL);
 	right_arg = ft_strdup(tmp[0]);
 	free_arr(tmp, 1);
 	if (!right_arg)
