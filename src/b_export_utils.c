@@ -6,13 +6,14 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 19:56:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/28 23:07:49 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:47:27 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 static void	handle_empty(char *value, char *key);
+static void	handle_assign(char *value, char *key);
 
 /**
  * @brief handles each arg of the export command or the assign command
@@ -74,20 +75,23 @@ void	handle_eq(char *arg, char *value, char *key, int is_exp)
 		replace_envp_key(&get_program()->envp, key, value);
 	}
 	else
-	{
-		if (find_env(get_program()->exp_v, key) != -1)
-		{
-			del_from_envp(get_program()->exp_v, key);
-			replace_envp_key(&get_program()->envp, key, value);
-		}
-		else if (find_env(get_program()->loc_v, key) != -1)
-			replace_envp_key(&get_program()->loc_v, key, value);
-		else if (find_env(get_program()->envp, key) != -1)
-			replace_envp_key(&get_program()->envp, key, value);
-		else
-			replace_envp_key(&get_program()->loc_v, key, value);
-	}
+		handle_assign(value, key);
 	free(value);
+}
+
+static void	handle_assign(char *value, char *key)
+{
+	if (find_env(get_program()->exp_v, key) != -1)
+	{
+		del_from_envp(get_program()->exp_v, key);
+		replace_envp_key(&get_program()->envp, key, value);
+	}
+	else if (find_env(get_program()->loc_v, key) != -1)
+		replace_envp_key(&get_program()->loc_v, key, value);
+	else if (find_env(get_program()->envp, key) != -1)
+		replace_envp_key(&get_program()->envp, key, value);
+	else
+		replace_envp_key(&get_program()->loc_v, key, value);
 }
 
 /**

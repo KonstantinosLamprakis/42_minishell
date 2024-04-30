@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 15:03:52 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:38:32 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 	tester: https://github.com/zstenger93/42_minishell_tester
 	tester2: https://github.com/LucasKuhn/minishell_tester
 	bugs:
-		- dollar sign for '' and "" different behavior
 		- Louen notes:
 			if inside stdin waiting for input : CTRL + D or CTRL + C doesn't work, intended ?
 			After using CTRL + C to kill an ongoing command, nothing works anymore (maybe just need a reset ?)

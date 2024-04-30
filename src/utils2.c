@@ -6,12 +6,23 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:20:15 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 14:20:28 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:59:17 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+static void	get_result(char **result, int start, char *str, int i);
+
+/**
+ * @brief takes a string that in first char has a quote ' or "
+ * and return how many positions should skip in order to reach the first
+ * character after the quote
+ * @param str
+ * @param quote " or ' charakter
+ * @return int how many position from beggining to skip in order to reach
+ * the next character after quote
+ */
 int	skip_quotes(char const *str, char quote)
 {
 	int	i;
@@ -29,27 +40,31 @@ int	skip_quotes(char const *str, char quote)
 	return (i);
 }
 
+/**
+ * @brief removes the quotes " and ' and returns the new string
+ * any other-single quotes ex. "Konstantino's bike" are preserved
+ * or ex. 'Konstantino's bike'
+ *
+ * @param str should be freeable, and this function free it
+ * It is the initial string that contains the quotes
+ * @return char* the new string after we remove the quotes from the
+ * initial one
+ */
 char	*replace_quotes(char *str)
 {
 	int		i;
 	int		start;
 	char	quote;
 	char	*result;
-	char	*temp;
 
 	i = 0;
 	result = ft_strdup("");
-	while(str[i])
+	while (str[i])
 	{
 		start = i;
 		while (str[i] && str[i] != '\'' && str[i] != '\"')
 			i++;
-		temp = ft_substr(str, start, i - start);
-		if (temp)
-		{
-			result = ft_strjoin(result, temp);
-			free(temp);
-		}
+		get_result(&result, start, str, i);
 		if (!str[i])
 			break ;
 		start = i + 1;
@@ -58,14 +73,23 @@ char	*replace_quotes(char *str)
 			i++;
 		if (!str[i])
 			break ;
-		temp = ft_substr(str, start, i - start);
-		if (temp)
-		{
-			result = ft_strjoin(result, temp);
-			free(temp);
-		}
+		get_result(&result, start, str, i);
 		i++;
 	}
-	free(str);
-	return (result);
+	return (free(str), result);
+}
+
+static void	get_result(char **result, int start, char *str, int i)
+{
+	char	*temp;
+	char	*temp2;
+
+	temp = ft_substr(str, start, i - start);
+	if (temp)
+	{
+		temp2 = *result;
+		*result = ft_strjoin(*result, temp);
+		free(temp);
+		free(temp2);
+	}
 }

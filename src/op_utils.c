@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:01:14 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 10:17:14 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 15:43:06 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	contains_op(char *str)
  * @param str
  * @return int
  */
-int ft_strop(char *str)
+int	ft_strop(char *str)
 {
 	int	index;
 	int	op;

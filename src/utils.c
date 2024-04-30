@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 11:31:08 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:52:19 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char	*get_line(void)
 		else if (!line_read[0])
 			free(line_read);
 		else
-			break;
+			break ;
 	}
 	add_history(line_read);
 	return (line_read);
