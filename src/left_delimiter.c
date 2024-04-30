@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 13:56:08 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 14:10:45 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,6 @@ int	l_delimiter_handler(void *arg)
 	pid_t	p;
 	int		status;
 
-	p = fork();
-	if (p < 0)
-		return (set_error((char *)__func__, FORK), -1);
-	else if (p != 0)
-		return(waitpid(p, &status, 0), status);
-	signal(SIGINT, &handler_exit);
-	signal(SIGQUIT, &handler_exit);
 	token = (t_token *)arg;
 	left_arg = get_left_arg(token);
 	right_arg = get_right_arg(token);
@@ -102,6 +95,13 @@ int	l_delimiter_handler(void *arg)
 	sub_right = extract_used_part(token, left_arg, right_arg);
 	if (!sub_right)
 		return (-1);
+	p = fork();
+	if (p < 0)
+		return (set_error((char *)__func__, FORK), -1);
+	else if (p != 0)
+		return(waitpid(p, &status, 0), status);
+	signal(SIGINT, &handler_exit);
+	signal(SIGQUIT, &handler_exit);
 	left_delimiter(right_arg);
 	left_redirection(HERE_DOC_FILE, sub_right);
 	if (left_arg)

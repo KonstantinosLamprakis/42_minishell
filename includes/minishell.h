@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 13:55:56 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 14:13:27 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_program
 	int				is_on_getline;
 }					t_program;
 
-# define SYNTAX_STATUS 258
+# define SYNTAX_STATUS 2
 # define CMD_NF_STATUS 127
 # define NO_FD_STATUS 1
 
