@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 11:31:39 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 11:55:34 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 	tester: https://github.com/zstenger93/42_minishell_tester
 	tester2: https://github.com/LucasKuhn/minishell_tester
 	bugs:
-		- unset ? : invalid identifier
 		- export test1="" => not valid identifier -> split gives a NULL arg extra
 			- I fixed that in my code(b_export()), but I thing is parser error
 		- "echo test" -> wrong error number instead of command not found
@@ -25,11 +24,6 @@
 		- ERROR with split ex. export test="value"
 			- returns test="value" and value. Should return only the first
 			- should split "" only when they are between spaces
-
-		- ctrl D should decrease SHLVL if its > 1 and clean everything
-		- echo << test << test2 << and then signals (fix it by fork after get_line
-		and just kill child)
-		- emtpy command gives invalid argument error
 		- Luen notes:
 			(Worked fine but broke it by addind () + | handling)
 			cmd | cmd2 << limiter :
@@ -49,29 +43,28 @@
 					minishell > export a="asd"
 					export: �B: not valid identifier
 					zsh: segmentation fault  ./minishell
-				- builtins not going into the pipes
 				- when trying to find absolute path cmd: no such file or dir (NOT cmd not found)
 				- error messages should include the issue
 					(/bin/echo 1 | kaka
 					=> bash: kaka: command not found)
 				- ls | cat << stop | ls -la | cat << stop1 | ls | cat << stop2 | ls -la > out | cat << 'stop3'
-				minishell(57114,0x114a04dc0) malloc: *** error for object 0x3000000000000000: pointer being freed was not allocated
-				minishell(57114,0x114a04dc0) malloc: *** set a breakpoint in malloc_error_break to debug
 				- cat<<asd>out
 					=> current limiter is first "word" by wspace.
 					BUT it should stop if operator
 				(Don't know if it's a problem)
 				CTRL + D while in here_doc (<<)
 					- prints D, but it doesn't in bash ?
+					- also creates a sub shell
 	todo:
 		- clean_struct should clean everything because we use it at signals and at exit
 		- delete and clean git branches
 		- check mem leaks
 		- replace fprintf because is forbitten
-		- echo << test <<
 		- TODO OPTIONAL
 			- error at dollar operator ${name -> bad substitution
 			- CDPATH at cd builtin
+			- ctrl D should decrease SHLVL if its > 1 and clean everything
+
 */
 
 // void	leaks(void)
