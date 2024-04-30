@@ -1,4 +1,4 @@
-#apt-get install libreadline-dev : on linux
+# apt-get install libreadline-dev : on linux
 
 CC = cc
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 13:51:33 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 09:43:34 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_program
 	char			**exp_v;
 	char			**env_path;
 	int				status;
-	int				opened_files[OPEN_MAX];
+	int				opened_files[FOPEN_MAX];
 	int				opened_count;
 	int				std_fd[3];
 	char			*delimiter;
