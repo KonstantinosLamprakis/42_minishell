@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 21:01:12 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 22:51:06 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,10 @@
 	tester2: https://github.com/LucasKuhn/minishell_tester
 	bugs:
 		- me
-			- echo test1		test2 -> trim \t not only ' '
-			- echo $USER$TESTNOTFOUND$HOME$ -> wheb empty var at between
-			- echo $USER$TESTNOTFOUND$HOME$WTF$PWD
-			- cd "$PWD/file_tests"
 			- pipes on builtin
 			- /bin/echo $HALLO42$HOME$sda$USER: need to check what command we pass, because it works ex. for $HOME
 		- louen
 			- 35 echo "exit_code ->$? user ->$USER home -> $HOME"
-
-		- make my split work with \t
 		- why it works with errno instead of get_errno but not for my new errors
 		- env | wc -l
 			- still prints on stdout
