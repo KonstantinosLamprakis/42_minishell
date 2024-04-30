@@ -6,11 +6,11 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:40:56 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/26 11:47:23 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:29:30 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
+#include "../includes/minishell.h"
 
 static int	count_words(char *str, int (*cmp)(int), int (*esc)(int))
 {
@@ -35,15 +35,6 @@ static int	count_words(char *str, int (*cmp)(int), int (*esc)(int))
 			count++;
 	}
 	return (count);
-}
-
-static void	free_arr(char **arr, int is_allocated)
-{
-	if (arr)
-		while (arr)
-			free(*arr++);
-	if (is_allocated)
-		free(arr);
 }
 
 static int	save_word(char **arr, char *str, int *count, int (*cmp)(int))
@@ -74,7 +65,7 @@ static void	fill_arr(char **arr, char *str, int (*cmp)(int), int (*esc)(int))
 		{
 			tmp = ft_strchr(str + index + 1, str[index]);
 			if (!tmp)
-				return (set_error((char *)__func__, SYNTAX));
+				return (ms_syntax_error(ft_ltruncate(str + index, 1)));
 			arr[wc++] = ft_substr(str, index + 1, tmp - (str + index) - 1);
 			if (!arr[wc - 1])
 				return (free_arr(arr, 1), set_error((char *)__func__, ALLOC));

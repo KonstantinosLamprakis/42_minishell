@@ -1,4 +1,4 @@
-#apt-get install libreadline-dev : on linux
+# apt-get install libreadline-dev : on linux
 
 CC = cc
 
@@ -52,7 +52,9 @@ SRCS =	main.c					\
 		ft_operators.c			\
 		ft_handlers.c			\
 		ft_findnext.c			\
-		ft_handle_found.c
+		ft_handle_found.c		\
+		ms_error.c				\
+		ft_escsplit.c
 
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 

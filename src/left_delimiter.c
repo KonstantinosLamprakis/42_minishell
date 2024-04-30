@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   left_delimiter.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 11:21:52 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:56:08 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,20 @@ static char	*get_right_arg(t_token *token)
 {
 	char	**tmp;
 	char	*right_arg;
+	int		end;
+	int		had_quotes;
 
 	if (ft_strlen_if(token->str + token->start + 2, ft_iswspace) == 0)
-		return (set_status(SYNTAX_STATUS), set_error((char *)__func__, SYNTAX),
-			NULL);
+		return (ms_syntax_error("newline"), NULL);
+	had_quotes = (ft_strcount(token->str + token->start + 2, ft_isquote) > 0);
 	tmp = ft_escsplit(token->str + token->start + 2, ft_iswspace, ft_isquote);
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
-	right_arg = ft_strdup(tmp[0]);
+	end = (ft_strop(tmp[0]) * !had_quotes + had_quotes * ft_strlen(tmp[0]));
+	if (end <= 0)
+		return (ms_syntax_error(ft_ltruncate(tmp[0], 1)), free_arr(tmp, 1),
+			NULL);
+	right_arg = ft_substr(tmp[0], 0, end);
 	free_arr(tmp, 1);
 	if (!right_arg)
 		return (NULL);
@@ -51,7 +57,8 @@ static char	*extract_used_part(t_token *token, char *left_arg, char *right_arg)
 	int		offset;
 
 	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
-			- token->str) + ft_strlen(right_arg);
+			- token->str) + ft_strlen(right_arg) + (ft_strcount(token->str
+				+ token->start + 2, ft_isquote) > 0);
 	tmp = ft_substr(token->str, offset, ft_strlen(token->str + offset));
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);

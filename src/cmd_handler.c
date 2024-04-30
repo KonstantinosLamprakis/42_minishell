@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 18:35:56 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 13:55:20 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*get_cmd(char **cmd_args)
 	{
 		if (access(cmd_args[0], F_OK | X_OK) >= 0)
 			return (ft_strdup(cmd_args[0]));
+		return (ms_perror(cmd_args[0], NO_SUCH_FILE_OR_DIR), NULL);
 	}
 	else if (is_valid_cmd_path(cmd_args[0]) && cmd_args[0][0] != '/')
 	{
@@ -42,8 +43,7 @@ char	*get_cmd(char **cmd_args)
 			free(cmd);
 		}
 	}
-	program->status = 127;
-	return (set_error((char *)__func__, COMMAND_NOT_FOUND), NULL);
+	return (ms_cmdnf_error(cmd_args[0]), NULL);
 }
 
 int	cmd_handler(void *arg)

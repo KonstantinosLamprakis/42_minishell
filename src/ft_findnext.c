@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 09:42:34 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 13:37:13 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:10:16 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	find_next_token(char *str, t_token *token)
 		if (token_c >= 0 && token->start < 0 && handle_found_encapsulator(token,
 				str, index, token_c))
 			index += endof_paranthese(str, index) + 1;
+		if (*get_errno() != NO_ERROR)
+			return (-1);
 	}
 	if (*get_errno() != NO_ERROR)
 		return (-1);

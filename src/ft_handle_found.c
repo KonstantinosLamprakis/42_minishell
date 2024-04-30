@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 09:46:43 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 13:37:16 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:10:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	handle_found_encapsulator(t_token *token, char *str, int start,
 	token->op = -1;
 	if (enc == L_PARANTHESE)
 		token->end = token->start + endof_paranthese(str, start);
+	if (*get_errno() != NO_ERROR)
+		return (0);
 	return (1);
 }
 
