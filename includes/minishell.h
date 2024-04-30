@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 13:27:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:36:31 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ int					is_builtin(char *path);
 void				set_status(int status);
 int					contains_op(char *str);
 int					ft_strop(char *str);
-void				ms_perror(char *arg);
+void				ms_perror(char *arg, int ft_errno);
 void				ms_syntax_error(char *arg);
 char				**ft_escsplit(char *str, int (*cmp)(int), int (*esc)(int));
 

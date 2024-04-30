@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 13:25:00 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:42:12 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	right_append(char *arg, char *left_arg)
 
 	right_fd = ft_open(arg, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (right_fd < 0)
-		return (set_error((char *)__func__, OPEN));
+		return ;
 	if (dup2(right_fd, STDOUT) < 0)
 		return (set_error((char *)__func__, DUP));
 	if (left_arg)
