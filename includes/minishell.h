@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 09:43:34 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 10:13:22 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ char				*get_line(void);
 int					is_builtin(char *path);
 void				set_status(int status);
 int					contains_op(char *str);
-int					is_valid_fname(char *str, int had_quotes);
+int					ft_strop(char *str);
 
 //			BUILTIN FUNCS
 
