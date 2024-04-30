@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 21:22:22 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:28:51 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char		*replace_quotes(char *str);
 int			is_included(char c, char *del);
 
 //			CUSTOM_SPLIT.c
-char				**ft_split_custom(char const *s, char c);
+char				**ft_split_custom(char const *s, char *c);
 
 //			ASSIGN_OP.c
 

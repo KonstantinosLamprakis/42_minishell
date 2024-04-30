@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:57:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 18:44:38 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:42:14 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@
 
 #include "../includes/minishell.h"
 
-static int	get_result(char const *str, char sep, char **result);
+static int	get_result(char const *str, char *sep, char **result);
 static void	free_mem(int k, char	**result);
 static char	*get_str(char const *str, int start, int end);
-static int	count_seps(char const *str, char sep);
+static int	count_seps(char const *str, char *sep);
 
-char	**ft_split_custom(char const *s, char c)
+char	**ft_split_custom(char const *s, char *c)
 {
 	char	**result;
 	int		k;
@@ -95,14 +95,14 @@ static char	*get_str(char const *str, int start, int end)
 	return (result);
 }
 
-static int	count_seps(char const *str, char sep)
+static int	count_seps(char const *str, char *sep)
 {
 	int	i;
 	int	sep_c;
 
 	i = 0;
 	sep_c = 0;
-	while (str[i] != '\0' && str[i] == sep)
+	while (str[i] != '\0' && is_included(str[i], sep) != -1)
 		i++;
 	if (str[i] != '\0')
 		sep_c++;
@@ -110,7 +110,7 @@ static int	count_seps(char const *str, char sep)
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 			i += skip_quotes(str + i, str[i]);
-		if (str[i] == sep && str[i + 1] != sep && str[i + 1] != '\0')
+		if (is_included(str[i], sep) != - 1 && is_included(str[i + 1], sep) == -1 && str[i + 1] != '\0')
 			sep_c++;
 		i++;
 	}
@@ -125,7 +125,7 @@ static int	count_seps(char const *str, char sep)
  * @param result
  * @return int returns the nummber of the words
  */
-static int	get_result(char const *str, char sep, char **result)
+static int	get_result(char const *str, char *sep, char **result)
 {
 	int	i;
 	int	k;
@@ -140,7 +140,7 @@ static int	get_result(char const *str, char sep, char **result)
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 			i += skip_quotes(str + i, str[i]);
-		is_sep = (str[i] == sep);
+		is_sep = (is_included(str[i], sep) != -1);
 		if (is_sep)
 		{
 			if (start != i)

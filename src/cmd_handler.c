@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 21:24:15 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:40:09 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	cmd_handler(void *arg)
 	cmd_str = dollar_op(token->str);
 	if (!cmd_str)
 		return (-1);
-	cmd = ft_split_custom(cmd_str, ' ');
+	cmd = ft_split_custom(cmd_str, " \t");
 	free(cmd_str);
 	if (!cmd)
 		return (-1);
