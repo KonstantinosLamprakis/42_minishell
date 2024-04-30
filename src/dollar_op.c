@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:55:43 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/28 23:07:43 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:37:40 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static char	*get_value(char *key);
 		replace until space ' '
 		- ${name}: replace until }
 		- $? : replace it with the get_program()->status
+		- "$test"
 */
 
 /**
@@ -39,13 +40,17 @@ char	*dollar_op(char	*str)
 	int		i;
 	char	*cmd;
 	int		is_bracket;
+	int		is_quote;
 
 	is_bracket = 0;
 	i = -1;
 	cmd = ft_strdup(str);
+	is_quote = 0;
 	while (cmd && cmd[++i])
 	{
-		if (cmd[i] == '$')
+		if (cmd[i] == '\'')
+			is_quote = !is_quote;
+		if (cmd[i] == '$' && !is_quote)
 		{
 			is_bracket += (cmd[i + 1] == RIGHT_BRACKET);
 			if (is_bracket)
@@ -84,7 +89,7 @@ static char	*replace_dollar(char *str, int index, char del)
 		j++;
 	if (str[j] == '\0' && del == LEFT_BRACKET)
 		return (free(str), NULL);
-	end = j;
+	end = j - (str[j - 1] == '\"');
 	j = index + 1 + (del == LEFT_BRACKET);
 	key = ft_substr(str, j, end - j);
 	if (!key)
