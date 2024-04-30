@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 15:02:21 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:03:52 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,8 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_parse(line);
 		free(line);
 		reset_struct();
-		get_program()->status = 0;
 		line = get_line();
 	}
 	clean_struct();
-	exit(*get_errno() != 0);
+	exit(get_program()->status);
 }
-

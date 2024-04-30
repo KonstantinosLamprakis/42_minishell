@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 14:21:17 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:04:00 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # include <strings.h>   // SIGINT, SIGOUT
 # include <sys/fcntl.h> // open_flags
 # include <unistd.h>    // chdir, write, getcwd open, read, write, access, close, fork, dup, dup2, pause
+# include <errno.h>
+
+# define ERROR_PROMPT "minishell"
+# define SYNTAX_ERR_MSG "syntax error near unexpected token"
+# define CMD_NF_ERR_MSG "command not found"
 
 # define STDIN 0
 # define STDOUT 1
@@ -72,7 +77,7 @@ typedef struct s_program
 	int				is_on_getline;
 }					t_program;
 
-# define SYNTAX_STATUS 258
+# define SYNTAX_STATUS 2
 # define CMD_NF_STATUS 127
 # define NO_FD_STATUS 1
 
@@ -161,7 +166,11 @@ char				*get_line(void);
 int					is_builtin(char *path);
 void				set_status(int status);
 int					contains_op(char *str);
-int					is_valid_fname(char *str, int had_quotes);
+int					ft_strop(char *str);
+void				ms_perror(char *arg, int ft_errno);
+void				ms_syntax_error(char *arg);
+void				ms_cmdnf_error(char *arg);
+char				**ft_escsplit(char *str, int (*cmp)(int), int (*esc)(int));
 
 //			BUILTIN FUNCS
 

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:33 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/24 10:12:27 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:37:07 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_open(char *file_name, int flags, int mode)
 	else
 		fd = open(file_name, flags, mode);
 	if (fd < 0)
-		return (set_error((char *)__func__, OPEN), -1);
+		return (ms_perror(file_name, OPEN), -1);
 	program->opened_files[program->opened_count++] = fd;
 	return (fd);
 }
@@ -60,7 +60,7 @@ int	ft_open_first(char *file_name, int flags, int mode)
 	else
 		fd = open(file_name, flags, mode);
 	if (fd < 0)
-		return (set_error((char *)__func__, OPEN), -1);
+		return (ms_perror(file_name, OPEN), -1);
 	program->opened_files[index] = fd;
 	program->opened_count++;
 	return (fd);
