@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:03 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 21:05:11 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 23:16:40 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,29 @@ static int	get_status(char *status_str);
 int	b_exit(char *const argv[], char *envp[])
 {
 	int	status;
+	int	i;
+	int	j;
 
 	envp++;
-	// ft_putstr_fd("exit\n", 1);
 	printf("exit\n");
-	if (argv[1] && argv[2])
+	status = 0;
+	i = 0;
+	while (argv[++i])
 	{
-		ms_perror_custom("exit", "too many arguments", 0);
-		return (-1);
+		j = is_included(argv[i][0], "+-") != -1;
+		while (ft_isdigit(argv[i][j]))
+			j++;
+		if (argv[i][j])
+		{
+			ft_putstr_fd("Error: invalid arg", 2);
+			status = 255;
+			break ;
+		}
 	}
-	if (argv[1])
+	if (argv[2] && status != 255)
+		status = 1;
+	if (argv[1] && status != 255)
 		status = get_status(argv[1]);
-	else
-		status = 0;
 	clean_struct();
 	get_program()->status = status;
 	exit(status);
@@ -62,14 +72,16 @@ static int	get_status(char *status_str)
 	int	status;
 
 	status = 0;
-	i = -1 + (status_str[0] == '-');
+	if (!status_str[0])
+		return (255);
+	i = -1 + (status_str[0] == '-') || (status_str[0] == '+');
 	while (status_str[++i] != '\0')
 		if (status_str[i] < '0' || status_str[i] > '9')
 			break ;
 	if (status_str[i] != '\0')
 	{
 		ms_perror_custom("exit", "numeric argument required", 0);
-		status = get_program()->status;
+		status = 1;
 	}
 	else
 	{
