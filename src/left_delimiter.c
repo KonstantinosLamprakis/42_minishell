@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 11:15:18 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:21:27 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,15 @@ static char	*get_right_arg(t_token *token)
 	int		had_quotes;
 
 	if (ft_strlen_if(token->str + token->start + 2, ft_iswspace) == 0)
-		return (set_status(SYNTAX_STATUS), set_error((char *)__func__, SYNTAX),
-			NULL);
+		return (ms_syntax_error("newline"), NULL);
 	had_quotes = (ft_strcount(token->str + token->start + 2, ft_isquote) > 0);
 	tmp = ft_escsplit(token->str + token->start + 2, ft_iswspace, ft_isquote);
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
 	end = (ft_strop(tmp[0]) * !had_quotes + had_quotes * ft_strlen(tmp[0]));
 	if (end <= 0)
-		return (free_arr(tmp, 1), set_status(SYNTAX_STATUS),
-			set_error((char *)__func__, SYNTAX), NULL);
+		return (ms_syntax_error(ft_ltruncate(tmp[0], 1)), free_arr(tmp, 1),
+			NULL);
 	right_arg = ft_substr(tmp[0], 0, end);
 	free_arr(tmp, 1);
 	if (!right_arg)

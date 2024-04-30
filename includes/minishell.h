@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 10:13:22 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:27:36 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # include <strings.h>   // SIGINT, SIGOUT
 # include <sys/fcntl.h> // open_flags
 # include <unistd.h>    // chdir, write, getcwd open, read, write, access, close, fork, dup, dup2, pause
+# include <errno.h>
+
+# define ERROR_PROMPT "minishell"
+# define SYNTAX_ERR_MSG "syntax error near unexpected token"
 
 # define STDIN 0
 # define STDOUT 1
@@ -153,6 +157,9 @@ int					is_builtin(char *path);
 void				set_status(int status);
 int					contains_op(char *str);
 int					ft_strop(char *str);
+void				ms_perror(char *arg);
+void				ms_syntax_error(char *arg);
+char				**ft_escsplit(char *str, int (*cmp)(int), int (*esc)(int));
 
 //			BUILTIN FUNCS
 

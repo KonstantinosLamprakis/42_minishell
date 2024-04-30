@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 10:18:24 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:23:27 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,15 @@ static char	*get_right_arg(t_token *token)
 	int		had_quotes;
 
 	if (ft_strlen_if(token->str + token->start + 1, ft_iswspace) == 0)
-		return (set_status(SYNTAX_STATUS), set_error((char *)__func__, SYNTAX),
-			NULL);
+		return (ms_syntax_error("newline"), NULL);
 	had_quotes = (ft_strcount(token->str + token->start + 1, ft_isquote) > 0);
 	tmp = ft_escsplit(token->str + token->start + 1, ft_iswspace, ft_isquote);
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
 	end = (ft_strop(tmp[0]) * !had_quotes + had_quotes * ft_strlen(tmp[0]));
 	if (end <= 0)
-		return (free_arr(tmp, 1), set_status(SYNTAX_STATUS),
-			set_error((char *)__func__, SYNTAX), NULL);
+		return (ms_syntax_error(ft_ltruncate(tmp[0], 1)), free_arr(tmp, 1),
+			NULL);
 	right_arg = ft_substr(tmp[0], 0, end);
 	free_arr(tmp, 1);
 	if (!right_arg)
@@ -89,7 +88,7 @@ int	l_redirect_handler(void *arg)
 		return (-1);
 	left_arg = get_left_arg(token);
 	right_arg = get_right_arg(token);
-	if (*get_errno() != 0)
+	if (*get_errno() != NO_ERROR || !right_arg)
 		return (-1);
 	sub_right = extract_used_part(token, left_arg, right_arg);
 	if (!sub_right)
@@ -113,7 +112,7 @@ void	left_redirection(char *arg, char *sub_right)
 
 	right_fd = ft_open(arg, O_RDONLY, -1);
 	if (right_fd < 0)
-		return (set_error((char *)__func__, OPEN));
+		return (ms_perror(arg));
 	if (dup2(right_fd, STDIN) < 0)
 		return (set_error((char *)__func__, DUP));
 	if (sub_right)

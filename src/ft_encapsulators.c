@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 13:41:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 13:37:04 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:11:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ int	endof_paranthese(char *str, int start)
 			break ;
 	}
 	if (count != 0)
-		return (set_error((char *)__func__, SYNTAX), -1);
+		return (ms_syntax_error(L_PARANTHESE_ENC), -1);
 	return (index + 1);
 }

@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handle_found.c                                  :+:      :+:    :+:   */
+/*   ms_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/28 09:46:43 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 13:10:53 by lgreau           ###   ########.fr       */
+/*   Created: 2024/04/30 11:28:57 by lgreau            #+#    #+#             */
+/*   Updated: 2024/04/30 13:22:52 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	handle_found_encapsulator(t_token *token, char *str, int start,
-		t_encapsulators enc)
+void	ms_perror(char *arg)
 {
-	token->start = start;
-	token->enc = enc;
-	token->op = -1;
-	if (enc == L_PARANTHESE)
-		token->end = token->start + endof_paranthese(str, start);
-	if (*get_errno() != NO_ERROR)
-		return (0);
-	return (1);
+	if (errno != NO_ERROR)
+		printf("%s: %s: %s\n", ERROR_PROMPT, arg, strerror(errno));
 }
 
-int	handle_found_operator(t_token *token, int index, t_operators op)
+void	ms_syntax_error(char *arg)
 {
-	token->op = op;
-	token->enc = -1;
-	token->start = index;
-	return (1);
+	set_status(SYNTAX_STATUS);
+	set_errno(SYNTAX);
+	printf("%s: ", ERROR_PROMPT);
+	printf("%s `%1s'\n", SYNTAX_ERR_MSG, arg);
 }

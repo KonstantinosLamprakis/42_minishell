@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 08:21:20 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 13:37:21 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:12:29 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@ static int	ft_is_doperator(const char *str, int op)
 	if (op == AND && ft_strncmp(str, AND_OP, 2) == 0)
 	{
 		if (ft_strlen(str) >= 2 && str[2] == AND_OP[0])
-			return (set_error((char *)__func__, SYNTAX), -1);
+			return (ms_syntax_error("&"), -1);
 		return (1);
 	}
 	if (op == OR && ft_strncmp(str, OR_OP, 2) == 0)
 	{
 		if (ft_strlen(str) >= 2 && str[2] == OR_OP[0])
-			return (set_error((char *)__func__, SYNTAX), -1);
+			return (ms_syntax_error("|"), -1);
 		return (1);
 	}
 	if (op == L_DELIMITER && ft_strncmp(str, L_DELIMITER_OP, 2) == 0)
 	{
 		if (ft_strlen(str) >= 2 && str[2] == L_DELIMITER_OP[0])
-			return (set_error((char *)__func__, SYNTAX), -1);
+			return (ms_syntax_error("<"), -1);
 		return (1);
 	}
 	if (op == R_APPEND && ft_strncmp(str, R_APPEND_OP, 2) == 0)
 	{
 		if (ft_strlen(str) >= 2 && str[2] == R_APPEND_OP[0])
-			return (set_error((char *)__func__, SYNTAX), -1);
+			return (ms_syntax_error(">"), -1);
 		return (1);
 	}
 	return (-1);
