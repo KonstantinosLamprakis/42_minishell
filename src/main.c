@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 12:44:24 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:02:21 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,6 @@
 	tester2: https://github.com/LucasKuhn/minishell_tester
 	bugs:
 		- dollar sign for '' and "" different behavior
-		- split with empty quotes, "asdfds"dfsdf, quotes at the end, quotes at the beggining, single-double quotes
-			- also for unclosed quotes and tab instead of space
-		- export test1="" => not valid identifier -> split gives a NULL arg extra
-			- I fixed that in my code(b_export()), but I thing is parser error
-		- "echo test" -> wrong error number instead of command not found
-		- test2=" df" -> invalid arg-> wrong
-		- export test2=" this is" -> not valid identifier -> wrong
-		- ERROR with split ex. export test="value"
-			- returns test="value" and value. Should return only the first
-			- should split "" only when they are between spaces
 		- Louen notes:
 			if inside stdin waiting for input : CTRL + D or CTRL + C doesn't work, intended ?
 			After using CTRL + C to kill an ongoing command, nothing works anymore (maybe just need a reset ?)
