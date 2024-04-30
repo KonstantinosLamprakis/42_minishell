@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 15:04:00 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:42:01 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ void				set_status(int status);
 int					contains_op(char *str);
 int					ft_strop(char *str);
 void				ms_perror(char *arg, int ft_errno);
+void				ms_perror_custom(char *arg, char *msg, int ft_errno);
 void				ms_syntax_error(char *arg);
 void				ms_cmdnf_error(char *arg);
 char				**ft_escsplit(char *str, int (*cmp)(int), int (*esc)(int));

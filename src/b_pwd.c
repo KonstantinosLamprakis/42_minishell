@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:19 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/28 23:07:49 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:35:26 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,17 @@ int	b_pwd(char *const argv[], char *envp[])
 	envp = get_program()->envp;
 	if (argv[1] && argv[1][0] == '-')
 	{
-		fprintf(stderr, "pwd: %c%c: invalid option\n", argv[1][0], argv[1][1]);
+		ms_perror_custom("pwd", argv[1], INVALID_OPT);
 		return (-1);
 	}
 	path = get_env_value(envp, "PWD", NULL);
 	if (!path)
 	{
-		fprintf(stderr, "pwd: PWD not set\n");
+		ms_perror_custom("pwd", "PWD", ENV_NOT_SET);
 		return (-1);
 	}
-	printf("%s\n", path);
+	ft_putstr_fd(path, 1);
+	ft_putchar_fd('\n', 1);
 	free(path);
 	return (0);
 }

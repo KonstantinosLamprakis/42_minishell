@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:14 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/29 16:52:23 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:50:39 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ int	b_unset(char *const argv[], char *envp[])
 	if (!argv[1])
 		return (0);
 	if (argv[1][0] == '-')
-		return (fprintf(stderr, "unset: -%c: invalid option\n", argv[1][1]), 1);
+		return (ms_perror_custom("unset", argv[1], INVALID_OPT), 1);
 	if (argv[1][0] == '~' && argv[1][1] == '\0')
 	{
 		temp = get_env_value(get_program()->loc_v, "~", NULL);
 		if (!temp)
-			return (fprintf(stderr, "unset: ~ not set\n"), 1);
-		fprintf(stderr, "unset: `%s': not a valid identifier\n", temp);
+			return (ms_perror_custom("unset", "~", ENV_NOT_SET), 1);
+		ms_perror_custom("unset", temp, INVALID_IDENTIFIER);
 		return (free(temp), 1);
 	}
 	i = 0;
 	while (argv[++i])
 	{
 		if (!is_valid_name(argv[i], 0))
-			fprintf(stderr, "unset: `%s': not a valid identifier\n", argv[i]);
+			ms_perror_custom("unset", argv[i], INVALID_IDENTIFIER);
 		else
 			unset_all_lists(argv[i]);
 	}

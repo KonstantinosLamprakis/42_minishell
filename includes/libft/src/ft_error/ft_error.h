@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:06:29 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 11:18:10 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 16:52:02 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ typedef enum e_errno
 	FORK,
 	COMMAND_NOT_FOUND,
 	NO_SUCH_FILE_OR_DIR,
+	INVALID_OPT,
+	ENV_NOT_SET,
+	INVALID_IDENTIFIER,
 	ERR_COUNT
 }				t_errno;
 
@@ -51,6 +54,9 @@ typedef enum e_errno
 # define FORK_ERR "error forking "
 # define COMMAND_NOT_FOUND_ERR "command not found "
 # define NO_SUCH_FILE_OR_DIR_ERR "no such file or directory "
+# define INVALID_OPT_ERR "invalid option "
+# define ENV_NOT_SET_ERR "not set "
+# define INVALID_IDENTIFIER_ERR "not valid identifier "
 
 int				*get_errno(void);
 void			set_errno(int err_value);

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:36 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/29 10:06:59 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:07:42 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int	b_echo(char *const argv[], char *envp[])
 	{
 		echo_arg(argv[i]);
 		if (argv[i + 1])
-			printf(" ");
+			ft_putchar_fd(' ', 1);
 	}
 	if (!is_n)
-		printf("\n");
+		ft_putchar_fd('\n', 1);
 	return (0);
 }
 
@@ -63,13 +63,13 @@ static void	echo_arg(char *arg)
 	{
 		temp = get_env_value(get_program()->loc_v, "~", NULL);
 		str = ft_strjoin(temp, arg + 1);
-		printf("%s", str);
+		ft_putstr_fd(str, 1);
 		if (temp)
 			free(temp);
 		free(str);
 	}
 	else
-		printf("%s", arg);
+		ft_putstr_fd(arg, 1);
 }
 
 /**
@@ -87,7 +87,7 @@ static int	is_option_n(char *const argv[], int *i)
 
 	if (!argv[1])
 	{
-		printf("\n");
+		ft_putchar_fd('\n', 1);
 		*i = 1;
 		return (0);
 	}

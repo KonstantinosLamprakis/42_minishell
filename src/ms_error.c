@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:28:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 14:14:57 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 17:51:05 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,29 @@ void	ms_perror(char *arg, int ft_errno)
 		write(STDERR, tmp, ft_strlen(tmp));
 		write(STDERR, "\n", 1);
 	}
+}
+
+void	ms_perror_custom(char *arg, char *msg, int ft_errno)
+{
+	t_program	*program;
+	char		*tmp;
+
+	set_errno(ft_errno);
+	program = get_program();
+	write(STDERR, ERROR_PROMPT, ft_strlen(ERROR_PROMPT));
+	ft_putstr_fd(": ", STDERR);
+	write(STDERR, arg, ft_strlen(arg));
+	ft_putstr_fd(": ", STDERR);
+	write(STDERR, msg, ft_strlen(msg));
+	ft_putstr_fd(" ", STDERR);
+	if (*get_errno() != NO_ERROR)
+	{
+		tmp = strerror(*get_errno());
+		write(STDERR, tmp, ft_strlen(tmp));
+		printf("error is %s\n", tmp);
+	}
+	printf("error code is %d %d\n", ft_errno, NO_ERROR);
+	write(STDERR, "\n", 1);
 }
 
 void	ms_syntax_error(char *arg)

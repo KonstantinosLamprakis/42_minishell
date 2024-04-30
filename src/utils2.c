@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:20:15 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 15:59:17 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:42:42 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	skip_quotes(char const *str, char quote)
 		i++;
 	if (!str[i])
 	{
-		printf("error: not closing quotes\n");
+		printf("todo error: not closing quotes: %s\n", str);
 		return (0);
 	}
 	return (i);

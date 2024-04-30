@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 19:56:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 15:47:27 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:47:47 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int	handle_arg(char *arg, int is_exp)
 	int		j;
 
 	if (!(ft_isalpha(arg[0]) || arg[0] == '_'))
-		return (fprintf(stderr, "export: %s: not valid identifier\n", arg), 1);
+		return (ms_perror_custom("export", arg, INVALID_IDENTIFIER), 1);
 	j = 1;
 	while (ft_isalnum(arg[j]) || arg[j] == '_')
 		j++;
 	if (arg[j] != '=' && arg[j] != '\0' && \
 	(arg[j] != '+' || arg[j + 1] != '='))
-		return (fprintf(stderr, "export: %s: not valid identifier\n", arg), 1);
+		return (ms_perror_custom("export", arg, INVALID_IDENTIFIER), 1);
 	value = NULL;
 	key = ft_substr(arg, 0, j);
 	if (arg[j] == '+' && arg[j + 1] == '=')

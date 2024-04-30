@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:55:43 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 16:25:14 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:47:34 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,17 @@ char	*dollar_op(char	*str)
 			is_quote = !is_quote;
 		if (cmd[i] == '$' && !is_quote)
 		{
+			if ((cmd[i + 1] == '\'') || (cmd[i + 1] == '\"'))
+				if (cmd[i + 2] == ' ' || !cmd[i + 2] || cmd[i + 2] == '\t')
+					continue ;
+			if (cmd[i + 1] == ' ' || !cmd[i + 1] || cmd[i + 1] == '\t')
+				continue ;
 			is_bracket += (cmd[i + 1] == RIGHT_BRACKET);
 			if (is_bracket)
 				cmd = replace_dollar(cmd, i, LEFT_BRACKET);
 			else
 				cmd = replace_dollar(cmd, i, ' ');
 			is_bracket = 0;
-			i = -1;
 		}
 	}
 	return (cmd);
@@ -85,11 +89,11 @@ static char	*replace_dollar(char *str, int index, char del)
 	char	*key;
 
 	j = index + 1;
-	while (str[j] && str[j] != del && str[j] != '$')
+	while (str[j] && str[j] != del && str[j] != '$' && str[j] != '\"' && str[j] != '\'')
 		j++;
 	if (str[j] == '\0' && del == LEFT_BRACKET)
 		return (free(str), NULL);
-	end = j - (str[j - 1] == '\"');
+	end = j;
 	j = index + 1 + (del == LEFT_BRACKET);
 	key = ft_substr(str, j, end - j);
 	if (!key)

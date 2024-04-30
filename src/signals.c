@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:54 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 11:12:17 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:36:23 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	handler_cmd(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("\n");
+		ft_putchar_fd('\n', 1);
 		get_program()->status = 130;
 	}
 	if (sig == SIGQUIT)
 	{
-		printf("Quit: 3\n");
+		ft_putstr_fd("Quit: 3\n", 1);
 		get_program()->status = 131;
 	}
 }

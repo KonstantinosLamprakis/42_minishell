@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:03 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/29 10:07:08 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:05:11 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ int	b_exit(char *const argv[], char *envp[])
 	int	status;
 
 	envp++;
+	// ft_putstr_fd("exit\n", 1);
 	printf("exit\n");
 	if (argv[1] && argv[2])
 	{
-		fprintf(stderr, "exit: too many arguments\n");
+		ms_perror_custom("exit", "too many arguments", 0);
 		return (-1);
 	}
 	if (argv[1])
@@ -67,7 +68,7 @@ static int	get_status(char *status_str)
 			break ;
 	if (status_str[i] != '\0')
 	{
-		fprintf(stderr, "exit: %s: numeric argument required\n", status_str);
+		ms_perror_custom("exit", "numeric argument required", 0);
 		status = get_program()->status;
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:16:01 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/28 23:07:49 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:31:52 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	b_cd(char *const argv[], char *envp[])
 	{
 		path = get_env_value(envp, "OLDPWD", "/");
 		if (!path)
-			return (fprintf(stderr, "cd: OLDPWD not set\n"), -1);
+			return (ms_perror_custom("cd", "OLDPWD", ENV_NOT_SET), -1);
 	}
 	else
 		path = get_final_path(argv[1], envp);
@@ -55,7 +55,10 @@ int	b_cd(char *const argv[], char *envp[])
 	if (change_dir(path, envp) == -1)
 		return (-1);
 	if (argv[1] && argv[1][0] == '-' && argv[1][1] == '\0')
-		printf("%s\n", path);
+	{
+		ft_putstr_fd(path, 1);
+		ft_putchar_fd('\n', 1);
+	}
 	free(path);
 	return (0);
 }
@@ -66,7 +69,7 @@ static int	change_dir(char *path, char **envp)
 
 	if (chdir(path) == -1)
 	{
-		fprintf(stderr, "cd: %s: No such file or directory\n", path);
+		ms_perror_custom("cd", path, NO_SUCH_FILE_OR_DIR);
 		if (path)
 			free(path);
 		return (-1);
@@ -98,7 +101,7 @@ static char	*get_initial_path(char *path, char *envp[])
 	{
 		temp = get_env_value(envp, "HOME", "/");
 		if (!temp)
-			fprintf(stderr, "cd: HOME not set\n");
+			ms_perror_custom("cd", "HOME", ENV_NOT_SET);
 		return (temp);
 	}
 	if (path[0] == '/')
@@ -107,12 +110,12 @@ static char	*get_initial_path(char *path, char *envp[])
 	{
 		temp = get_env_value(get_program()->loc_v, "~", "/");
 		if (!temp)
-			fprintf(stderr, "unset: ~ not set\n");
+			ms_perror_custom("unset", "~", ENV_NOT_SET);
 		return (temp);
 	}
 	temp = get_env_value(envp, "PWD", "/");
 	if (!temp)
-		return (fprintf(stderr, "cd: PWD not set\n"), NULL);
+		return (ms_perror_custom("cd", "PWD", ENV_NOT_SET), NULL);
 	return (temp);
 }
 

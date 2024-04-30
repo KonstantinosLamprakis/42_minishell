@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 16:21:52 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:01:12 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@
 	tester: https://github.com/zstenger93/42_minishell_tester
 	tester2: https://github.com/LucasKuhn/minishell_tester
 	bugs:
+		- me
+			- echo test1		test2 -> trim \t not only ' '
+			- echo $USER$TESTNOTFOUND$HOME$ -> wheb empty var at between
+			- echo $USER$TESTNOTFOUND$HOME$WTF$PWD
+			- cd "$PWD/file_tests"
+			- pipes on builtin
+			- /bin/echo $HALLO42$HOME$sda$USER: need to check what command we pass, because it works ex. for $HOME
+		- louen
+			- 35 echo "exit_code ->$? user ->$USER home -> $HOME"
+
+		- make my split work with \t
+		- why it works with errno instead of get_errno but not for my new errors
+		- env | wc -l
+			- still prints on stdout
 		- Louen notes:
 			if inside stdin waiting for input : CTRL + D or CTRL + C doesn't work, intended ?
 			After using CTRL + C to kill an ongoing command, nothing works anymore (maybe just need a reset ?)
@@ -31,10 +45,10 @@
 					- prints D, but it doesn't in bash ?
 					- also creates a sub shell
 	todo:
+		- tested on empty environment
 		- clean_struct should clean everything because we use it at signals and at exit
 		- delete and clean git branches
 		- check mem leaks
-		- replace fprintf because is forbitten
 		- TODO OPTIONAL
 			- error at dollar operator ${name -> bad substitution
 			- CDPATH at cd builtin

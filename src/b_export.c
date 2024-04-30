@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:22 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/29 10:07:18 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:34:50 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,17 +114,17 @@ static void	print_record(char *rec)
 
 	i = -1;
 	is_eq = 0;
-	printf("declare -x ");
+	ft_putstr_fd("declare -x ", 1);
 	while (rec[++i] != '\0')
 	{
-		printf("%c", rec[i]);
+		ft_putchar_fd(rec[i], 1);
 		if (rec[i] == '=' && !is_eq)
-			printf("\"");
+			ft_putchar_fd('\"', 1);
 		is_eq += rec[i] == '=';
 	}
 	if (is_eq)
-		printf("\"");
-	printf("\n");
+		ft_putchar_fd('\"', 1);
+	ft_putchar_fd('\n', 1);
 }
 
 /**
