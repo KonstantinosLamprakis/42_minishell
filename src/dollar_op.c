@@ -6,17 +6,17 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:55:43 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 20:47:34 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 22:46:32 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-#define LEFT_BRACKET '}'
-#define RIGHT_BRACKET '{'
+#define LEFT_BRACKET '{'
+#define RIGHT_BRACKET '}'
 
-static char	*replace_dollar(char *str, int index, char del);
-static char	*put_value(char *str, int index, char *key, char *value);
+static char	*replace_dollar(char *str, int *index, char del);
+static char	*put_value(char *str, int *index, char *key, char *value);
 static char	*get_value(char *key);
 
 /*
@@ -52,16 +52,17 @@ char	*dollar_op(char	*str)
 			is_quote = !is_quote;
 		if (cmd[i] == '$' && !is_quote)
 		{
-			if ((cmd[i + 1] == '\'') || (cmd[i + 1] == '\"'))
-				if (cmd[i + 2] == ' ' || !cmd[i + 2] || cmd[i + 2] == '\t')
+			if (is_included(cmd[i + 1], "\'\"") != -1)
+				if (is_included(cmd[i + 2], " \t") != -1 || !cmd[i + 2])
 					continue ;
-			if (cmd[i + 1] == ' ' || !cmd[i + 1] || cmd[i + 1] == '\t')
+			// if (cmd[i + 1] == ' ' || !cmd[i + 1] || cmd[i + 1] == '\t')
+			if (is_included(cmd[i + 1], " \t") != -1 || !cmd[i + 1])
 				continue ;
-			is_bracket += (cmd[i + 1] == RIGHT_BRACKET);
+			is_bracket += (cmd[i + 1] == LEFT_BRACKET);
 			if (is_bracket)
-				cmd = replace_dollar(cmd, i, LEFT_BRACKET);
+				cmd = replace_dollar(cmd, &i, RIGHT_BRACKET);
 			else
-				cmd = replace_dollar(cmd, i, ' ');
+				cmd = replace_dollar(cmd, &i, ' ');
 			is_bracket = 0;
 		}
 	}
@@ -80,7 +81,7 @@ char	*dollar_op(char	*str)
  * with its value
  * Returns NULL on error (key not found, ${name, )
  */
-static char	*replace_dollar(char *str, int index, char del)
+static char	*replace_dollar(char *str, int *index, char del)
 {
 	int		j;
 	int		end;
@@ -88,13 +89,14 @@ static char	*replace_dollar(char *str, int index, char del)
 	char	*value;
 	char	*key;
 
-	j = index + 1;
-	while (str[j] && str[j] != del && str[j] != '$' && str[j] != '\"' && str[j] != '\'')
+	j = *index + 1 + (del == RIGHT_BRACKET);
+	// while (str[j] && str[j] != del && str[j] != '$' && str[j] != '\"' && str[j] != '\'')
+	while (str[j] && (ft_isalnum(str[j]) || str[j] == '_'))
 		j++;
-	if (str[j] == '\0' && del == LEFT_BRACKET)
+	if (del == RIGHT_BRACKET && str[j] != del)
 		return (free(str), NULL);
 	end = j;
-	j = index + 1 + (del == LEFT_BRACKET);
+	j = *index + 1 + (del == RIGHT_BRACKET);
 	key = ft_substr(str, j, end - j);
 	if (!key)
 		return (free(str), NULL);
@@ -140,7 +142,7 @@ static char	*get_value(char *key)
  * @return char* the new str that contains the value instead of $key
  * or NULL if allocation error occured
  */
-static char	*put_value(char *str, int index, char *key, char *value)
+static char	*put_value(char *str, int *index, char *key, char *value)
 {
 	int		i;
 	int		j;
@@ -149,20 +151,21 @@ static char	*put_value(char *str, int index, char *key, char *value)
 	char	*result;
 
 	del = ' ';
-	if (str[index + 1] == RIGHT_BRACKET)
-		del = LEFT_BRACKET;
+	if (str[*index + 1] == LEFT_BRACKET)
+		del = RIGHT_BRACKET;
 	result = malloc(sizeof(char) * (1 + ft_strlen(str) + ft_strlen(value) \
-	- ft_strlen(key) - 1 - 2 * (del == LEFT_BRACKET)));
+	- ft_strlen(key) - 1 - 2 * (del == RIGHT_BRACKET)));
 	if (!result)
 		return (set_error((char *)__func__, ALLOC), NULL);
 	i = 0;
 	j = 0;
-	while (str[i] && i < index)
+	while (str[i] && i < *index)
 		result[j++] = str[i++];
 	k = 0;
 	while (value[k])
 		result[j++] = value[k++];
-	i += 1 + 2 * (del == LEFT_BRACKET) + ft_strlen(key);
+	i += 1 + 2 * (del == RIGHT_BRACKET) + ft_strlen(key);
+	*index = j - 1;
 	while (str && str[i])
 		result[j++] = str[i++];
 	result[j] = '\0';
