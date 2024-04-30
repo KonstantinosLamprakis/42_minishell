@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:20:15 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 18:42:42 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:20:49 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,25 @@ static void	get_result(char **result, int start, char *str, int i)
 		free(temp);
 		free(temp2);
 	}
+}
+
+/**
+ * @brief check if character c is included on string of delimiters
+ *
+ * @param c
+ * @param del
+ * @return int -1 if not included, else the index of it starting from
+ * zero
+ */
+int	is_included(char c, char *del)
+{
+	int	i;
+
+	if (!del)
+		return (-1);
+	i = -1;
+	while (del[++i])
+		if (del[i] == c)
+			return (i);
+	return (-1);
 }

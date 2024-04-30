@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 18:44:05 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 21:24:15 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	exec_cmd(char **cmd_args)
 	t_program	*program;
 	pid_t		child;
 	char		*cmd;
+	int			status;
 
 	program = get_program();
 	if (is_assign(cmd_args))
@@ -83,7 +84,10 @@ void	exec_cmd(char **cmd_args)
 	}
 	if (is_builtin(cmd_args[0]))
 	{
-		program->status = builtin_execve(cmd_args[0], cmd_args, program->envp);
+		program->status = -10;
+		status = builtin_execve(cmd_args[0], cmd_args, program->envp);
+		if (program->status == -10)
+			program->status = status;
 		if (program->status == -1)
 			program->status = 1;
 		return ;
