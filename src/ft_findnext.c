@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 09:42:34 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 13:10:16 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 15:43:17 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,21 @@ int	find_next_token(char *str, t_token *token)
 	if (token->start < 0)
 		return (0);
 	return (1);
+}
+
+void	save_next_token(char *str, t_token *token)
+{
+	int	index;
+	int	token_c;
+
+	index = -1;
+	while (str[++index])
+	{
+		token_c = ft_which_op(str + index);
+		if (*get_errno() != NO_ERROR)
+			return ;
+		if (token_c >= 0)
+			break ;
+	}
+	token->next = index;
 }

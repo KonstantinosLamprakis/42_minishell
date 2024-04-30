@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 14:13:27 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 15:51:26 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define ERROR_PROMPT "minishell"
 # define SYNTAX_ERR_MSG "syntax error near unexpected token"
 # define CMD_NF_ERR_MSG "command not found"
+# define NO_FD_ERR_MSG "No such file or directory"
 
 # define STDIN 0
 # define STDOUT 1
@@ -117,6 +118,7 @@ typedef struct s_token
 {
 	char			*str;
 	t_operators		op;
+	int				next;
 	t_encapsulators	enc;
 	int				start;
 	int				end;
@@ -163,6 +165,7 @@ int					ft_strop(char *str);
 void				ms_perror(char *arg, int ft_errno);
 void				ms_syntax_error(char *arg);
 void				ms_cmdnf_error(char *arg);
+void				ms_no_such_fd_error(char *arg);
 char				**ft_escsplit(char *str, int (*cmp)(int), int (*esc)(int));
 
 //			BUILTIN FUNCS
@@ -210,7 +213,7 @@ void				close_opened_files(void);
 //			OPERATORS
 
 int					l_redirect_handler(void *arg);
-void				left_redirection(char *arg, char *left_arg);
+int					left_redirection(char *arg);
 
 int					l_delimiter_handler(void *arg);
 void				left_delimiter(char *arg);
@@ -249,6 +252,7 @@ void				print_environment(void);
 void				ft_parse(char *str);
 
 int					find_next_token(char *str, t_token *token);
+void				save_next_token(char *str, t_token *token);
 
 int					handle_found_operator(t_token *token, int index,
 						t_operators op);

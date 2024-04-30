@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:28:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 14:14:57 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 15:51:14 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	ms_perror(char *arg, int ft_errno)
 	{
 		program = get_program();
 		tmp = strerror(errno);
+		if (errno == 2)
+			set_status(NO_FD_STATUS);
 		write(STDERR, ERROR_PROMPT, ft_strlen(ERROR_PROMPT));
 		ft_putstr_fd(": ", STDERR);
 		write(STDERR, arg, ft_strlen(arg));
@@ -41,6 +43,18 @@ void	ms_syntax_error(char *arg)
 	ft_putstr_fd(" `", STDERR);
 	write(STDERR, arg, ft_strlen(arg));
 	ft_putstr_fd("'\n", STDERR);
+}
+
+void	ms_no_such_fd_error(char *arg)
+{
+	set_status(NO_FD_STATUS);
+	set_errno(NO_SUCH_FILE_OR_DIR);
+	write(STDERR, ERROR_PROMPT, ft_strlen(ERROR_PROMPT));
+	ft_putstr_fd(": ", STDERR);
+	write(STDERR, arg, ft_strlen(arg));
+	ft_putstr_fd(": ", STDERR);
+	write(STDERR, NO_FD_ERR_MSG, ft_strlen(NO_FD_ERR_MSG));
+	ft_putstr_fd("\n", STDERR);
 }
 
 void	ms_cmdnf_error(char *arg)
