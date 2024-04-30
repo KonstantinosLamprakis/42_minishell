@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:55:43 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 16:21:13 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:25:14 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char	*dollar_op(char	*str)
 				cmd = replace_dollar(cmd, i, ' ');
 			is_bracket = 0;
 			i = -1;
-			printf("new str: %s\n", cmd);
 		}
 	}
 	return (cmd);
