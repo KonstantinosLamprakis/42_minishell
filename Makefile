@@ -20,6 +20,8 @@ SRCS =	main.c					\
 		quit_utils.c			\
 		assign_op.c				\
 		dollar_op.c				\
+		custom_split.c			\
+		utils2.c				\
 		b_cd.c					\
 		b_cd_utils.c			\
 		b_echo.c				\

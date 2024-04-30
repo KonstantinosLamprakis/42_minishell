@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 11:55:34 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:44:24 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 	tester: https://github.com/zstenger93/42_minishell_tester
 	tester2: https://github.com/LucasKuhn/minishell_tester
 	bugs:
+		- dollar sign for '' and "" different behavior
+		- split with empty quotes, "asdfds"dfsdf, quotes at the end, quotes at the beggining, single-double quotes
+			- also for unclosed quotes and tab instead of space
 		- export test1="" => not valid identifier -> split gives a NULL arg extra
 			- I fixed that in my code(b_export()), but I thing is parser error
 		- "echo test" -> wrong error number instead of command not found
@@ -24,14 +27,7 @@
 		- ERROR with split ex. export test="value"
 			- returns test="value" and value. Should return only the first
 			- should split "" only when they are between spaces
-		- Luen notes:
-			(Worked fine but broke it by addind () + | handling)
-			cmd | cmd2 << limiter :
-				- rn: reads from the pipe until limiter
-				- should: read from
-			(Sometimes (couldn't repliacte))
-			cat<Makefile:
-				- rn: equivalent to cat Makefile or < Makefile cat. BUT keeps stdin open and waiting for input
+		- Louen notes:
 			if inside stdin waiting for input : CTRL + D or CTRL + C doesn't work, intended ?
 			After using CTRL + C to kill an ongoing command, nothing works anymore (maybe just need a reset ?)
 			it's still possible to CTRL + C again to have a new prompt, but you can't execute cmds or CTRL + D to quit
@@ -47,10 +43,6 @@
 				- error messages should include the issue
 					(/bin/echo 1 | kaka
 					=> bash: kaka: command not found)
-				- ls | cat << stop | ls -la | cat << stop1 | ls | cat << stop2 | ls -la > out | cat << 'stop3'
-				- cat<<asd>out
-					=> current limiter is first "word" by wspace.
-					BUT it should stop if operator
 				(Don't know if it's a problem)
 				CTRL + D while in here_doc (<<)
 					- prints D, but it doesn't in bash ?
