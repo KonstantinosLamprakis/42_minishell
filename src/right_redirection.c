@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 10:19:07 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 11:25:03 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	right_redirection(char *arg, char *left_arg)
 {
 	int	right_fd;
 
-	right_fd = ft_open_first(arg, O_WRONLY | O_CREAT, 0644);
+	right_fd = ft_open_first(arg, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (right_fd < 0)
 		return (set_error((char *)__func__, OPEN));
 	if (dup2(right_fd, STDOUT) < 0)
