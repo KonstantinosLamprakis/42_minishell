@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 13:36:31 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:48:47 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 # define ERROR_PROMPT "minishell"
 # define SYNTAX_ERR_MSG "syntax error near unexpected token"
+# define CMD_NF_ERR_MSG "command not found"
 
 # define STDIN 0
 # define STDOUT 1
@@ -159,6 +160,7 @@ int					contains_op(char *str);
 int					ft_strop(char *str);
 void				ms_perror(char *arg, int ft_errno);
 void				ms_syntax_error(char *arg);
+void				ms_cmdnf_error(char *arg);
 char				**ft_escsplit(char *str, int (*cmp)(int), int (*esc)(int));
 
 //			BUILTIN FUNCS

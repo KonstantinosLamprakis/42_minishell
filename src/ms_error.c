@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:28:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 13:36:15 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 13:49:49 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,13 @@ void	ms_syntax_error(char *arg)
 	set_status(SYNTAX_STATUS);
 	set_errno(SYNTAX);
 	printf("%s: ", ERROR_PROMPT);
-	printf("%s `%1s'\n", SYNTAX_ERR_MSG, arg);
+	printf("%s `%s'\n", SYNTAX_ERR_MSG, arg);
+}
+
+void	ms_cmdnf_error(char *arg)
+{
+	set_status(CMD_NF_STATUS);
+	set_errno(COMMAND_NOT_FOUND);
+	printf("%s: ", ERROR_PROMPT);
+	printf("%s: %s\n", arg, CMD_NF_ERR_MSG);
 }
