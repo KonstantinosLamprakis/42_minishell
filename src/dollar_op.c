@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:55:43 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 15:37:40 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:21:13 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*dollar_op(char	*str)
 				cmd = replace_dollar(cmd, i, ' ');
 			is_bracket = 0;
 			i = -1;
+			printf("new str: %s\n", cmd);
 		}
 	}
 	return (cmd);
@@ -85,7 +86,7 @@ static char	*replace_dollar(char *str, int index, char del)
 	char	*key;
 
 	j = index + 1;
-	while (str[j] && str[j] != del)
+	while (str[j] && str[j] != del && str[j] != '$')
 		j++;
 	if (str[j] == '\0' && del == LEFT_BRACKET)
 		return (free(str), NULL);

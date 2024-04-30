@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 15:38:32 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:21:52 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@
 			it's still possible to CTRL + C again to have a new prompt, but you can't execute cmds or CTRL + D to quit
 			For here_doc (<<) + CTRL D handling
 			Monday:
-				- /bin/echo $HOME$USER returns "", maybe not handling no spacing ?
-				- Bash: a="asd" => in env: a=asd, quotes trimmed
-				- With already existing a: (couldn't replicate)
-					minishell > export a="asd"
-					export: �B: not valid identifier
-					zsh: segmentation fault  ./minishell
 				- when trying to find absolute path cmd: no such file or dir (NOT cmd not found)
 				- error messages should include the issue
 					(/bin/echo 1 | kaka
