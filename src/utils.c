@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/29 11:10:37 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/04/30 10:51:24 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ char	*get_line(void)
 {
 	char	*line_read;
 
+	get_program()->is_on_getline = 1;
 	line_read = readline("minishell > ");
+	get_program()->is_on_getline = 0;
 	if (!line_read)
 	{
 		clean_struct();

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 09:56:54 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/29 10:09:35 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 11:12:17 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handler_idle(int sig)
 {
 	char	*temp;
 
-	if (sig == SIGINT)
+	if (sig == SIGINT && get_program()->is_on_getline)
 	{
 		temp = ft_strjoin(rl_line_buffer, "  ");
 		rl_replace_line(temp, 0);
@@ -26,8 +26,10 @@ void	handler_idle(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		get_program()->status = 130;
 	}
+	else if (sig == SIGINT)
+		ft_putchar_fd('\n', STDOUT_FILENO);
+	get_program()->status = 130;
 }
 
 void	handler_cmd(int sig)
@@ -42,4 +44,11 @@ void	handler_cmd(int sig)
 		printf("Quit: 3\n");
 		get_program()->status = 131;
 	}
+}
+
+void	handler_exit(int sig)
+{
+	if (sig == SIGINT)
+		get_program()->status = 130;
+	exit (get_program()->status);
 }

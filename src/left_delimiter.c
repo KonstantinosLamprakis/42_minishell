@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 16:36:43 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 11:21:52 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,16 @@ int	l_delimiter_handler(void *arg)
 	char	*left_arg;
 	char	*right_arg;
 	char	*sub_right;
+	pid_t	p;
+	int		status;
 
+	p = fork();
+	if (p < 0)
+		return (set_error((char *)__func__, FORK), -1);
+	else if (p != 0)
+		return(waitpid(p, &status, 0), status);
+	signal(SIGINT, &handler_exit);
+	signal(SIGQUIT, &handler_exit);
 	token = (t_token *)arg;
 	left_arg = get_left_arg(token);
 	right_arg = get_right_arg(token);
@@ -124,7 +133,7 @@ void	left_delimiter(char *arg)
 	if (here_doc < 0)
 		return ;
 	write(program->std_fd[STDOUT], HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
-	buffer = ft_get_next_line_custom(program->std_fd[STDIN]);
+	buffer = ft_get_next_line(program->std_fd[STDIN]);
 	while (buffer)
 	{
 		if (is_delimiter(buffer))
@@ -136,7 +145,7 @@ void	left_delimiter(char *arg)
 		free(buffer);
 		write(program->std_fd[STDOUT], HERE_DOC_PROMPT,
 				ft_strlen(HERE_DOC_PROMPT));
-		buffer = ft_get_next_line_custom(program->std_fd[STDIN]);
+		buffer = ft_get_next_line(program->std_fd[STDIN]);
 	}
 	close(here_doc);
 }

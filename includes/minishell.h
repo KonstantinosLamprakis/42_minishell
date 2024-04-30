@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 18:40:37 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/04/30 11:22:59 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_program
 	int				pipe_save_write[MAX_SUB_DEPTH];
 	int				pipe_save_read[MAX_SUB_DEPTH];
 	int				depth;
+	int				is_on_getline;
 }					t_program;
 
 # define SYNTAX_STATUS 258
@@ -116,9 +117,6 @@ typedef struct s_token
 	int				end;
 }					t_token;
 
-//			GET_NEXT_LINE_CUSTOM
-char			*ft_get_next_line_custom(int fd);
-
 //			ASSIGN_OP.c
 
 int					is_assign(char *const argv[]);
@@ -132,6 +130,7 @@ char				*dollar_op(char *str);
 
 void				handler_idle(int sig);
 void				handler_cmd(int sig);
+void				handler_exit(int sig);
 
 //			ENV_UTILS.c
 
