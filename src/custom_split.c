@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:57:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 21:42:14 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 12:53:23 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ static int	count_seps(char const *str, char *sep)
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 			i += skip_quotes(str + i, str[i]);
-		if (is_included(str[i], sep) != - 1 && is_included(str[i + 1], sep) == -1 && str[i + 1] != '\0')
+		if ((is_included(str[i], sep) != -1) && \
+		(is_included(str[i + 1], sep) == -1) && str[i + 1] != '\0')
 			sep_c++;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 19:56:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/05/01 08:09:02 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 12:48:12 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ int	handle_arg(char *arg, int is_exp)
 	int		j;
 
 	if (arg[0] == '-')
-	{
-		get_program()->status = 2;
-		return (ms_perror_custom("export", arg, INVALID_IDENTIFIER), 1);
-	}
+		return (get_program()->status = 2, \
+		ms_perror_custom("export", arg, INVALID_IDENTIFIER), 1);
 	if (!(ft_isalpha(arg[0]) || arg[0] == '_'))
 		return (ms_perror_custom("export", arg, INVALID_IDENTIFIER), 1);
 	j = 1;

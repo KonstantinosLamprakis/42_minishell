@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:20:15 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 21:31:54 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:06:12 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,11 @@ int	is_included(char c, char *del)
 		if (del[i] == c)
 			return (i);
 	return (-1);
+}
+
+t_program	*get_program(void)
+{
+	static t_program	program;
+
+	return (&program);
 }

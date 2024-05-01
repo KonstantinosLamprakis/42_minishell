@@ -6,20 +6,13 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 12:05:40 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:13:40 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	update_shlvl(void);
-
-t_program	*get_program(void)
-{
-	static t_program	program;
-
-	return (&program);
-}
+static void	init_lists(void);
 
 /**
  * @brief Saves the std file descriptor (STDIN, OUT & ERR) in the program
@@ -88,13 +81,27 @@ static void	init_environment(t_program *program)
 void	init_struct(char **envp)
 {
 	t_program	*program;
-	char		*temp;
-	char		*home;
 
 	program = get_program();
 	create_envp(&(program->envp), envp);
 	del_from_envp(program->envp, "OLDPWD");
 	program->opened_count = 0;
+	init_lists();
+	program->status = 0;
+	program->is_on_getline = 0;
+	update_shlvl();
+	init_environment(program);
+	if (*get_errno() != 0)
+		return ;
+}
+
+static void	init_lists(void)
+{
+	t_program	*program;
+	char		*temp;
+	char		*home;
+
+	program = get_program();
 	program->exp_v = malloc(1 * sizeof(char *));
 	if (!program->exp_v)
 		return (set_error((char *)__func__, ALLOC));
@@ -111,36 +118,4 @@ void	init_struct(char **envp)
 		free(home);
 		free(temp);
 	}
-	program->status = 0;
-	program->is_on_getline = 0;
-	update_shlvl();
-	init_environment(program);
-	if (*get_errno() != 0)
-		return ;
-}
-
-static void	update_shlvl(void)
-{
-	char	*value;
-	int		i;
-	int		shlvl;
-
-	value = get_env_value(get_program()->envp, "SHLVL", NULL);
-	if (!value)
-	{
-		replace_envp_key(&get_program()->envp, "SHLVL", "1");
-		return ;
-	}
-	i = 0;
-	while (value[i] >= '0' && value[i] <= '9')
-		i++;
-	if (value[i] != '\0' || i > 10)
-		shlvl = 0;
-	else
-		shlvl = ft_atoi(value);
-	shlvl++;
-	free(value);
-	value = ft_itoa(shlvl);
-	replace_envp_key(&get_program()->envp, "SHLVL", value);
-	free(value);
 }

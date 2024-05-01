@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 21:28:51 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:07:46 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h> // signals
-#include <sys/types.h> // waitpid for linuc
-#include <sys/wait.h> // waitpid for linuc
+# include <sys/types.h> // waitpid for linuc
+# include <sys/wait.h> // waitpid for linuc
 # include <stdio.h>
 # include <stdlib.h>
-# include <stdlib.h>    // getenv
-# include <strings.h>   // SIGINT, SIGOUT
+# include <stdlib.h> // getenv
+# include <strings.h> // SIGINT, SIGOUT
 # include <sys/fcntl.h> // open_flags
-# include <unistd.h>    // chdir, write, getcwd open, read, write, access, close, fork, dup, dup2, pause
+// chdir, write, getcwd open, read, write, access, close, fork, dup, dup2, pause
+# include <unistd.h>
 # include <errno.h>
 
 # define ERROR_PROMPT "minishell"
@@ -123,9 +124,9 @@ typedef struct s_token
 }					t_token;
 
 //			UTILS2.c
-int			skip_quotes(char const *str, char quote);
-char		*replace_quotes(char *str);
-int			is_included(char c, char *del);
+int					skip_quotes(char const *str, char quote);
+char				*replace_quotes(char *str);
+int					is_included(char c, char *del);
 
 //			CUSTOM_SPLIT.c
 char				**ft_split_custom(char const *s, char *c);
@@ -156,6 +157,7 @@ int					find_env(char **envp, char *key);
 //			ENV_UTILS_2.c
 
 void				create_envp(char ***new_envp, char **old_envp);
+void				update_shlvl(void);
 
 //			UTILS.c
 

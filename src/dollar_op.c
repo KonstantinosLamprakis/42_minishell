@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:55:43 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 22:46:32 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:30:10 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 static char	*replace_dollar(char *str, int *index, char del);
 static char	*put_value(char *str, int *index, char *key, char *value);
 static char	*get_value(char *key);
+static void	handle_dollar(char **cmd, int *i, int *is_bracket);
 
 /*
 	- Cases $
@@ -52,21 +53,39 @@ char	*dollar_op(char	*str)
 			is_quote = !is_quote;
 		if (cmd[i] == '$' && !is_quote)
 		{
-			if (is_included(cmd[i + 1], "\'\"") != -1)
-				if (is_included(cmd[i + 2], " \t") != -1 || !cmd[i + 2])
-					continue ;
-			// if (cmd[i + 1] == ' ' || !cmd[i + 1] || cmd[i + 1] == '\t')
-			if (is_included(cmd[i + 1], " \t") != -1 || !cmd[i + 1])
-				continue ;
-			is_bracket += (cmd[i + 1] == LEFT_BRACKET);
-			if (is_bracket)
-				cmd = replace_dollar(cmd, &i, RIGHT_BRACKET);
-			else
-				cmd = replace_dollar(cmd, &i, ' ');
-			is_bracket = 0;
+			handle_dollar(&cmd, &i, &is_bracket);
+			// if (is_included(cmd[i + 1], "\'\"") != -1)
+			// 	if (is_included(cmd[i + 2], " \t") != -1 || !cmd[i + 2])
+			// 		continue ;
+			// if (is_included(cmd[i + 1], " \t") != -1 || !cmd[i + 1])
+			// 	continue ;
+			// is_bracket += (cmd[i + 1] == LEFT_BRACKET);
+			// if (is_bracket)
+			// 	cmd = replace_dollar(cmd, &i, RIGHT_BRACKET);
+			// else
+			// 	cmd = replace_dollar(cmd, &i, ' ');
+			// is_bracket = 0;
 		}
 	}
 	return (cmd);
+}
+
+static void	handle_dollar(char **cmdp, int *i, int *is_bracket)
+{
+	char	*cmd;
+
+	cmd = *cmdp;
+	if (is_included(cmd[*i + 1], "\'\"") != -1)
+		if (is_included(cmd[*i + 2], " \t") != -1 || !cmd[*i + 2])
+			return ;
+	if (is_included(cmd[*i + 1], " \t") != -1 || !cmd[*i + 1])
+		return ;
+	*is_bracket += (cmd[*i + 1] == LEFT_BRACKET);
+	if (*is_bracket)
+		*cmdp = replace_dollar(cmd, i, RIGHT_BRACKET);
+	else
+		*cmdp = replace_dollar(cmd, i, ' ');
+	*is_bracket = 0;
 }
 
 /**
@@ -90,7 +109,6 @@ static char	*replace_dollar(char *str, int *index, char del)
 	char	*key;
 
 	j = *index + 1 + (del == RIGHT_BRACKET);
-	// while (str[j] && str[j] != del && str[j] != '$' && str[j] != '\"' && str[j] != '\'')
 	while (str[j] && (ft_isalnum(str[j]) || str[j] == '_'))
 		j++;
 	if (del == RIGHT_BRACKET && str[j] != del)
@@ -150,9 +168,7 @@ static char	*put_value(char *str, int *index, char *key, char *value)
 	char	del;
 	char	*result;
 
-	del = ' ';
-	if (str[*index + 1] == LEFT_BRACKET)
-		del = RIGHT_BRACKET;
+	del = RIGHT_BRACKET + (str[*index + 1] != LEFT_BRACKET);
 	result = malloc(sizeof(char) * (1 + ft_strlen(str) + ft_strlen(value) \
 	- ft_strlen(key) - 1 - 2 * (del == RIGHT_BRACKET)));
 	if (!result)

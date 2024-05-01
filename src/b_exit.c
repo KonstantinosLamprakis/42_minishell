@@ -6,13 +6,14 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:03 by klamprak          #+#    #+#             */
-/*   Updated: 2024/05/01 09:39:21 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:15:53 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 static int	get_status(char *status_str);
+static void	check_args(char *const argv[]);
 
 /*
 	Edge cases:
@@ -31,13 +32,11 @@ static int	get_status(char *status_str);
  */
 int	b_exit(char *const argv[], char *envp[])
 {
-	int	status;
 	int	i;
 	int	j;
 
 	envp++;
 	printf("exit\n");
-	status = 0;
 	i = 0;
 	while (argv[++i])
 	{
@@ -47,22 +46,26 @@ int	b_exit(char *const argv[], char *envp[])
 		if (argv[i][j])
 		{
 			ft_putstr_fd("Error: invalid arg", 2);
-			status = 255;
+			get_program()->status = 255;
 			break ;
 		}
 	}
-	if (argv[1] && argv[2] && status != 255)
+	check_args(argv);
+	clean_struct();
+	exit(get_program()->status);
+}
+
+static void	check_args(char *const argv[])
+{
+	if (argv[1] && argv[2] && get_program()->status != 255)
 	{
-		status = 1;
+		get_program()->status = 1;
 		ft_putstr_fd("Error: too many args", 2);
 	}
-	else if (argv[1] && status != 255)
-		status = get_status(argv[1]);
-	clean_struct();
+	else if (argv[1] && get_program()->status != 255)
+		get_program()->status = get_status(argv[1]);
 	if (!argv[1])
-		status = 0;
-	get_program()->status = status;
-	exit(status);
+		get_program()->status = 0;
 }
 
 /**
@@ -79,10 +82,9 @@ static int	get_status(char *status_str)
 	status = 0;
 	if (!status_str[0])
 		return (255);
-	i = -1 + (status_str[0] == '-') || (status_str[0] == '+');
-	while (status_str[++i] != '\0')
-		if (status_str[i] < '0' || status_str[i] > '9')
-			break ;
+	i = (status_str[0] == '-') || (status_str[0] == '+');
+	while (status_str[i] && ft_isdigit(status_str[i]))
+		i++;
 	if (status_str[i] != '\0')
 	{
 		ms_perror_custom("exit", "numeric argument required", 0);
