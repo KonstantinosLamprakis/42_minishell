@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 10:50:28 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 12:05:40 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	get_env_paths(t_program *program)
 
 	line = get_env_value(program->envp, "PATH", NULL);
 	if (!line)
-		return (set_error((char *)__func__, INVALID_ARG));
+		return (ms_perror_custom("PATH", "", ENV_NOT_SET));
 	program->env_path = ft_split(line, ':');
 	free(line);
 	if (!program->env_path)
