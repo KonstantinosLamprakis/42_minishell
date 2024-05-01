@@ -56,7 +56,8 @@ SRCS =	main.c					\
 		ft_findnext.c			\
 		ft_handle_found.c		\
 		ms_error.c				\
-		ft_escsplit.c
+		ft_escsplit.c			\
+		token_validation.c
 
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 

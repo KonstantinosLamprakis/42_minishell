@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:29:55 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 12:56:42 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 12:44:42 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	parantheses_handler(void *arg)
 	token = (t_token *)arg;
 	program = get_program();
 	program->depth++;
-	sub = ft_substr(token->str, token->start + 1, token->end - token->start - 1);
+	sub = ft_substr(token->str, token->start + 1, token->end - token->start - 2);
 	if (!sub)
 		return (set_error((char *)__func__, ALLOC), -1);
 	ft_parse_sub(sub);

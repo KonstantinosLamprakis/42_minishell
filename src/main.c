@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 11:41:48 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 12:52:57 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int	main(int argc, char *argv[], char *envp[])
 	line = get_line();
 	while (line)
 	{
-		ft_parse(line);
+		if (validate_line(line))
+			ft_parse(line);
 		free(line);
 		reset_struct();
 		line = get_line();

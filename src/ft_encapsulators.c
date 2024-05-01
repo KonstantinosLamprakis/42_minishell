@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 13:41:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 13:11:35 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 12:42:16 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_which_enc(char *str)
 	encapsulators = get_encapsulators();
 	index = -1;
 	while (++index < ENCAPSULATOR_COUNT)
-		if (str[index] == encapsulators[index][0])
+		if (str[0] == encapsulators[index][0])
 			return (index);
 	return (-1);
 }
