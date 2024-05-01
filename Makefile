@@ -1,18 +1,23 @@
 # apt-get install libreadline-dev : on linux
 
 CC = cc
-
 CFLAGS = -Wall -Werror -Wextra
 
 NAME = minishell
 
 SRC_DIR = src
-
 OBJ_DIR = obj
 
 LIBFT_OBJS = ${LIBFT_DIR}/obj/*
 
 INCLUDES_DIR = includes
+
+RESET_COLOR = \033[0m
+G1_COLOR = \033[38;5;160m
+G2_COLOR = \033[38;5;125m
+G3_COLOR = \033[38;5;90m
+G4_COLOR = \033[38;5;55m
+G5_COLOR = \033[38;5;20m
 
 SRCS =	main.c					\
 		init_struct.c			\
@@ -66,6 +71,16 @@ LIBFT = ${LIBFT_DIR}/libft.a
 INCLUDE_LIBFT = -L${LIBFT_DIR} -lft
 
 all : ${NAME}
+	@make ascii_art
+
+ascii_art :
+	@echo "${G1_COLOR}                 _         _        __           __ __  ${RESET_COLOR}"
+	@echo "${G2_COLOR}     ____ ___   (_)____   (_)_____ / /_   ___   / // /  ${RESET_COLOR}"
+	@echo "${G3_COLOR}    / __ \`__ \ / // __ \ / // ___// __ \ / _ \ / // /   ${RESET_COLOR}"
+	@echo "${G4_COLOR}   / / / / / // // / / // /(__  )/ / / //  __// // /    ${RESET_COLOR}"
+	@echo "${G5_COLOR}  /_/ /_/ /_//_//_/ /_//_//____//_/ /_/ \___//_//_/     ${RESET_COLOR}"
+	@echo "                                                        "
+	@echo "                              by: @klamprak & @lgreau   "
 
 ${NAME} : ${OBJS} ${LIBFT}
 	@$(CC) $(CFLAGS) ${INCLUDE_LIBFT} ${LIBFT_OBJS} ${OBJS} -o ${NAME} -lreadline
