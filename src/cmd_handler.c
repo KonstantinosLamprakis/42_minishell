@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 17:05:11 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 18:12:11 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,9 @@ void	exec_cmd(char **cmd_args)
 	program = get_program();
 	if (is_assign(cmd_args) || is_builtin(cmd_args[0]))
 		return (not_from_path(cmd_args));
-	cmd = get_cmd(cmd_args);
+	cmd = get_relative_cmd(cmd_args);
+	if (!cmd)
+		cmd = get_cmd(cmd_args);
 	if (!cmd)
 		return ;
 	child = fork();

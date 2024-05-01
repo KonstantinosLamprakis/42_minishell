@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 17:26:32 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 18:08:34 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ void				ms_cmdnf_error(char *arg);
 void				ms_no_such_fd_error(char *arg);
 char				**ft_escsplit(char *str, int (*cmp)(int), int (*esc)(int));
 int					setup_write_pipe(void);
+char				*get_relative_cmd(char **cmd_args);
 
 //			BUILTIN FUNCS
 
