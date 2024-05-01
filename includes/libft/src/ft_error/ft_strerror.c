@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strerror.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 07:09:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/29 11:18:03 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 08:41:23 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ char	**get_strerror(void)
 	error_messages[FORK] = FORK_ERR;
 	error_messages[COMMAND_NOT_FOUND] = COMMAND_NOT_FOUND_ERR;
 	error_messages[NO_SUCH_FILE_OR_DIR] = NO_SUCH_FILE_OR_DIR_ERR;
+	error_messages[INVALID_OPT] = INVALID_OPT_ERR;
+	error_messages[ENV_NOT_SET] = ENV_NOT_SET_ERR;
+	error_messages[INVALID_IDENTIFIER] = INVALID_IDENTIFIER_ERR;
 	return (error_messages);
 }
 

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:28:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 17:51:05 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 08:44:08 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ void	ms_perror_custom(char *arg, char *msg, int ft_errno)
 	ft_putstr_fd(" ", STDERR);
 	if (*get_errno() != NO_ERROR)
 	{
-		tmp = strerror(*get_errno());
+		tmp = get_strerror()[*get_errno()];
 		write(STDERR, tmp, ft_strlen(tmp));
-		printf("error is %s\n", tmp);
 	}
-	printf("error code is %d %d\n", ft_errno, NO_ERROR);
 	write(STDERR, "\n", 1);
 }
 
