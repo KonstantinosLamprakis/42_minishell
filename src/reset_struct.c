@@ -6,28 +6,28 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 09:20:15 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 14:14:00 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 17:24:19 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	close_opened_files(void)
-{
-	t_program	*program;
-	int			index;
+// void	close_opened_files(void)
+// {
+// 	t_program	*program;
+// 	int			index;
 
-	program = get_program();
-	index = -1;
-	while (++index >= 0 && program->opened_count > 0)
-	{
-		if (index == 0 || program->opened_files[index] != 0)
-		{
-			close(index);
-			program->opened_count--;
-		}
-	}
-}
+// 	program = get_program();
+// 	index = -1;
+// 	while (++index >= 0 && program->opened_count > 0)
+// 	{
+// 		if (index == 0 || program->opened_files[index] != 0)
+// 		{
+// 			close(index);
+// 			program->opened_count--;
+// 		}
+// 	}
+// }
 
 void	reset_std_fd(void)
 {
@@ -47,7 +47,6 @@ void	reset_std_fd(void)
  */
 void	reset_struct(void)
 {
-	// close_opened_files();
 	reset_std_fd();
 	set_errno(NO_ERROR);
 }

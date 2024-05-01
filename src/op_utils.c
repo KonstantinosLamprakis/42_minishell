@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:01:14 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 16:45:32 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 17:04:34 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,15 @@ int	ft_strop(char *str)
 				return (index);
 	}
 	return (-1);
+}
+
+int	setup_write_pipe(void)
+{
+	t_program	*program;
+
+	program = get_program();
+	if (dup2(program->pipe_save_write[program->depth], STDOUT) < 0)
+		return (set_error((char *)__func__, DUP), 0);
+	close(program->pipe_save_read[program->depth]);
+	return (1);
 }

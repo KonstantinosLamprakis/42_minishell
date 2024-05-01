@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 16:18:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 17:32:05 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,30 @@ static char	*extract_used_part(t_token *token, char *left_arg, char *right_arg)
 	return (res);
 }
 
+static int	setup_args(t_token *token, char *right_arg)
+{
+	char	*left_arg;
+	char	*sub_right;
+	int		here_doc;
+
+	here_doc = left_redirection(HERE_DOC_FILE);
+	if (*get_errno() != NO_ERROR)
+		return (set_errno(NO_ERROR), token->next);
+	left_arg = get_left_arg(token);
+	if (*get_errno() != NO_ERROR)
+		return (close(here_doc), set_errno(NO_ERROR), token->next);
+	sub_right = extract_used_part(token, left_arg, right_arg);
+	free(right_arg);
+	if (!sub_right)
+		return (-1);
+	if (left_arg)
+		free(left_arg);
+	ft_parse(sub_right);
+	free(sub_right);
+	close(here_doc);
+	return (-1);
+}
+
 /**
  * @brief "<<" operator handler, expects a string as right argument
  *
@@ -83,85 +107,23 @@ static char	*extract_used_part(t_token *token, char *left_arg, char *right_arg)
 int	l_delimiter_handler(void *arg)
 {
 	t_token	*token;
-	char	*left_arg;
 	char	*right_arg;
-	char	*sub_right;
 	pid_t	parent;
-	int		here_doc;
 
 	token = (t_token *)arg;
 	right_arg = get_right_arg(token);
 	if (!right_arg)
 		return (set_errno(NO_ERROR), token->next);
-	printf("delimiter = %s\n", right_arg);
 	parent = fork();
 	if (parent < 0)
 		return (set_error((char *)__func__, FORK), -1);
 	else if (parent != CHILD_PROCESS)
 	{
 		waitpid(parent, NULL, 0);
-		here_doc = left_redirection(HERE_DOC_FILE);
-		if (*get_errno() != NO_ERROR)
-			return (set_errno(NO_ERROR), token->next);
-		left_arg = get_left_arg(token);
-		if (*get_errno() != NO_ERROR)
-			return (close(here_doc), set_errno(NO_ERROR), token->next);
-		sub_right = extract_used_part(token, left_arg, right_arg);
-		free(right_arg);
-		if (!sub_right)
-			return (-1);
-		if (left_arg)
-			free(left_arg);
-		return (ft_parse(sub_right), free(sub_right), close(here_doc), -1);
+		return (setup_args(token, right_arg));
 	}
 	signal(SIGINT, &handler_exit);
 	signal(SIGQUIT, &handler_exit);
 	left_delimiter(right_arg);
 	exit(0);
-}
-
-static int	is_delimiter(char *buffer)
-{
-	t_program	*program;
-
-	if (!buffer)
-		return (set_error((char *)__func__, INVALID_ARG), -1);
-	program = get_program();
-	return (ft_strlen(buffer) == (1 + ft_strlen(program->delimiter))
-		&& ft_strncmp(buffer, program->delimiter, ft_strlen(buffer) - 1) == 0);
-}
-
-/**
- * @brief Reads from stdin until DELIMITER
- * then redirects the read content to stdin
- *
- * @param arg Delimiter to read from stdin until
- * @param left_arg optionnal (= NULL) argument defining to which fd
- * the redirection occurs
- */
-void	left_delimiter(char *arg)
-{
-	char		*buffer;
-	char		*tmp;
-	int			here_doc;
-
-	get_program()->delimiter = arg;
-	here_doc = ft_open_first(HERE_DOC_FILE, O_TRUNC | O_CREAT | O_WRONLY, 0644);
-	if (here_doc < 0)
-		return ;
-	write(get_program()->std_fd[STDOUT], HERE_DOC_PROMPT,
-			ft_strlen(HERE_DOC_PROMPT));
-	buffer = ft_get_next_line(get_program()->std_fd[STDIN]);
-	while (buffer && !is_delimiter(buffer))
-	{
-		tmp = dollar_op(buffer);
-		write(here_doc, tmp, ft_strlen(tmp));
-		free(tmp);
-		write(get_program()->std_fd[STDOUT], HERE_DOC_PROMPT,
-				ft_strlen(HERE_DOC_PROMPT));
-		buffer = ft_get_next_line(get_program()->std_fd[STDIN]);
-	}
-	if (buffer)
-		free(buffer);
-	close(here_doc);
 }

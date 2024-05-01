@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 09:39:02 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 21:40:09 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:05:11 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,9 @@ int	cmd_handler(void *arg)
 	return (-1);
 }
 
-void	exec_cmd(char **cmd_args)
+static void	not_from_path(char **cmd_args)
 {
 	t_program	*program;
-	pid_t		child;
-	char		*cmd;
 	int			status;
 
 	program = get_program();
@@ -92,24 +90,25 @@ void	exec_cmd(char **cmd_args)
 			program->status = 1;
 		return ;
 	}
+}
+
+void	exec_cmd(char **cmd_args)
+{
+	t_program	*program;
+	pid_t		child;
+	char		*cmd;
+
+	program = get_program();
+	if (is_assign(cmd_args) || is_builtin(cmd_args[0]))
+		return (not_from_path(cmd_args));
 	cmd = get_cmd(cmd_args);
 	if (!cmd)
 		return ;
 	child = fork();
-	if (child < 0)
-		return (set_error((char *)__func__, FORK));
 	signal(SIGINT, &handler_cmd);
 	signal(SIGQUIT, &handler_cmd);
-	if (child == CHILD_PROCESS)
-	{
-		if (program->is_piped)
-		{
-			if (dup2(program->pipe_save_write[program->depth], STDOUT) < 0)
-				return (set_error((char *)__func__, DUP));
-			close(program->pipe_save_read[program->depth]);
-		}
+	if (child == CHILD_PROCESS && (!program->is_piped || setup_write_pipe()))
 		execve(cmd, cmd_args, program->envp);
-	}
 	waitpid(child, &program->status, 0);
 	program->status %= 255;
 	signal(SIGINT, &handler_idle);

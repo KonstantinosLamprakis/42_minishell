@@ -44,6 +44,7 @@ SRCS =	main.c					\
 		cmd_handler.c			\
 		misc.c					\
 		left_delimiter.c		\
+		left_delimiter2.c		\
 		and_handler.c			\
 		or_handler.c			\
 		signals.c				\

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 16:43:47 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 17:26:32 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ void				ms_syntax_error(char *arg);
 void				ms_cmdnf_error(char *arg);
 void				ms_no_such_fd_error(char *arg);
 char				**ft_escsplit(char *str, int (*cmp)(int), int (*esc)(int));
+int					setup_write_pipe(void);
 
 //			BUILTIN FUNCS
 
@@ -230,6 +231,7 @@ int					l_redirect_handler(void *arg);
 int					left_redirection(char *arg);
 
 int					l_delimiter_handler(void *arg);
+int					is_delimiter(char *buffer);
 void				left_delimiter(char *arg);
 
 int					and_handler(void *arg);
