@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 16:13:17 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 16:18:36 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*get_right_arg(t_token *token)
 	tmp = ft_escsplit(token->str + token->start + 2, ft_iswspace, ft_isquote);
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
-	end = (ft_strop(tmp[0]) * !had_quotes);
+	end = (ft_strop(tmp[0]) * !had_quotes + had_quotes * ft_strlen(tmp[0]));
 	if (!had_quotes && end == 0)
 		return (ms_syntax_error(ft_ltruncate(tmp[0], 1)), free_arr(tmp, 1),
 			NULL);
@@ -93,6 +93,7 @@ int	l_delimiter_handler(void *arg)
 	right_arg = get_right_arg(token);
 	if (!right_arg)
 		return (set_errno(NO_ERROR), token->next);
+	printf("delimiter = %s\n", right_arg);
 	parent = fork();
 	if (parent < 0)
 		return (set_error((char *)__func__, FORK), -1);
