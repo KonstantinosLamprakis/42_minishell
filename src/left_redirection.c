@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 16:08:42 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 08:30:15 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static char	*get_left_arg(t_token *token)
 
 static char	*get_right_arg(t_token *token)
 {
-	char	**tmp;
 	char	*right_arg;
+	char	**tmp;
 	int		end;
 	int		had_quotes;
 

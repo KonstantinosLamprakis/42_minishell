@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 14:17:25 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 08:57:16 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int	main(int argc, char *argv[], char *envp[])
 	line = get_line();
 	while (line)
 	{
+		printf("is line valid ?\n");
+		printf("%d\n", validate_line(line));
 		ft_parse(line);
 		free(line);
 		reset_struct();

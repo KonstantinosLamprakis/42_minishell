@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 15:51:26 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 08:45:58 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,5 +272,10 @@ int					endof_paranthese(char *str, int start);
 
 t_operator_handler	*get_handlers(void);
 void				set_handler(t_operators op, t_operator_handler new_handler);
+
+//			PARSER_VALIDATION
+
+int					is_right_empty(char *str);
+int					validate_line(char *line);
 
 #endif

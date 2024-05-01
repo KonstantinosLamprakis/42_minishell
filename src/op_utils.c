@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:01:14 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 10:17:14 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 09:26:38 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ int ft_strop(char *str)
 				|| ft_is_encapsulator(str[index]) == 1)
 				return (index);
 	}
-	return (index);
+	return (-1);
 }
