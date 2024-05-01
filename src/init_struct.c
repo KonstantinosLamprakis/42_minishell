@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 13:13:40 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:23:12 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,15 @@ static void	save_std_fd(t_program *program)
 static void	get_env_paths(t_program *program)
 {
 	char	*line;
+	char	cwd[PATH_MAX];
 
 	line = get_env_value(program->envp, "PATH", NULL);
 	if (!line)
-		return (ms_perror_custom("PATH", "", ENV_NOT_SET));
+	{
+		replace_envp_key(&get_program()->envp, "PATH", getcwd(cwd, sizeof(cwd)));
+		line = get_env_value(program->envp, "PATH", NULL);
+		ms_perror_custom("PATH", "", ENV_NOT_SET);
+	}
 	program->env_path = ft_split(line, ':');
 	free(line);
 	if (!program->env_path)
