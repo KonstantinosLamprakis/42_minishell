@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/05/01 15:52:42 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:00:52 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ static void	exec_in_pipe(const char *path, char *const argv[])
 	{
 		if (get_program()->is_piped)
 		{
-			if (dup2(get_program()->pipe_save_write[get_program()->depth], STDOUT) < 0)
+			if (dup2(get_program()->pipe_save_write[get_program()->depth], \
+			STDOUT) < 0)
 				return (set_error((char *)__func__, DUP));
 			close(get_program()->pipe_save_read[get_program()->depth]);
 		}
