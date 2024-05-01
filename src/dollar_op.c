@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:55:43 by klamprak          #+#    #+#             */
-/*   Updated: 2024/05/01 13:31:06 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:23:26 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ static char	*replace_dollar(char *str, int *index, char del)
 
 	j = *index + 1 + (del == RIGHT_BRACKET);
 	while (str[j] && (ft_isalnum(str[j]) || str[j] == '_'))
+		j++;
+	if (str[j] == '?')
 		j++;
 	if (del == RIGHT_BRACKET && str[j] != del)
 		return (free(str), NULL);
