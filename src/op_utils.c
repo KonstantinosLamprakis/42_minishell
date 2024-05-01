@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:01:14 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 12:53:49 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 16:45:32 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ int	ft_strop(char *str)
 	index = -1;
 	while (str[++index])
 	{
+		if (ft_isquote(str[index]))
+		{
+			index += skip_quotes(str + index, str[index]);
+			continue ;
+		}
 		op = -1;
 		while (++op < OPERATOR_COUNT)
 			if (ft_is_operator(str + index, op) == 1

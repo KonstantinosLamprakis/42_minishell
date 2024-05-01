@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 09:42:34 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 12:42:10 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 16:52:29 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int	find_next_token(char *str, t_token *token)
 	token->start = -1;
 	while (str[++index])
 	{
+		if (ft_isquote(str[index]))
+		{
+			index += skip_quotes(str + index, str[index]);
+			continue ;
+		}
 		token_c = ft_which_op(str + index);
 		if (token_c >= 0 && handle_found_operator(token, index, token_c))
 			break ;
@@ -38,9 +43,7 @@ int	find_next_token(char *str, t_token *token)
 		if (*get_errno() != NO_ERROR)
 			return (-1);
 	}
-	if (*get_errno() != NO_ERROR)
-		return (-1);
-	if (token->start < 0)
+	if (*get_errno() != NO_ERROR || token->start < 0)
 		return (0);
 	return (1);
 }
