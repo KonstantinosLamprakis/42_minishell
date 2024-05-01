@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:03 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 23:16:40 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 08:31:22 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,15 @@ int	b_exit(char *const argv[], char *envp[])
 		}
 	}
 	if (argv[2] && status != 255)
+	{
 		status = 1;
-	if (argv[1] && status != 255)
+		ft_putstr_fd("Error: too many args", 2);
+	}
+	else if (argv[1] && status != 255)
 		status = get_status(argv[1]);
 	clean_struct();
+	if (!argv[1])
+		status = 0;
 	get_program()->status = status;
 	exit(status);
 }

@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:14 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 22:54:13 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 08:17:57 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,14 @@ int	b_unset(char *const argv[], char *envp[])
 	envp++;
 	if (!argv[1])
 	{
-		get_program()->status = 1;
+		get_program()->status = 0;
 		return (0);
 	}
 	if (argv[1][0] == '-')
+	{
+		get_program()->status = 2;
 		return (ms_perror_custom("unset", argv[1], INVALID_OPT), 1);
+	}
 	if (argv[1][0] == '~' && argv[1][1] == '\0')
 	{
 		temp = get_env_value(get_program()->loc_v, "~", NULL);
