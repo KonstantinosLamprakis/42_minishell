@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 15:51:47 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:43:47 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,13 @@ typedef struct s_token
 }					t_token;
 
 //			UTILS2.c
+
 int					skip_quotes(char const *str, char quote);
 char				*replace_quotes(char *str);
 int					is_included(char c, char *del);
 
 //			CUSTOM_SPLIT.c
+
 char				**ft_split_custom(char const *s, char *c);
 
 //			ASSIGN_OP.c
