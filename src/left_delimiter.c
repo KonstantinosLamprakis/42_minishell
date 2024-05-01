@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 14:44:09 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 16:13:17 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,29 +140,27 @@ static int	is_delimiter(char *buffer)
  */
 void	left_delimiter(char *arg)
 {
-	t_program	*program;
 	char		*buffer;
+	char		*tmp;
 	int			here_doc;
 
-	program = get_program();
-	program->delimiter = arg;
+	get_program()->delimiter = arg;
 	here_doc = ft_open_first(HERE_DOC_FILE, O_TRUNC | O_CREAT | O_WRONLY, 0644);
 	if (here_doc < 0)
 		return ;
-	write(program->std_fd[STDOUT], HERE_DOC_PROMPT, ft_strlen(HERE_DOC_PROMPT));
-	buffer = ft_get_next_line(program->std_fd[STDIN]);
-	while (buffer)
+	write(get_program()->std_fd[STDOUT], HERE_DOC_PROMPT,
+			ft_strlen(HERE_DOC_PROMPT));
+	buffer = ft_get_next_line(get_program()->std_fd[STDIN]);
+	while (buffer && !is_delimiter(buffer))
 	{
-		if (is_delimiter(buffer))
-		{
-			free(buffer);
-			break ;
-		}
-		write(here_doc, buffer, ft_strlen(buffer));
-		free(buffer);
-		write(program->std_fd[STDOUT], HERE_DOC_PROMPT,
+		tmp = dollar_op(buffer);
+		write(here_doc, tmp, ft_strlen(tmp));
+		free(tmp);
+		write(get_program()->std_fd[STDOUT], HERE_DOC_PROMPT,
 				ft_strlen(HERE_DOC_PROMPT));
-		buffer = ft_get_next_line(program->std_fd[STDIN]);
+		buffer = ft_get_next_line(get_program()->std_fd[STDIN]);
 	}
+	if (buffer)
+		free(buffer);
 	close(here_doc);
 }
