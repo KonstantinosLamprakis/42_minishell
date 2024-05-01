@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   left_delimiter.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 14:10:45 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 11:40:06 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,16 @@ int	l_delimiter_handler(void *arg)
 	if (p < 0)
 		return (set_error((char *)__func__, FORK), -1);
 	else if (p != 0)
-		return(waitpid(p, &status, 0), status);
+		return(waitpid(p, &status, 0), -1);
 	signal(SIGINT, &handler_exit);
 	signal(SIGQUIT, &handler_exit);
 	left_delimiter(right_arg);
 	left_redirection(HERE_DOC_FILE, sub_right);
 	if (left_arg)
 		free(left_arg);
-	return (free(right_arg), free(sub_right), -1);
+	free(right_arg);
+	free(sub_right);
+	exit(0);
 }
 
 static int	is_delimiter(char *buffer)

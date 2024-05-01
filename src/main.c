@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/30 22:51:06 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:41:48 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,10 @@
 	tester: https://github.com/zstenger93/42_minishell_tester
 	tester2: https://github.com/LucasKuhn/minishell_tester
 	bugs:
-		- me
-			- pipes on builtin
 			- /bin/echo $HALLO42$HOME$sda$USER: need to check what command we pass, because it works ex. for $HOME
 		- louen
+			- heredoc with single char delimiter
 			- 35 echo "exit_code ->$? user ->$USER home -> $HOME"
-		- why it works with errno instead of get_errno but not for my new errors
-		- env | wc -l
-			- still prints on stdout
 		- Louen notes:
 			if inside stdin waiting for input : CTRL + D or CTRL + C doesn't work, intended ?
 			After using CTRL + C to kill an ongoing command, nothing works anymore (maybe just need a reset ?)
