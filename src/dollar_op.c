@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:55:43 by klamprak          #+#    #+#             */
-/*   Updated: 2024/05/01 13:30:10 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:31:06 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,7 @@ char	*dollar_op(char	*str)
 		if (cmd[i] == '\'')
 			is_quote = !is_quote;
 		if (cmd[i] == '$' && !is_quote)
-		{
 			handle_dollar(&cmd, &i, &is_bracket);
-			// if (is_included(cmd[i + 1], "\'\"") != -1)
-			// 	if (is_included(cmd[i + 2], " \t") != -1 || !cmd[i + 2])
-			// 		continue ;
-			// if (is_included(cmd[i + 1], " \t") != -1 || !cmd[i + 1])
-			// 	continue ;
-			// is_bracket += (cmd[i + 1] == LEFT_BRACKET);
-			// if (is_bracket)
-			// 	cmd = replace_dollar(cmd, &i, RIGHT_BRACKET);
-			// else
-			// 	cmd = replace_dollar(cmd, &i, ' ');
-			// is_bracket = 0;
-		}
 	}
 	return (cmd);
 }
