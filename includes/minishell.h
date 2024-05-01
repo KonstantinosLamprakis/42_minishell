@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 12:52:15 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 13:40:04 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 # define MINISHELL_H
 
 # include "libft/libft.h"
+# include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h> // signals
-#include <sys/types.h> // waitpid for linuc
-#include <sys/wait.h> // waitpid for linuc
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdlib.h>    // getenv
 # include <strings.h>   // SIGINT, SIGOUT
 # include <sys/fcntl.h> // open_flags
-# include <unistd.h>    // chdir, write, getcwd open, read, write, access, close, fork, dup, dup2, pause
-# include <errno.h>
+# include <sys/types.h> // waitpid for linuc
+# include <sys/wait.h>  // waitpid for linuc
+# include <unistd.h>    // chdir, write, getcwd open, read, write, access,
+						// close, fork, dup, dup2, pause
 
 # define ERROR_PROMPT "minishell"
 # define SYNTAX_ERR_MSG "syntax error near unexpected token"
@@ -71,10 +72,11 @@ typedef struct s_program
 	int				std_fd[3];
 	char			*delimiter;
 	int				pipe_end[2];
-	int				is_piped;
 	int				pipe_save_write[MAX_SUB_DEPTH];
 	int				pipe_save_read[MAX_SUB_DEPTH];
+	int				is_piped;
 	int				depth;
+	int				is_enc_piped;
 	int				is_on_getline;
 }					t_program;
 
@@ -125,9 +127,9 @@ typedef struct s_token
 }					t_token;
 
 //			UTILS2.c
-int			skip_quotes(char const *str, char quote);
-char		*replace_quotes(char *str);
-int			is_included(char c, char *del);
+int					skip_quotes(char const *str, char quote);
+char				*replace_quotes(char *str);
+int					is_included(char c, char *del);
 
 //			CUSTOM_SPLIT.c
 char				**ft_split_custom(char const *s, char *c);

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 12:52:50 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 14:04:45 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*get_right_arg(t_token *token)
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
 	end = (ft_strop(tmp[0]) * !had_quotes + had_quotes * ft_strlen(tmp[0]));
-	if (end <= 0)
+	if (end == 0)
 		return (ms_syntax_error(ft_ltruncate(tmp[0], 1)), free_arr(tmp, 1),
 			NULL);
 	right_arg = ft_substr(tmp[0], 0, end);
@@ -85,29 +85,34 @@ int	l_delimiter_handler(void *arg)
 	char	*right_arg;
 	char	*sub_right;
 	pid_t	parent;
-	int		status;
+	int		here_doc;
 
 	token = (t_token *)arg;
-	left_arg = get_left_arg(token);
 	right_arg = get_right_arg(token);
 	if (!right_arg)
-		return (-1);
-	sub_right = extract_used_part(token, left_arg, right_arg);
-	if (!sub_right)
-		return (-1);
+		return (set_errno(NO_ERROR), token->next);
 	parent = fork();
 	if (parent < 0)
 		return (set_error((char *)__func__, FORK), -1);
 	else if (parent != CHILD_PROCESS)
-		return(waitpid(parent, &status, 0), status);
+	{
+		waitpid(parent, NULL, 0);
+		left_arg = get_left_arg(token);
+		sub_right = extract_used_part(token, left_arg, right_arg);
+		free(right_arg);
+		if (!sub_right)
+			return (-1);
+		if (left_arg)
+			free(left_arg);
+		here_doc = left_redirection(HERE_DOC_FILE);
+		if (*get_errno() != NO_ERROR)
+			return (free(sub_right) ,-1);
+		ft_parse(sub_right);
+		return (free(sub_right), close(here_doc), -1);
+	}
 	signal(SIGINT, &handler_exit);
 	signal(SIGQUIT, &handler_exit);
 	left_delimiter(right_arg);
-	left_redirection(HERE_DOC_FILE);
-	if (left_arg)
-		free(left_arg);
-	free(right_arg);
-	free(sub_right);
 	exit(0);
 }
 
