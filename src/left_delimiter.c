@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 14:04:45 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 14:24:20 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static char	*get_right_arg(t_token *token)
 	tmp = ft_escsplit(token->str + token->start + 2, ft_iswspace, ft_isquote);
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
-	end = (ft_strop(tmp[0]) * !had_quotes + had_quotes * ft_strlen(tmp[0]));
-	if (end == 0)
+	end = (ft_strop(tmp[0]) * !had_quotes);
+	if (!had_quotes && end == 0)
 		return (ms_syntax_error(ft_ltruncate(tmp[0], 1)), free_arr(tmp, 1),
 			NULL);
 	right_arg = ft_substr(tmp[0], 0, end);
@@ -56,9 +56,11 @@ static char	*extract_used_part(t_token *token, char *left_arg, char *right_arg)
 	char	*tmp;
 	int		offset;
 
-	offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
-			- token->str) + ft_strlen(right_arg) + (ft_strcount(token->str
-				+ token->start + 2, ft_isquote) > 0);
+	offset = ft_strlen(token->str);
+	if (ft_strlen(right_arg) > 0)
+		offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
+				- token->str) + ft_strlen(right_arg) + (ft_strcount(token->str
+					+ token->start + 2, ft_isquote) > 0);
 	tmp = ft_substr(token->str, offset, ft_strlen(token->str + offset));
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
@@ -97,18 +99,19 @@ int	l_delimiter_handler(void *arg)
 	else if (parent != CHILD_PROCESS)
 	{
 		waitpid(parent, NULL, 0);
+		here_doc = left_redirection(HERE_DOC_FILE);
+		if (*get_errno() != NO_ERROR)
+			return (set_errno(NO_ERROR), token->next);
 		left_arg = get_left_arg(token);
+		if (*get_errno() != NO_ERROR)
+			return (close(here_doc), set_errno(NO_ERROR), token->next);
 		sub_right = extract_used_part(token, left_arg, right_arg);
 		free(right_arg);
 		if (!sub_right)
 			return (-1);
 		if (left_arg)
 			free(left_arg);
-		here_doc = left_redirection(HERE_DOC_FILE);
-		if (*get_errno() != NO_ERROR)
-			return (free(sub_right) ,-1);
-		ft_parse(sub_right);
-		return (free(sub_right), close(here_doc), -1);
+		return (ft_parse(sub_right), free(sub_right), close(here_doc), -1);
 	}
 	signal(SIGINT, &handler_exit);
 	signal(SIGQUIT, &handler_exit);
