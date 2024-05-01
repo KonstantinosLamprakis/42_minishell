@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:28:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 12:53:04 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 17:40:19 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 void	ms_perror(char *arg, int ft_errno)
 {
-	t_program	*program;
 	char		*tmp;
 
 	set_errno(ft_errno);
 	if (errno != NO_ERROR)
 	{
-		program = get_program();
 		tmp = strerror(errno);
 		if (errno == 2)
 			set_status(NO_FD_STATUS);
@@ -35,11 +33,9 @@ void	ms_perror(char *arg, int ft_errno)
 
 void	ms_perror_custom(char *arg, char *msg, int ft_errno)
 {
-	t_program	*program;
 	char		*tmp;
 
 	set_errno(ft_errno);
-	program = get_program();
 	write(STDERR, ERROR_PROMPT, ft_strlen(ERROR_PROMPT));
 	ft_putstr_fd(": ", STDERR);
 	write(STDERR, arg, ft_strlen(arg));
