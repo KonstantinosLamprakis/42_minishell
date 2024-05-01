@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:49:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 17:23:12 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:34:15 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ static void	get_env_paths(t_program *program)
 	line = get_env_value(program->envp, "PATH", NULL);
 	if (!line)
 	{
-		replace_envp_key(&get_program()->envp, "PATH", getcwd(cwd, sizeof(cwd)));
+		replace_envp_key(&get_program()->envp, "PATH", getcwd(cwd,
+				sizeof(cwd)));
 		line = get_env_value(program->envp, "PATH", NULL);
 		ms_perror_custom("PATH", "", ENV_NOT_SET);
 	}
