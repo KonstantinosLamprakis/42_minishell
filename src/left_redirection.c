@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:06:09 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 08:30:15 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 10:47:41 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*get_right_arg(t_token *token)
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
 	end = (ft_strop(tmp[0]) * !had_quotes + had_quotes * ft_strlen(tmp[0]));
-	if (end <= 0)
+	if (end == 0)
 	{
 		if (had_quotes)
 			return (ms_no_such_fd_error(""), NULL);
@@ -93,13 +93,13 @@ int	l_redirect_handler(void *arg)
 		return (-1);
 	right_arg = get_right_arg(token);
 	if (!right_arg)
-		return (set_errno(NO_ERROR), token->start + token->next + 2);
+		return (set_errno(NO_ERROR), token->next);
 	fd = left_redirection(right_arg);
 	if (*get_errno() != NO_ERROR)
-		return (set_errno(NO_ERROR), token->start + token->next + 2);
+		return (set_errno(NO_ERROR), token->next);
 	left_arg = get_left_arg(token);
 	if (*get_errno() != NO_ERROR)
-		return (close(fd), set_errno(NO_ERROR), token->start + token->next + 2);
+		return (close(fd), set_errno(NO_ERROR), token->next);
 	sub_right = extract_used_part(token, left_arg, right_arg);
 	free(right_arg);
 	if (left_arg)

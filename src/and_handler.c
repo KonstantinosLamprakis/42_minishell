@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:39:34 by lgreau            #+#    #+#             */
-/*   Updated: 2024/04/28 08:32:40 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 12:47:56 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ int	and_handler(void *arg)
 		if (!left_arg)
 			return (set_error((char *)__func__, ALLOC), -1);
 	}
-	and_operation(left_arg);
 	if (left_arg)
+	{
+		and_operation(left_arg);
 		free(left_arg);
+	}
 	program = get_program();
 	if (program->status != 0)
 		return (-1);
