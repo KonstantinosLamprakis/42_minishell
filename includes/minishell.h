@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 15:09:26 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:51:47 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,10 +157,11 @@ int					del_from_envp(char **envp, char *key);
 void				replace_envp_key(char ***envp, char *key, char *new_value);
 int					find_env(char **envp, char *key);
 
-//			ENV_UTILS_2.c
+//			UTILS3.c
 
 void				create_envp(char ***new_envp, char **old_envp);
 void				update_shlvl(void);
+char				*get_line(void);
 
 //			UTILS.c
 
@@ -168,7 +169,6 @@ char				*ft_strjoin_3(char const *s1, char const *s2,
 						char const *s3);
 int					builtin_execve(const char *pathname, char *const argv[],
 						char *envp[]);
-char				*get_line(void);
 int					is_builtin(char *path);
 void				set_status(int status);
 int					contains_op(char *str);

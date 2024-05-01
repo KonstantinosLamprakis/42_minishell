@@ -6,11 +6,13 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:09:23 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/30 15:52:19 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:52:42 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	exec_in_pipe(const char *path, char *const argv[]);
 
 /**
  * @brief check if the name path is in builtin commands
@@ -55,20 +57,50 @@ int	builtin_execve(const char *path, char *const argv[], char *envp[])
 	if (!path || !argv || !argv[0] || !envp)
 		return (-1);
 	if (ft_strcmp(path, "echo") == 0)
-		return (b_echo(argv, envp));
+		return (exec_in_pipe(path, argv), get_program()->status);
 	else if (ft_strcmp(path, "cd") == 0)
 		return (b_cd(argv, envp));
 	else if (ft_strcmp(path, "pwd") == 0)
-		return (b_pwd(argv, envp));
+		return (exec_in_pipe(path, argv), get_program()->status);
+	else if (ft_strcmp(path, "export") == 0 && !argv[1])
+		return (exec_in_pipe(path, argv), get_program()->status);
 	else if (ft_strcmp(path, "export") == 0)
 		return (b_export(argv, envp));
 	else if (ft_strcmp(path, "unset") == 0)
 		return (b_unset(argv, envp));
 	else if (ft_strcmp(path, "env") == 0)
-		return (b_env(argv, envp));
+		return (exec_in_pipe(path, argv), get_program()->status);
 	else if (ft_strcmp(path, "exit") == 0)
 		return (b_exit(argv, envp));
 	return (-2);
+}
+
+static void	exec_in_pipe(const char *path, char *const argv[])
+{
+	pid_t	p;
+
+	p = fork();
+	if (p < 0)
+		return (set_error((char *)__func__, FORK));
+	else if (p == 0)
+	{
+		if (get_program()->is_piped)
+		{
+			if (dup2(get_program()->pipe_save_write[get_program()->depth], STDOUT) < 0)
+				return (set_error((char *)__func__, DUP));
+			close(get_program()->pipe_save_read[get_program()->depth]);
+		}
+		if (ft_strcmp(path, "echo") == 0)
+			get_program()->status = (b_echo(argv, get_program()->envp));
+		else if (ft_strcmp(path, "env") == 0)
+			get_program()->status = (b_env(argv, get_program()->envp));
+		else if (ft_strcmp(path, "pwd") == 0)
+			get_program()->status = (b_pwd(argv, get_program()->envp));
+		else if (ft_strcmp(path, "export") == 0 && !argv[1])
+			get_program()->status = (b_export(argv, get_program()->envp));
+		exit(get_program()->status);
+	}
+	waitpid(p, &get_program()->status, 0);
 }
 
 /**
@@ -88,39 +120,6 @@ char	*ft_strjoin_3(char const *s1, char const *s2, char const *s3)
 	temp2 = ft_strjoin(temp, s3);
 	free(temp);
 	return (temp2);
-}
-
-/**
- * @brief Get the line object
- * readline returns NULL if Ctrl D received and "\0" if empty
- * command received
- *
- * @return char* should free the line after use, returns NULL
- * on error, otherwise it return the line from user
- */
-char	*get_line(void)
-{
-	char	*line_read;
-
-	if (!isatty(fileno(stdin)))
-		return (ft_get_next_line_nonl(fileno(stdin)));
-	while (42)
-	{
-		get_program()->is_on_getline = 1;
-		line_read = readline("minishell > ");
-		get_program()->is_on_getline = 0;
-		if (!line_read)
-		{
-			clean_struct();
-			exit(0);
-		}
-		else if (!line_read[0])
-			free(line_read);
-		else
-			break ;
-	}
-	add_history(line_read);
-	return (line_read);
 }
 
 void	set_status(int status)

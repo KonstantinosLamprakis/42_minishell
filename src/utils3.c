@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils_2.c                                      :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 16:28:18 by klamprak          #+#    #+#             */
-/*   Updated: 2024/05/01 13:07:14 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:51:49 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,37 @@ void	update_shlvl(void)
 	value = ft_itoa(shlvl);
 	replace_envp_key(&get_program()->envp, "SHLVL", value);
 	free(value);
+}
+
+/**
+ * @brief Get the line object
+ * readline returns NULL if Ctrl D received and "\0" if empty
+ * command received
+ *
+ * @return char* should free the line after use, returns NULL
+ * on error, otherwise it return the line from user
+ */
+char	*get_line(void)
+{
+	char	*line_read;
+
+	if (!isatty(fileno(stdin)))
+		return (ft_get_next_line_nonl(fileno(stdin)));
+	while (42)
+	{
+		get_program()->is_on_getline = 1;
+		line_read = readline("minishell > ");
+		get_program()->is_on_getline = 0;
+		if (!line_read)
+		{
+			clean_struct();
+			exit(0);
+		}
+		else if (!line_read[0])
+			free(line_read);
+		else
+			break ;
+	}
+	add_history(line_read);
+	return (line_read);
 }
