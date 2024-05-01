@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 12:32:56 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:36:40 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	main(int argc, char *argv[], char *envp[])
 	line = get_line();
 	while (line)
 	{
-		ft_parse(line);
+		if (validate_line(line))
+			ft_parse(line);
 		free(line);
 		reset_struct();
 		line = get_line();
