@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:45:14 by klamprak          #+#    #+#             */
-/*   Updated: 2024/05/01 08:17:57 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 12:51:52 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	unset_if_exists(char *key, char **ar);
 static void	unset_all_lists(char *key);
+static int	not_valid_args(char *const argv[]);
 
 /*
 	Edge cases:
@@ -35,10 +36,30 @@ static void	unset_all_lists(char *key);
  */
 int	b_unset(char *const argv[], char *envp[])
 {
-	int		i;
-	char	*temp;
+	int	i;
 
 	envp++;
+	i = not_valid_args(argv);
+	if (i != -1)
+		return (i);
+	i = 0;
+	while (argv[++i])
+	{
+		if (!is_valid_name(argv[i], 0))
+		{
+			ms_perror_custom("unset", argv[i], INVALID_IDENTIFIER);
+			get_program()->status = 1;
+		}
+		else
+			unset_all_lists(argv[i]);
+	}
+	return (0);
+}
+
+static int	not_valid_args(char *const argv[])
+{
+	char	*temp;
+
 	if (!argv[1])
 	{
 		get_program()->status = 0;
@@ -57,18 +78,7 @@ int	b_unset(char *const argv[], char *envp[])
 		ms_perror_custom("unset", temp, INVALID_IDENTIFIER);
 		return (free(temp), 1);
 	}
-	i = 0;
-	while (argv[++i])
-	{
-		if (!is_valid_name(argv[i], 0))
-		{
-			ms_perror_custom("unset", argv[i], INVALID_IDENTIFIER);
-			get_program()->status = 1;
-		}
-		else
-			unset_all_lists(argv[i]);
-	}
-	return (0);
+	return (-1);
 }
 
 static void	unset_all_lists(char *key)

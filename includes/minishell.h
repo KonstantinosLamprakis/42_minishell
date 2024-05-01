@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:38:40 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 13:40:04 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 14:06:00 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <signal.h> // signals
 # include <stdio.h>
 # include <stdlib.h>
-# include <stdlib.h>    // getenv
-# include <strings.h>   // SIGINT, SIGOUT
+# include <stdlib.h> // getenv
+# include <strings.h> // SIGINT, SIGOUT
 # include <sys/fcntl.h> // open_flags
 # include <sys/types.h> // waitpid for linuc
 # include <sys/wait.h>  // waitpid for linuc
@@ -160,6 +160,7 @@ int					find_env(char **envp, char *key);
 //			ENV_UTILS_2.c
 
 void				create_envp(char ***new_envp, char **old_envp);
+void				update_shlvl(void);
 
 //			UTILS.c
 

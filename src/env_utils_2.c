@@ -6,7 +6,7 @@
 /*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 16:28:18 by klamprak          #+#    #+#             */
-/*   Updated: 2024/04/23 16:40:20 by klamprak         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:07:14 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,30 @@ void	create_envp(char ***new_envp, char **old_envp)
 	}
 	result[i] = NULL;
 	*new_envp = result;
+}
+
+void	update_shlvl(void)
+{
+	char	*value;
+	int		i;
+	int		shlvl;
+
+	value = get_env_value(get_program()->envp, "SHLVL", NULL);
+	if (!value)
+	{
+		replace_envp_key(&get_program()->envp, "SHLVL", "1");
+		return ;
+	}
+	i = 0;
+	while (value[i] >= '0' && value[i] <= '9')
+		i++;
+	if (value[i] != '\0' || i > 10)
+		shlvl = 0;
+	else
+		shlvl = ft_atoi(value);
+	shlvl++;
+	free(value);
+	value = ft_itoa(shlvl);
+	replace_envp_key(&get_program()->envp, "SHLVL", value);
+	free(value);
 }

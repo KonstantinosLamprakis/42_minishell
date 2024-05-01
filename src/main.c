@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: klamprak <klamprak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:05:38 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 12:52:57 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 13:36:40 by klamprak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 			- /bin/echo $HALLO42$HOME$sda$USER: need to check what command we pass, because it works ex. for $HOME
 		- louen
 			- heredoc with single char delimiter
+			- env -i ./minishell -> cat -> segfault
 			- 35 echo "exit_code ->$? user ->$USER home -> $HOME"
 		- Louen notes:
 			if inside stdin waiting for input : CTRL + D or CTRL + C doesn't work, intended ?
