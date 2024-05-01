@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:59:26 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/01 14:24:20 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/01 14:44:09 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ static char	*extract_used_part(t_token *token, char *left_arg, char *right_arg)
 
 	offset = ft_strlen(token->str);
 	if (ft_strlen(right_arg) > 0)
-		offset = (ft_strnstr(token->str, right_arg, ft_strlen(right_arg))
-				- token->str) + ft_strlen(right_arg) + (ft_strcount(token->str
-					+ token->start + 2, ft_isquote) > 0);
+		offset = (ft_strnstr(token->str + token->start + 2, right_arg,
+					ft_strlen(right_arg)) - token->str) + ft_strlen(right_arg)
+			+ (ft_strcount(token->str + token->start + 2, ft_isquote) > 0);
 	tmp = ft_substr(token->str, offset, ft_strlen(token->str + offset));
 	if (!tmp)
 		return (set_error((char *)__func__, ALLOC), NULL);
